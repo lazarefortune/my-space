@@ -1,0 +1,27 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block admin_content %}
+    <main class="auth">
+      <!-- .empty-state -->
+      <div class="empty-state">
+        <!-- .empty-state-container -->
+        <div class="empty-state-container">
+          <!-- .card -->
+          <div class="card border border-primary">
+            <!-- .card-body -->
+            <div class="card-body">
+              <div class="state-figure">
+                <img class="img-fluid w-75" src="{{ asset('assets/images/illustration/maintenance.png') }}" alt="">
+              </div>
+              <h3 class="state-header"> Nous travaillons sur quelques mises à jour </h3>
+              <p class="state-description"> Nous vous prions de nous excuser pour la gêne occasionnée, mais nous serons de retour en peu de temps. Revenez bientôt! </p>
+              
+            </div><!-- /.card-body -->
+          </div><!-- /.card -->
+          {# <p class="text-muted small"> Are you site owner? <a href="auth-signin-v1.html">Login here</a> or enter your password. </p> #}
+        </div><!-- /.empty-state-container -->
+      </div><!-- /.empty-state -->
+    </main><!-- /.auth -->
+{% endblock %}

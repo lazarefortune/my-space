@@ -1,0 +1,67 @@
+security:
+    enable_authenticator_manager: true
+    encoders:
+        App\Entity\User: 
+            algorithm: sha256
+            encode_as_base64: false
+            iterations: 1
+
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                # property: email
+        # used to reload user from session & other features (e.g. switch_user)
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: false
+            lazy: true
+            provider: app_user_provider
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+                domain: ~
+                name: REMEMBER_DEMO
+                samesite: lax
+                # token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                target: app_login
+            login_throttling:
+                max_attempts: 5
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/connexion, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/mot-de-passe/recuperation, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/my-space, roles: ROLE_ADMIN }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+
+    role_hierarchy:
+        ROLE_ETUDIANT: ROLE_USER
+        ROLE_EVALUATOR: [ROLE_USER]
+        ROLE_ADMIN:       [ROLE_EDITOR]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]

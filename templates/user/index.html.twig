@@ -1,0 +1,93 @@
+{% extends "layouts/admin.html.twig" %}
+
+{% block admin_content %}
+	<div class="row mt-4">
+		<div class="mx-auto col-md-11">
+
+			{% include 'layouts/flash-messages.html.twig' %}
+				
+			<div class="card card-fluid">
+				<h6 class="card-header">
+					Profil
+				</h6>
+				<!-- .card-body -->
+				<div
+					class="card-body">
+					<!-- form -->
+						{{ form_start(formUser) }}
+						<!-- form row -->
+						<div
+							class="form-row">
+							<!-- form column -->
+							<div class="col-md-6 mb-3">
+								<label for="form_nomEval">Nom <span class="text-danger">*</span> </label>								
+								{{ form_widget(formUser.nom) }}
+								{{ form_errors(formUser.nom) }}
+							</div>
+							<!-- /form column -->
+							<!-- form column -->
+							<div class="col-md-6 mb-3">
+								<label for="input02">Prénom <span class="text-danger">*</span></label>
+								{{ form_widget(formUser.prenom) }}
+								{{ form_errors(formUser.prenom) }}
+							</div>
+							<!-- /form column -->
+						</div>
+						<!-- /form row -->
+						<!-- .form-group -->
+						<div class="form-group">
+							<label for="input03">Adresse e-mail <span class="text-danger">*</span></label>
+							{{ form_widget(formUser.email) }}
+							{{ form_errors(formUser.email) }}
+						</div>
+						<!-- /.form-group -->
+						<!-- .form-group -->
+						<div class="form-group">
+							<label for="identifiant">Identifiant de connexion</label>
+							{{ form_widget(formUser.login) }}
+							{{ form_errors(formUser.login) }}
+							<small class="text-muted">Cet identifiant est unique et vous permet de vous connecter à la plateforme.</small>
+						</div>
+						<!-- /.form-group -->
+						<!-- .form-group -->
+						<div class="form-group">
+							<label for="newPassword">Nouveau mot de passe</label>
+							<input type="password" class="form-control" name="newPassword" id="newPassword">
+						</div>
+						<!-- /.form-group -->
+						<hr>
+						<!-- .form-actions -->
+							<!-- enable submit btn when user type their current password -->
+						<div
+							class="form-actions">
+							<input type="password" class="form-control mr-3" name="oldPassword" id="oldPassword" placeholder="Entrez le mot de passe actuel" required="">
+							<button type="submit" class="btn btn-primary text-nowrap ml-auto" id="send" disabled>Mettre à jour</button>
+						</div> 
+						<!-- /.form-actions -->
+					{{ form_end(formUser) }}
+					
+					<!-- /form -->
+				</div>
+				<!-- /.card-body -->
+			</div>
+			<!-- /.card -->
+		</div>
+	</div>
+
+
+	<div>
+
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+		document.getElementById("oldPassword").addEventListener("keyup", function() {
+			var nameInput = document.getElementById('oldPassword').value;
+			if (nameInput != "") {
+				document.getElementById('send').removeAttribute("disabled");
+			} else {
+				document.getElementById('send').setAttribute("disabled", null);
+			}
+		});
+	</script>
+{% endblock %}

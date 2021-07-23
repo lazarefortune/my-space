@@ -1,0 +1,22 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}403 - Vous n'avez pas accès à cette page{% endblock %}
+
+{% block admin_content %}
+    <div class="wrapper">
+          <!-- .empty-state -->
+          <div class="empty-state">
+            <!-- .empty-state-container -->
+            <div class="empty-state-container">
+              <div class="state-figure">
+                <img class="img-fluid" src="assets/images/illustration/404.svg" alt="" style="max-width: 320px">
+              </div>
+              <h3 class="state-header"> 403! Vous n'avez pas accès à cette page </h3>
+              <p class="state-description lead text-muted"> Désolé, vous n'avez pas assez d'autorisations pour consulter cette page. </p>
+              <div class="state-action">
+                <a href="{{ path('home') }}" class="btn btn-lg btn-light"><i class="fa fa-angle-right"></i> Page d'acceuil</a>
+              </div>
+            </div><!-- /.empty-state-container -->
+          </div><!-- /.empty-state -->
+        </div><!-- /.wrapper -->
+{% endblock %}

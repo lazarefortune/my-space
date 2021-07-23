@@ -1,0 +1,138 @@
+{% extends "layouts/admin.html.twig" %}
+
+{% block javascripts %}
+   <!-- tiny text editor script -->
+      <!-- <script src="https://cdn.tiny.cloud/1/w8lxv8u1047tpk94wqg0uln8oh3ke8uqu13jmt49skfg1wvd/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
+      <script src="https://cdn.tiny.cloud/1/ri13hgfps3gifxkj8xnsnom2tpqd5iwzl2nbpwavr7qasiu0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+      <script>tinymce.init({selector:'textarea'});</script>
+{% endblock %}
+
+{% block admin_content %}
+
+<div class=" m-0 m-md-5 m-lg-5 email-app">
+    <main>
+        {% include 'layouts/flash-messages.html.twig' %}
+
+        <p class="text-center">Nouveau message</p>
+        
+        
+        
+
+        {# <form method="post" enctype="multipart/form-data"> #}
+        {{ form_start(formContact) }}
+              
+                    {# {{ form_widget(formContact.email, {'attr': {'class': 'form-control', 'placeholder' : 'test@univ-lorraine.fr'}}) }} #}
+            {# <div class="form-row mb-0 mb-md-3">
+                <label for="to" class="col-12 col-sm-12 col-md-12 col-lg-1 col-form-label">À</label>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-11">
+                    <input type="email" name="contact[email]" class="form-control" id="to" placeholder="" multiple>
+                </div>
+            </div>
+
+            <div class="form-row mb-0 mb-md-3">
+              <label for="" class="col-12 col-sm-12 col-md-12 col-lg-1 col-form-label">Tous les</label>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-11">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">Etudiants</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                  <label class="form-check-label" for="inlineCheckbox2">Encadrants</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row mb-0 mb-md-3">
+                <label for="cc" class="col-12 col-sm-12 col-md-12 col-lg-1 col-form-label">Cc/Bcc</label>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-11">
+                    <input type="email" class="form-control" id="cc" placeholder="" multiple>
+                </div>
+            </div> #}
+            <!-- <div class="form-row mb-3">
+                <label for="bcc" class="col-2 col-sm-1 col-form-label">BCC:</label>
+                <div class="col-10 col-sm-11">
+                    <input type="email" class="form-control" id="bcc" placeholder="">
+                </div>
+            </div> -->
+            {# <div class="form-row mb-0 mb-md-3">
+                <label for="subject" class="col-12 col-sm-12 col-md-12 col-lg-1 col-form-label">Objet</label>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-11">
+                    <input type="text" class="form-control" name="objet" id="subject" placeholder="">
+                </div>
+            </div> #}
+            {# <div class="form-row mb-0 mb-md-3">
+                <label for="subject" class="col-12 col-sm-12 col-md-12 col-lg-1 col-form-label">Message</label>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-11">
+                  <textarea class="form-control" id="message" rows="12"></textarea>
+                  <!-- <script>
+                  tinymce.init({
+                  selector: '#message',
+                  plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+                  toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+                  toolbar_mode: 'floating',
+                  tinycomments_mode: 'embedded',
+                  tinycomments_author: 'Author name',
+                });
+              </script> -->
+                </div>
+            </div> #}
+            {# <div class="form-row my-4 col-md-11 ml-auto">
+              <label for="attachFiles">Joindre des fichiers : </label>
+              {{ form_widget(formContact.fichiers, {'attr': {'class': 'form-control','multiple' : 'true' , 'id' : "attachFiles", 'onchange': "javascript:updateList()"}}) }}
+
+              <input type="file" class="form-control" id="attachFiles" name="attachFiles" multiple onchange="javascript:updateList()">
+               <div id="fileList" class="row">
+                <small>vos fichiers</small>
+              </div> 
+            </div> #}
+            {{ form_rest(formContact) }}
+            <div id="fileList" class="row my-2">
+                {# <small>vos fichiers</small> #}
+            </div> 
+            <script>
+            updateList = function() {
+              var input = document.getElementById('contact_fichiers');
+              var output = document.getElementById('fileList');
+              var children = "";
+              for (var i = 0; i < input.files.length; ++i) {
+                  children += '<li class="list-group-item">' + input.files.item(i).name + '</li>';
+              }
+              output.innerHTML = ' <small>Vos fichiers</small> <ul class="list-group list-group-flush">'+children+'</ul>';
+            }
+
+            deleteList = function(){
+              var output = document.getElementById('fileList');
+              var children = "";
+              output.innerHTML = '<ul class="list-group list-group-flush">'+children+'</ul>'; 
+            }
+            </script>
+            <div class="col-md-12 form-group d-flex justify-content-between">
+              <button type="reset" class="btn btn-outline-danger" onclick="javascript:deleteList()">Annuler</button>
+              <button type="submit" class="btn btn-primary px-5"><i class="fas fa-paper-plane"></i> Envoyer</button>
+            </div>
+            <!-- <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group mt-4">
+                      <label for="">Message : </label>
+                      <textarea class="form-control" id="message" rows="12">
+
+                      </textarea>
+
+                </div>
+                <div class=" my-4 form-group">
+                  <label for="attachFiles">Joindre des fichiers</label>
+                  <input type="file" class="form-control" id="attachFiles" name="attachFiles" multiple>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                  <button type="reset" class="btn btn-outline-warning">Annuler</button>
+                  <button type="submit" class="btn btn-primary px-5"><i class="fas fa-paper-plane"></i> Envoyer</button>
+                </div>
+              </div>
+            </div> -->
+            {{ form_end(formContact) }}
+        {# </form> #}
+    </main>
+</div>
+
+{% endblock %}
