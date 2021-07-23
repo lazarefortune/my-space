@@ -82,7 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					</li>
           <li>
 					<div class="btn-group">
-						<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+						<button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
 							<i class="fas fa-user"></i>
 						</button>
 						<div class="dropdown-menu" role="menu">
@@ -101,7 +101,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<aside
 				class="main-sidebar sidebar-dark-primary elevation-4">
 				<!-- Brand Logo -->
-				<a href="index3.html" class="brand-link">
+				<a href="{{ path('admin_home') }}" class="brand-link">
 					<img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
 					<span class="brand-text font-weight-light">Admin | LF</span>
 				</a>
@@ -112,7 +112,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<!-- Sidebar user panel (optional) -->
 					<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 						<div class="image">
-							<img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+							<img src="{{ asset('dist/img/user.png') }}" class="img-circle elevation-2" alt="User Image">
 						</div>
 						<div class="info text-white">
 							{# <a href="" class="d-block"> #}
@@ -187,15 +187,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<div class="container-fluid">
 						<div class="row mb-2">
 							<div class="col-sm-6">
-								<h1 class="m-0">Starter Page</h1>
+								<h1 class="m-0">My Space</h1>
 							</div>
 							<!-- /.col -->
 							<div class="col-sm-6">
 								<ol class="breadcrumb float-sm-right">
 									<li class="breadcrumb-item">
-										<a href="#">Home</a>
+										<a href="{{ path('admin_home') }}">Accueil</a>
 									</li>
-									<li class="breadcrumb-item active">Starter Page</li>
+									<li class="breadcrumb-item active">Apps</li>
 								</ol>
 							</div>
 							<!-- /.col -->
@@ -234,12 +234,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				class="main-footer">
 				<!-- To the right -->
 				<div class="float-right d-none d-sm-inline">
-					Anything you want
+					Un projet, une appli.
 				</div>
 				<!-- Default to the left -->
-				<strong>Copyright &copy; 2014-2021
-					<a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-				All rights reserved.
+				<strong>Copyright &copy; 2021
+					<a href="https://lazarefortune.com" target="_blank">Lazare Fortune</a>.</strong>
+				Tous les droits sont réservés.
 			</footer>
 		</div>
 		<!-- ./wrapper -->
