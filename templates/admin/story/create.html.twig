@@ -16,9 +16,9 @@
 				<p>Bienvenue <b>{{ app.user.nom }} {{ app.user.prenom }}</b></p>
 				<p>Espace d'inspiration, lachez vous...</p>
 			</div>
-			
-			<form method="post">
-				<div class="form-group">
+			{{ form_start(formStory) }}
+			{# <form method="post"> #}
+				{# <div class="form-group">
 					<label for="summernote">Mon inspiration *</label>
 					<textarea name="" id="summernote" cols="30" rows="10"></textarea>
 				</div>
@@ -30,13 +30,14 @@
 				<div class="form-group my-3">
 					<label for="publishHourAt">Heure de publication *</label>
 					<input type="time" class="form-control" id="publishHourAt" required>
-				</div>
+				</div> #}
 
-				<button type="submit" class="btn btn-primary my-4 text-center">
+				{# <button type="submit" class="btn btn-primary my-4 text-center">
 					Publier mon inspiration
 					<i class="fas fa-arrow-right"></i>
-				</button>
-			</form>
+				</button> #}
+			{# </form> #}
+			{{ form_end(formStory) }}
 
 
 			
