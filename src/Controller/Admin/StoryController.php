@@ -27,7 +27,7 @@ class StoryController extends AbstractController
     /**
      * @Route("/my-space/inspiration/create", name="create_inspiration")
      */
-    public function create(Request $request): Response
+    public function create(Request $request, \Swift_Mailer $mailer, InspirationRepository $inspirationRepository): Response
     {
         $story = new Inspiration();
 
@@ -40,7 +40,26 @@ class StoryController extends AbstractController
             $entityManager->persist($story);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Profil mis à jour avec succès');
+            $story = $inspirationRepository->findByTitle($story->getTitle());
+    
+            $toEmail = ["lazarefortune@gmail.com"];
+
+            $message = (new \Swift_Message('Nouvelle histoire disponible'))
+                // On attribue l'expéditeur
+                ->setFrom('myspace@lazarefortune.com')
+                // On attribue le destinataire
+                ->setTo($toEmail)
+                // On crée le texte avec la vue
+                ->setBody(
+                    $this->renderView(
+                        'layouts/emails/contact.html.twig',
+                        compact('story')
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
+
+            $this->addFlash('success', 'Nouvelle histoire ajoutée avec succès');
 
             return $this->redirectToRoute('inspiration');
         }

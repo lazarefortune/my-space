@@ -19,6 +19,19 @@ class InspirationRepository extends ServiceEntityRepository
         parent::__construct($registry, Inspiration::class);
     }
 
+    public function findByTitle(string $titleStory): ?Inspiration
+    {
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery(
+                'SELECT s
+                FROM App\Entity\Inspiration s
+                WHERE s.title = :query'
+            )
+            ->setParameter('query', $titleStory)
+            ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Inspiration[] Returns an array of Inspiration objects
     //  */
