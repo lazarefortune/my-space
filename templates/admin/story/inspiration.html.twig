@@ -33,7 +33,7 @@
               <span class="font-weight-bold">
                 {{ story.title }}
                 (Le
-                {{ story.createdAt|date("d-m-Y") }}
+                {{ story.createdAt|date("d/m/Y") }}
                 à
                 {{ story.createdAt|date("H:i:s") }}
                 )
@@ -49,44 +49,6 @@
     </div>
 
   </div>
-
-  {% block javascripts %}
-    <script>
-      $('#summernote').summernote({
-        placeholder: 'Ecrivez ce que vous voulez ...',
-        tabsize: 2,
-        height: 220,
-        toolbar: [
-          [
-            'style', ['style']
-          ],
-          [
-            'font',
-            [
-              'bold', 'underline', 'clear'
-            ]
-          ],
-          [
-            'color', ['color']
-          ],
-          [
-            'para',
-            [
-              'ul', 'ol', 'paragraph'
-            ]
-          ],
-          [
-            'insert', ['link']
-          ],
-          [
-            'view',
-            [
-              'fullscreen', 'codeview', 'help'
-            ]
-          ]
-        ]
-      });
-    </script>
-  {% endblock %}
+  
 
 {% endblock %}

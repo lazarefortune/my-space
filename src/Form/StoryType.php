@@ -22,11 +22,19 @@ class StoryType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 "label" => "Description*",
-                "attr" => ['id' => "summernote"]
+                "attr" => [
+                    'id' => "summernote",
+                    "placeholder" => "Ecrivez ce que vous voulez ...",
+                    "cols" => 30,
+                    "rows" => 10
+                    ]
                 ])
             ->add('created_at', DateTimeType::class, [
                 "label" => "Date de publication*",
-                "attr" => ['class' => "font-weight-bold"]
+                "attr" => [
+                    'class' => "font-weight-bold",
+                    'value' => date("Y-m-d H:i:s", strtotime("now") )
+                    ]
             ] )
             ->add('Enregistrer', SubmitType::class )
         ;
