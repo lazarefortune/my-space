@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StoryController extends AbstractController
 {
     /**
-     * @Route("/inspiration", name="inspiration")
+     * @Route("/my-space/inspiration", name="inspiration")
      */
     public function index(InspirationRepository $inspirationRepository): Response
     {
@@ -25,7 +25,7 @@ class StoryController extends AbstractController
     }
 
     /**
-     * @Route("/inspiration/create", name="create_inspiration")
+     * @Route("/my-space/inspiration/create", name="create_inspiration")
      */
     public function create(Request $request): Response
     {
@@ -51,7 +51,7 @@ class StoryController extends AbstractController
     }
 
     /**
-     * @Route("/inspiration/show/{storyId}", name="show_inspiration")
+     * @Route("/my-space/inspiration/show/{storyId}", name="show_inspiration")
      */
     public function show($storyId): Response
     {
