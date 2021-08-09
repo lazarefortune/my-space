@@ -19,37 +19,41 @@
         <p>Espace d'inspiration, lachez vous...</p>
       </div>
 
+      <h4>Edition de la story n°{{ story.id }}
+      </h4>
       {% include 'layouts/flash-messages.html.twig' %}
 
       <a href="{{ path('create_inspiration') }}" class="btn btn-primary mt-2 mb-4">
         Ajouter
         <i class="fas fa-arrow-right"></i>
       </a>
-      <a href="{{ path('edit_inspiration', {storyId: story.id}) }}" class="btn btn-warning mt-2 mb-4">
-        Modifier
-        <i class="fas fa-arrow-right"></i>
-      </a>
-
       <a href="{{ path('inspiration') }}" class="btn btn-secondary mt-2 mb-4">
         Liste
         <i class="fas fa-arrow-right"></i>
       </a>
 
-      <div class="form-group">
+      {{ form_start(formStory) }}
+
+
+      <button type="submit" class="btn btn-success mb-3">Mettre à jour</button>
+      {% do formStory.Enregistrer.setRendered %}
+      {{ form_end(formStory) }}
+
+      {# <div class="form-group">
         <label for="title">
           Titre
         </label>
-        <input type="text" value="{{ story.title }}" disabled name="" id="" class="form-control">
+        <input type="text" value="{{ story.title }}" name="" id="" class="form-control">
       </div>
       <div class="form-group">
         <label for="summernote">Mon inspiration *</label>
-        <textarea name="" id="summernote" class="form-control" disabled="disabled" cols="30" rows="10">{{ story.description }}
+        <textarea name="" id="summernote" class="form-control" cols="30" rows="10">{{ story.description }}
         </textarea>
       </div>
       <div class="form-group my-3">
         <label for="publishAt">Date de publication *</label>
-        <input type="text" disabled value="(Le {{ story.createdAt|date("d-m-Y") }} à {{ story.createdAt|date("H:i:s") }})" class="form-control" id="publishAt" required="required">
-      </div>
+        <input type="text" value="(Le {{ story.createdAt|date("d-m-Y") }} à {{ story.createdAt|date("H:i:s") }})" class="form-control" id="publishAt" required="required">
+      </div> #}
     </div>
 
   </div>

@@ -41,7 +41,7 @@ class StoryController extends AbstractController
             $entityManager->flush();
 
             $story = $inspirationRepository->findByTitle($story->getTitle());
-    
+
             $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
 
             $message = (new \Swift_Message('Nouvelle histoire disponible'))
@@ -81,5 +81,53 @@ class StoryController extends AbstractController
         return $this->render('admin/story/show.html.twig', [
             "story" => $story
         ]);
+    }
+
+    /**
+     * @Route("/my-space/inspiration/edit/{storyId}", name="edit_inspiration")
+     */
+    public function edit( $storyId , Request $request, \Swift_Mailer $mailer, InspirationRepository $inspirationRepository)
+    {
+        $repo = $this->getDoctrine()->getRepository(Inspiration::class);
+        $story = $repo->find($storyId);
+
+        $form = $this->createForm(StoryType::class, $story);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($story);
+            $entityManager->flush();
+
+            $story = $inspirationRepository->findByTitle($story->getTitle());
+
+            $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
+
+            $message = (new \Swift_Message('Modification d\'une histoire'))
+                // On attribue l'expéditeur
+                ->setFrom('myspace@lazarefortune.com')
+                // On attribue le destinataire
+                ->setTo($toEmail)
+                // On crée le texte avec la vue
+                ->setBody(
+                    $this->renderView(
+                        'layouts/emails/updateStory.html.twig',
+                        compact('story')
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
+
+            $this->addFlash('success', 'Story mis à jour avec succès');
+
+            return $this->redirectToRoute('inspiration');
+        }
+
+        return $this->render('admin/story/edit.html.twig', [
+            'formStory' => $form->createView(),
+            "story" => $story
+        ]);
+
     }
 }
