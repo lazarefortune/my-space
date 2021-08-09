@@ -1,3 +1,3 @@
 <?php
 
-header("Location: public/my-space");
+header("Location: my-space");
