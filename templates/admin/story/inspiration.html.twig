@@ -23,7 +23,7 @@
 
       <a href="{{ path('create_inspiration') }}" class="btn btn-primary mt-2 mb-4">
         Ajouter
-		<i class="fas fa-arrow-right"></i>
+        <i class="fas fa-arrow-right"></i>
       </a>
 
       <div class="card">
@@ -32,11 +32,20 @@
             <li class="list-group-item ">
               <span class="font-weight-bold">
                 {{ story.title }}
-                (Le
-                {{ story.createdAt|date("d/m/Y") }}
-                à
-                {{ story.createdAt|date("H:i:s") }}
-                )
+              </span>
+              <span class="ml-4 font-italic">
+
+                {% if story.createdAt | date("m/d/Y", "Europe/Paris") == "now" | date("m/d/Y", "Europe/Paris") %}
+                  Aujourd'hui à {{ story.createdAt|date("H:i:s", "Europe/Paris") }}
+                {% elseif story.createdAt | date("m/d/Y", "Europe/Paris") == "yesterday" | date("m/d/Y", "Europe/Paris") %}
+                  Hier à {{ story.createdAt|date("H:i:s", "Europe/Paris") }}
+                {% else %}
+                  (Le
+                  {{ story.createdAt|date("d/m/Y", "Europe/Paris") }}
+                  à
+                  {{ story.createdAt|date("H:i:s", "Europe/Paris") }}
+                  )
+                {% endif %}
               </span>
               <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="text-unstyled float-right">voir plus
                 <i class="fas fa-arrow-right"></i>
@@ -49,6 +58,5 @@
     </div>
 
   </div>
-  
 
 {% endblock %}
