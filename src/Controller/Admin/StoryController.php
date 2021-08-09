@@ -42,7 +42,7 @@ class StoryController extends AbstractController
 
             $story = $inspirationRepository->findByTitle($story->getTitle());
     
-            $toEmail = ["lazarefortune@gmail.com"];
+            $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
 
             $message = (new \Swift_Message('Nouvelle histoire disponible'))
                 // On attribue l'expéditeur
