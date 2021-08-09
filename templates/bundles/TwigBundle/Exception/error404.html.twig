@@ -1,9 +1,11 @@
-{% extends 'layouts/admin.html.twig' %}
+{% extends 'layouts/admin_simple.html.twig' %}
 
 {% block title %}404 - Page non trouvée{% endblock %}
 
 {% block admin_content %}
-    <div class="wrapper">
+<div class="row">
+<div class="col-md-7 mx-auto text-center ">
+<div class="wrapper">
           <!-- .empty-state -->
           <div class="empty-state">
             <!-- .empty-state-container -->
@@ -14,9 +16,12 @@
               <h3 class="state-header"> 404! Page non trouvée </h3>
               <p class="state-description lead text-muted"> Désolé, nous avons égaré cette URL ou elle pointe vers quelque chose qui n'existe pas. </p>
               <div class="state-action">
-                <a href="{{ path('home') }}" class="btn btn-lg btn-light"><i class="fa fa-angle-right"></i> Page d'acceuil</a>
+                <a href="{{ path('admin_home') }}" class="btn btn-lg btn-light"><i class="fa fa-angle-right"></i> Page d'acceuil</a>
               </div>
             </div><!-- /.empty-state-container -->
           </div><!-- /.empty-state -->
         </div><!-- /.wrapper -->
+</div>
+</div>
+    
 {% endblock %}
