@@ -2,8 +2,9 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Inspiration;
 use App\Form\StoryType;
+use App\Entity\Inspiration;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InspirationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ class StoryController extends AbstractController
     {
 
         $allStory = $inspirationRepository->findBy([
-            'statut' => "public"
+            'statut' => ["public", "public_anonyme"]
         ]);
         return $this->render('admin/story/inspiration.html.twig', [
             'allStory' => $allStory,
@@ -161,5 +162,18 @@ class StoryController extends AbstractController
             "story" => $story
         ]);
 
+    }
+
+    /**
+     * @Route("/my-space/inspiration/delete/{storyId}", name="delete_inspiration")
+     */
+    public function delete( $storyId, EntityManagerInterface $entityManager ): Response
+    {
+        $story = $entityManager->getRepository(Inspiration::class)->find($storyId);
+        // dd($story);
+        $entityManager->remove($story);
+        $entityManager->flush();
+        $this->addFlash('success', 'La story a été supprimé avec succès');
+        return $this->redirectToRoute('my_inspiration');
     }
 }

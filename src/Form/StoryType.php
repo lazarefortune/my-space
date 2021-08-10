@@ -34,20 +34,30 @@ class StoryType extends AbstractType
                     "rows" => 10
                     ]
                 ])
-            ->add('created_at', DateTimeType::class, [
-                "label" => "Date de publication*",
-                "attr" => [
-                    'class' => "font-weight-bold",
-                    'value' => date("Y-m-d H:i:s", strtotime("now") )
-                    ]
-            ] )
+            // ->add('created_at', DateTimeType::class, [
+            //     "label" => "Date de publication*",
+            //     "attr" => [
+            //         'class' => "font-weight-bold",
+            //         'value' => date("Y-m-d H:i:s", strtotime("now") )
+            //         ]
+            // ] )
+            ->add('created_at', DateTimeType::class , [
+                'label' => "Date de publication",
+                'widget' => 'single_text',
+                'attr' => [
+                    'id' => 'datepicker',
+                    'required' => true,
+                    'value' => date("Y-m-d H:i", strtotime( "+2 hours now") )
+                ],
+                ])
             ->add('statut', ChoiceType::class, [
                 'multiple' => false,
                 'attr' => [
-                    'class' => "col-md-4"
+                    'class' => "form-select col-md-8"
                 ],
                 'choices' => [
                     'Public (visible par tous)' => 'public',
+                    'Publier en anonyme (votre nom sera invisible)' => 'public_anonyme',
                     'Privée' => 'privee'
                 ]
         ])

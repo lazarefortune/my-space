@@ -12,6 +12,7 @@
     <div class="col-md-9 mx-auto">
 
       <h4 class="">
+      <i class="fas fa-atlas nav-icon"></i>
         <span class="text-capitalize font-weight-bold ">{{ app.user.nom }}
           {{ app.user.prenom }}</span>
         ici vous avez toutes vos stories</h4>
@@ -45,24 +46,24 @@
               </span>
               <span class="ml-4 font-italic">
 
-                {% if story.createdAt | date("m/d/Y", "Europe/Paris") == "now" | date("m/d/Y", "Europe/Paris") %}
+                {% if story.createdAt | date("m/d/Y") == "now"|date("m/d/Y") %}
                   Aujourd'hui à
-                  {{ story.createdAt|date("H:i:s", "Europe/Paris") }}
-                {% elseif story.createdAt | date("m/d/Y", "Europe/Paris") == "yesterday" | date("m/d/Y", "Europe/Paris") %}
+                  {{ story.createdAt|date("H:i:s") }}
+                {% elseif story.createdAt | date("m/d/Y") == "yesterday"|date("m/d/Y") %}
                   Hier à
-                  {{ story.createdAt|date("H:i:s", "Europe/Paris") }}
+                  {{ story.createdAt|date("H:i:s") }}
                 {% else %}
                   (Le
-                  {{ story.createdAt|date("d/m/Y", "Europe/Paris") }}
+                  {{ story.createdAt|date("d-m-Y") }}
                   à
-                  {{ story.createdAt|date("H:i:s", "Europe/Paris") }}
+                  {{ story.createdAt|date("H:i:s") }}
                   )
                 {% endif %}
               </span>
               <span class="badge badge-{{ story.statut == 'privee' ? 'danger' : 'success' }}">
                 {{ story.statut }}
               </span>
-              <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="text-unstyled float-right">voir plus
+              <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-sm btn-primary text-unstyled float-right">Lire ma story
                 <i class="fas fa-arrow-right"></i>
               </a>
             </li>

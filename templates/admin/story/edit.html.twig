@@ -9,9 +9,64 @@
 {% block admin_content %}
 
   <div class="row">
+
+
+    <div class="col-md-8 mx-auto">
+      <div class="d-flex justify-content-around">
+        <a href="{{ path('create_inspiration') }}" class="btn btn-sm btn-primary mt-2 mb-4">
+          Ajouter une story
+          <i class="fas fa-plus"></i>
+        </a>
+
+        <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-sm btn-secondary mt-2 mb-4">
+          Annuler
+          <i class="fas fa-arrow-up"></i>
+        </a>
+
+        <a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary mt-2 mb-4">
+          Liste des stories
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <article class="card border border-danger mt-4 p-3 mx-auto">
+      <h4 class="font-weight-bold text-danger"> <i class="fas fa-edit"></i> Modification de votre histoire </h4>
+      {{ form_start(formStory) }}
+
+        <h4 class="font-weight-bold">
+          {# {{ story.title }} #}
+          {{ form_row(formStory.title) }}
+        </h4>
+        <p class="mb-0 text-info">
+          Ecrit par :
+          <span class="font-italic font-weight-bold">
+            {{ story.idUser.nom }}
+            {{ story.idUser.prenom }}
+          </span>
+        </p>
+        <p class="text-info">
+          {{ form_row(formStory.created_at) }}
+        </p>
+
+        <p class="mt-4 text-justify">
+          
+          {{ form_row(formStory.description) }}
+        </p>
+          <div class="form-group">
+          <label for="story_statut"> <i class="fas fa-lock"></i> Confidentialité</label>
+          {{ form_widget(formStory.statut) }}
+          </div>
+
+
+      {{ form_end(formStory) }}
+      </article>
+
+    </div>
+
+
     <div class="col-md-9 mx-auto">
 
-      <div class="card  mt-4 p-3">
+      {# <div class="card  mt-4 p-3">
         <p>Bienvenue
           <b>{{ app.user.nom }}
             {{ app.user.prenom }}</b>
@@ -30,14 +85,11 @@
       <a href="{{ path('inspiration') }}" class="btn btn-secondary mt-2 mb-4">
         Liste
         <i class="fas fa-arrow-right"></i>
-      </a>
-
-      {{ form_start(formStory) }}
+      </a> #}
 
 
       {# <button type="submit" class="btn btn-success mb-3">Mettre à jour</button>
       {% do formStory.Publier.setRendered %} #}
-      {{ form_end(formStory) }}
 
       {# <div class="form-group">
         <label for="title">
@@ -59,3 +111,42 @@
   </div>
 
 {% endblock %}
+
+{% block javascripts %}
+    <script>
+      $('#story_description').summernote({
+        placeholder: 'Ecrivez ce que vous voulez ...',
+        tabsize: 2,
+        height: 220,
+        toolbar: [
+          [
+            'style', ['style']
+          ],
+          [
+            'font',
+            [
+              'bold', 'underline', 'clear'
+            ]
+          ],
+          [
+            'color', ['color']
+          ],
+          [
+            'para',
+            [
+              'ul', 'ol', 'paragraph'
+            ]
+          ],
+          [
+            'insert', ['link']
+          ],
+          [
+            'view',
+            [
+              'fullscreen', 'codeview', 'help'
+            ]
+          ]
+        ]
+      });
+    </script>
+  {% endblock %}

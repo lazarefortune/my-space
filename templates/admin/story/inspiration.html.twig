@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-md-9 mx-auto">
 
-      <h4 class="font-weight-bold">Les stories publics</h4>
+      <h4 class="font-weight-bold"> <i class="fas fa-globe-europe"></i> Les stories publics</h4>
 
       {% include 'layouts/flash-messages.html.twig' %}
 
@@ -33,24 +33,38 @@
               </span>
               <span class="ml-4 font-italic">
 
-                {% if story.createdAt | date("m/d/Y", "Europe/Paris") == "now" | date("m/d/Y", "Europe/Paris") %}
+                {% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
                   Aujourd'hui à
-                  {{ story.createdAt|date("H:i:s", "Europe/Paris") }}
-                {% elseif story.createdAt | date("m/d/Y", "Europe/Paris") == "yesterday" | date("m/d/Y", "Europe/Paris") %}
+                  {{ story.createdAt|date("H:i:s") }}
+                {% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
                   Hier à
-                  {{ story.createdAt|date("H:i:s", "Europe/Paris") }}
+                  {{ story.createdAt|date("H:i:s") }}
                 {% else %}
                   (Le
-                  {{ story.createdAt|date("d/m/Y", "Europe/Paris") }}
+                  {{ story.createdAt|date("d/m/Y") }}
                   à
-                  {{ story.createdAt|date("H:i:s", "Europe/Paris") }}
+                  {{ story.createdAt|date("H:i:s") }}
                   )
                 {% endif %}
               </span>
               <span class="ml-2">écrit par
-              << <strong> {% if app.user.idUser == story.idUser.idUser %} Vous {% else %} {{ story.idUser.nom }} {{ story.idUser.prenom }} {% endif %}  </strong> >>
+              << <strong>
+                {% if app.user.idUser == story.idUser.idUser %}
+                  Vous
+                  {% if story.statut == "public_anonyme" %}
+                      (En anonyme)
+                  {% endif %}
+                {% else %}
+                    {% if story.statut == "public_anonyme" %}
+                      un inconnu
+                    {% else %}
+                    {{ story.idUser.nom }}
+                    {{ story.idUser.prenom }}
+                  {% endif %}
+                {% endif %}
+                </strong> >>
               </span>
-              <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="text-unstyled float-right">voir plus
+              <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-sm btn-primary text-unstyled float-right">Lire la story
                 <i class="fas fa-arrow-right"></i>
               </a>
             </li>
