@@ -23,12 +23,14 @@
 
       <a href="{{ path('create_inspiration') }}" class="btn btn-primary mt-2 mb-4">
         Ajouter
-        <i class="fas fa-arrow-right"></i>
+        <i class="fas fa-plus"></i>
       </a>
+      {% if app.user.idUser == story.idUser.idUser %}
       <a href="{{ path('edit_inspiration', {storyId: story.id}) }}" class="btn btn-warning mt-2 mb-4">
         Modifier
-        <i class="fas fa-arrow-right"></i>
+        <i class="fas fa-edit"></i>
       </a>
+      {% endif %}
 
       <a href="{{ path('inspiration') }}" class="btn btn-secondary mt-2 mb-4">
         Liste

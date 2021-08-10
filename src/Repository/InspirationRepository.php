@@ -32,6 +32,7 @@ class InspirationRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    
     // /**
     //  * @return Inspiration[] Returns an array of Inspiration objects
     //  */

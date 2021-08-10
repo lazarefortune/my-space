@@ -3,12 +3,13 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<html lang="en">
+<html lang="fr">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>{% block title %} Admin | LF {% endblock %}</title>
-
+		<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 		<!-- Google Font: Source Sans Pro -->
 		<link
 		rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -158,20 +159,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<li class="nav-item">
 										<a href=" {{ path('create_inspiration') }} " class="nav-link {{ app.request.get('_route') == 'create_inspiration' ? 'active' }}">
 											<i class="far fa-circle nav-icon"></i>
-											<p>Créer une histoire</p>
+											<p>Ajouter une story</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href=" {{ path('inspiration') }} " class="nav-link {{ app.request.get('_route') == 'inspiration' ? 'active' }}">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Liste des stories publics</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href=" {{ path('my_inspiration') }} " class="nav-link {{ app.request.get('_route') == 'my_inspiration' ? 'active' }}">
+											<i class="far fa-circle nav-icon"></i>
+											<p>Mes stories</p>
 										</a>
 									</li>
 								</ul>
 							</li>
-							<li class="nav-item">
-								<a href=" {{ path('inspiration') }} " class="nav-link">
+							{# <li class="nav-item">
+								<a href=" {{ path('inspiration') }} " class="nav-link {{ app.request.get('_route') == 'inspiration' ? 'active' }}">
 									<i class="nav-icon fas fa-th"></i>
 									<p>
 										Liste des histoires
 										<span class="right badge badge-danger">New</span>
 									</p>
 								</a>
-							</li>
+							</li> #}
 						</ul>
 					</nav>
 					<!-- /.sidebar-menu -->

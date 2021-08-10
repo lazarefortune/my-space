@@ -18,8 +18,23 @@ class StoryController extends AbstractController
     public function index(InspirationRepository $inspirationRepository): Response
     {
 
-        $allStory = $inspirationRepository->findAll();
+        $allStory = $inspirationRepository->findBy([
+            'statut' => "public"
+        ]);
         return $this->render('admin/story/inspiration.html.twig', [
+            'allStory' => $allStory,
+        ]);
+    }
+
+    /**
+     * @Route("/my-space/inspiration/mes-stories", name="my_inspiration")
+     */
+    public function my_stories( InspirationRepository $inspirationRepository ) : Response
+    {
+        $allStory = $inspirationRepository->findBy([
+            'idUser' => $this->getUser()->getIdUser()
+        ]);
+        return $this->render('admin/story/my_inspiration.html.twig', [
             'allStory' => $allStory,
         ]);
     }
@@ -36,30 +51,37 @@ class StoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // On attribue l'auteur à la story
+            $story->setIdUser( $this->getUser() );
+            // dd($story);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($story);
             $entityManager->flush();
 
             $story = $inspirationRepository->findByTitle($story->getTitle());
+            if ( $story->getStatut() == "public" ) {
+                
+                $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
+    
+                $messageTitle = 'Nouvelle story n°'.$story->getId().' disponible';
+                dd($messageTitle);
+                $message = (new \Swift_Message( $messageTitle ))
+                    // On attribue l'expéditeur
+                    ->setFrom('myspace@lazarefortune.com')
+                    // On attribue le destinataire
+                    ->setTo($toEmail)
+                    // On crée le texte avec la vue
+                    ->setBody(
+                        $this->renderView(
+                            'layouts/emails/contact.html.twig',
+                            compact('story')
+                        ),
+                        'text/html'
+                    );
+                $mailer->send($message);
+            }
 
-            $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
-
-            $message = (new \Swift_Message('Nouvelle histoire disponible'))
-                // On attribue l'expéditeur
-                ->setFrom('myspace@lazarefortune.com')
-                // On attribue le destinataire
-                ->setTo($toEmail)
-                // On crée le texte avec la vue
-                ->setBody(
-                    $this->renderView(
-                        'layouts/emails/contact.html.twig',
-                        compact('story')
-                    ),
-                    'text/html'
-                );
-            $mailer->send($message);
-
-            $this->addFlash('success', 'Nouvelle histoire ajoutée avec succès');
+            $this->addFlash('success', 'Nouvelle story ajoutée avec succès');
 
             return $this->redirectToRoute('inspiration');
         }
@@ -76,7 +98,10 @@ class StoryController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(Inspiration::class);
         $story = $repo->find($storyId);
-        // dd($story);
+        
+        if ( $this->getUser()->getIdUser() != $story->getIdUser()->getIdUser() AND $story->getStatut() == "privee" ) {
+            return $this->denyAccessUnlessGranted('ROLE_EDIT', $story, 'Vous n\'avez pas le droit de consulter cette story.');
+        }
 
         return $this->render('admin/story/show.html.twig', [
             "story" => $story
@@ -91,6 +116,10 @@ class StoryController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Inspiration::class);
         $story = $repo->find($storyId);
 
+        if ( $this->getUser()->getIdUser() != $story->getIdUser()->getIdUser() ) {
+            return $this->denyAccessUnlessGranted('ROLE_EDIT', $story, 'Vous n\'avez pas le droit de consulter cette story.');
+        }
+
         $form = $this->createForm(StoryType::class, $story);
         $form->handleRequest($request);
 
@@ -102,22 +131,25 @@ class StoryController extends AbstractController
 
             $story = $inspirationRepository->findByTitle($story->getTitle());
 
-            $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
-
-            $message = (new \Swift_Message('Modification d\'une histoire'))
-                // On attribue l'expéditeur
-                ->setFrom('myspace@lazarefortune.com')
-                // On attribue le destinataire
-                ->setTo($toEmail)
-                // On crée le texte avec la vue
-                ->setBody(
-                    $this->renderView(
-                        'layouts/emails/updateStory.html.twig',
-                        compact('story')
-                    ),
-                    'text/html'
-                );
-            $mailer->send($message);
+            if( $story->getStatut() == "public" )
+            {
+                $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
+                $messageTitle = 'Modification de la story n°'.$story->getId().' disponible';
+                $message = (new \Swift_Message( $messageTitle ))
+                    // On attribue l'expéditeur
+                    ->setFrom('myspace@lazarefortune.com')
+                    // On attribue le destinataire
+                    ->setTo($toEmail)
+                    // On crée le texte avec la vue
+                    ->setBody(
+                        $this->renderView(
+                            'layouts/emails/updateStory.html.twig',
+                            compact('story')
+                        ),
+                        'text/html'
+                    );
+                $mailer->send($message);
+            }
 
             $this->addFlash('success', 'Story mis à jour avec succès');
 
