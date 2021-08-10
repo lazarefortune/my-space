@@ -12,13 +12,13 @@
 
 	<div class="col-md-8 mx-auto">
       <div class="d-flex justify-content-around">
-        <a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary">
+        <a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary shadow">
           Liste des stories
           <i class="fas fa-arrow-right"></i>
         </a>
       </div>
 
-      <article class="card border border-primary mt-4 p-3 mx-auto">
+      <article class="card border border-primary shadow mt-4 p-3 mx-auto">
       {{ form_start(formStory) }}
 		<p>Ravis de te revoir {{ app.user.nom }} {{ app.user.prenom }} ;-) Quoi de neuf ? Ecrit ton histoire...</p>
         <h5 class="font-weight-bold">

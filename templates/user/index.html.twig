@@ -6,8 +6,8 @@
 
 			{% include 'layouts/flash-messages.html.twig' %}
 				
-			<div class="card card-fluid">
-				<h6 class="card-header">
+			<div class="card card-fluid border border-dark">
+				<h6 class="card-header font-weight-bold bg-dark">
 					Profil
 				</h6>
 				<!-- .card-body -->
@@ -53,16 +53,19 @@
 						<div class="form-group">
 							<label for="newPassword">Nouveau mot de passe</label>
 							<input type="password" class="form-control" name="newPassword" id="newPassword">
+							<small>Uniquement si vous Souhaitez modifier votre mot de passe, sinon laissez vide.</small>
 						</div>
 						<!-- /.form-group -->
-						<hr>
+						{# <hr> #}
 						<!-- .form-actions -->
 							<!-- enable submit btn when user type their current password -->
 						<div
-							class="form-actions">
-							<input type="password" class="form-control mr-3" name="oldPassword" id="oldPassword" placeholder="Entrez le mot de passe actuel" required="">
-							<button type="submit" class="btn btn-primary text-nowrap ml-auto" id="send" disabled>Mettre à jour</button>
+							class="form-group">
+							<label for="oldPassword">Mot de passe actuel *</label>
+							<input type="password" class="form-control mr-3" name="oldPassword" id="oldPassword" placeholder="Entrez votre mot de passe actuel" required="">
+							<small>Obligatoire pour mettre à jour vos données.</small>
 						</div> 
+							<button type="submit" class="btn btn-primary text-nowrap ml-auto" id="send" disabled>Mettre à jour</button>
 						<!-- /.form-actions -->
 					{{ form_end(formUser) }}
 					

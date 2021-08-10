@@ -13,23 +13,23 @@
 
     <div class="col-md-8 mx-auto">
       <div class="d-flex justify-content-around">
-        <a href="{{ path('create_inspiration') }}" class="btn btn-sm btn-primary mt-2 mb-4">
+        <a href="{{ path('create_inspiration') }}" class="btn btn-sm btn-primary shadow mt-2 mb-4">
           Ajouter une story
           <i class="fas fa-plus"></i>
         </a>
 
-        <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-sm btn-secondary mt-2 mb-4">
+        <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
           Annuler
           <i class="fas fa-arrow-up"></i>
         </a>
 
-        <a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary mt-2 mb-4">
+        <a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
           Liste des stories
           <i class="fas fa-arrow-right"></i>
         </a>
       </div>
 
-      <article class="card border border-danger mt-4 p-3 mx-auto">
+      <article class="card border border-danger shadow mt-4 p-3 mx-auto">
       <h4 class="font-weight-bold text-danger"> <i class="fas fa-edit"></i> Modification de votre histoire </h4>
       {{ form_start(formStory) }}
 

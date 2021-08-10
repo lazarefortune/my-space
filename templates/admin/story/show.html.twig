@@ -13,17 +13,17 @@
 
     <div class="col-md-8 mx-auto">
       <div class="d-flex justify-content-around">
-        <a href="{{ path('create_inspiration') }}" class="btn btn-sm btn-primary mt-2 mb-4">
+        <a href="{{ path('create_inspiration') }}" class="btn btn-sm btn-primary shadow mt-2 mb-4">
           Ajouter une story
           <i class="fas fa-plus"></i>
         </a>
         {% if app.user.idUser == story.idUser.idUser %}
-          <a href="{{ path('edit_inspiration', {storyId: story.id}) }}" class="btn btn-sm btn-warning mt-2 mb-4">
+          <a href="{{ path('edit_inspiration', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
             Modifier
             <i class="fas fa-edit"></i>
           </a>
           <!-- Button delete modal -->
-          <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-danger mt-2 mb-4">
+          <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-danger shadow mt-2 mb-4">
             Supprimer
             <i class="fas fa-trash"></i>
           </button>
@@ -57,13 +57,13 @@
 
         {% endif %}
 
-        <a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary mt-2 mb-4">
+        <a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
           Liste des stories
           <i class="fas fa-arrow-right"></i>
         </a>
       </div>
 
-      <article class="card mt-4 p-3 mx-auto">
+      <article class="card shadow mt-4 p-3 mx-auto">
         <h4 class="font-weight-bold">
           {{ story.title }}
         </h4>

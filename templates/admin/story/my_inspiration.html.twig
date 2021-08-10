@@ -37,7 +37,42 @@
           Nous prenons très au sérieux la confidentialité et la sécurité de vos données.
         </div>
       {% endif %}
-      <div class="card">
+
+
+      {% for story in allStory %}
+      <div class="card shadow">
+        <div class="card-body">
+        <span class="h5 font-weight-bold text-primary"> {{ story.title }} </span>
+          <p> Publié 
+              <span class="font-italic">
+              {% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
+                  Aujourd'hui à
+                  {{ story.createdAt|date("H:i:s") }}
+                {% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
+                  Hier à
+                  {{ story.createdAt|date("H:i:s") }}
+                {% else %}
+                  (Le
+                  {{ story.createdAt|date("d/m/Y") }}
+                  à
+                  {{ story.createdAt|date("H:i:s") }}
+                  )
+                {% endif %}
+              </span>
+              <br>
+              Story
+              <span class="badge badge-{{ story.statut == 'privee' ? 'danger' : 'success' }}">
+                <i class="fas fa-{{ story.statut == 'privee' ? 'lock' : 'globe-europe' }}"></i>
+                {{ story.statut }}
+              </span>
+                
+            </p>
+          <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-primary rounded shadow float-right">Lire la story <i class="fas fa-arrow-circle-right ml-2"></i> </a>
+        </div>
+      </div>
+      {% endfor %}
+
+      {# <div class="card">
         <ul class="list-group list-group-flush">
           {% for story in allStory %}
             <li class="list-group-item ">
@@ -69,7 +104,7 @@
             </li>
           {% endfor %}
         </ul>
-      </div>
+      </div> #}
 
     </div>
 

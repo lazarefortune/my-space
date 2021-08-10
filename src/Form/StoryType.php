@@ -62,7 +62,10 @@ class StoryType extends AbstractType
                 ]
         ])
             ->add("Publier", SubmitType::class, [
-                "label" => "Publier la story"
+                "label" => "Publier la story",
+                "attr" => [
+                    "class" => "shadow btn btn-primary"
+                ]
             ] )
         ;
     }

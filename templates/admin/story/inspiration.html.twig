@@ -15,7 +15,7 @@
 
       {% include 'layouts/flash-messages.html.twig' %}
 
-      <a href="{{ path('create_inspiration') }}" class="btn btn-primary mt-2 mb-4">
+      <a href="{{ path('create_inspiration') }}" class="btn btn-primary shadow mt-2 mb-4">
         Ajouter
         <i class="fas fa-plus"></i>
       </a>
@@ -24,13 +24,58 @@
         <div class="alert alert-info">Il n'y a aucune story public, Vous pouvez être le premier(ère) à en ajouter
         </div>
       {% endif %}
-      <div class="card">
+      
+      {% for story in allStory %}
+      <div class="card shadow">
+        <div class="card-body">
+        <span class="h5 font-weight-bold text-primary"> {{ story.title }} </span>
+          <p> Publié 
+              <span class="font-italic">
+              {% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
+                  Aujourd'hui à
+                  {{ story.createdAt|date("H:i:s") }}
+                {% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
+                  Hier à
+                  {{ story.createdAt|date("H:i:s") }}
+                {% else %}
+                  (Le
+                  {{ story.createdAt|date("d/m/Y") }}
+                  à
+                  {{ story.createdAt|date("H:i:s") }}
+                  )
+                {% endif %}
+              </span>
+              <br>
+               par: 
+                <span class="font-weight-bold">
+                {% if app.user.idUser == story.idUser.idUser %}
+                  Vous
+                  {% if story.statut == "public_anonyme" %}
+                      (En anonyme)
+                  {% endif %}
+                {% else %}
+                    {% if story.statut == "public_anonyme" %}
+                      un inconnu
+                    {% else %}
+                    {{ story.idUser.nom }}
+                    {{ story.idUser.prenom }}
+                  {% endif %}
+                {% endif %} 
+                </span> <br>
+                
+            </p>
+          <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-primary rounded shadow float-right">Lire la story <i class="fas fa-arrow-circle-right ml-2"></i> </a>
+        </div>
+      </div>
+      {% endfor %}
+
+      {# <div class="card">
         <ul class="list-group list-group-flush">
           {% for story in allStory %}
             <li class="list-group-item ">
               <span class="font-weight-bold">
                 {{ story.title }}
-              </span>
+              </span> <br>
               <span class="ml-4 font-italic">
 
                 {% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
@@ -46,7 +91,7 @@
                   {{ story.createdAt|date("H:i:s") }}
                   )
                 {% endif %}
-              </span>
+              </span> <br>
               <span class="ml-2">écrit par
               << <strong>
                 {% if app.user.idUser == story.idUser.idUser %}
@@ -70,7 +115,7 @@
             </li>
           {% endfor %}
         </ul>
-      </div>
+      </div> #}
 
     </div>
 
