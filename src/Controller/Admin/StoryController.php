@@ -65,7 +65,7 @@ class StoryController extends AbstractController
                 $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
     
                 $messageTitle = 'Nouvelle story n°'.$story->getId().' disponible';
-                dd($messageTitle);
+                // dd($messageTitle);
                 $message = (new \Swift_Message( $messageTitle ))
                     // On attribue l'expéditeur
                     ->setFrom('myspace@lazarefortune.com')
