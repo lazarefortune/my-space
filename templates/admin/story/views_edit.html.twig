@@ -1,0 +1,46 @@
+{% extends "layouts/admin.html.twig" %}
+
+{% block stylesheets %}
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+{% endblock %}
+
+{% block admin_content %}
+
+  <div class="row">
+    {% include 'layouts/flash-messages.html.twig' %}
+
+    <div class="col-md-8 mx-auto">
+    <a href=" {{ path('views') }} " class="btn btn-primary mb-4">Voir les vues</a>
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom et prénom</th>
+            <th scope="col">Vues</th>
+            <th scope="col">Emails</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paramsUser in paramsUsers %}        
+            <tr>
+                <th scope="row">1</th>
+                <td> {{ paramsUser.idUser.nom }} {{ paramsUser.idUser.prenom }} </td>
+                <td> 
+                  {{ paramsUser.viewCounter == 1 ? 'actif' : 'inactif' }} <br>
+                  <a href=" {{ path('change_view_param', {idParam: paramsUser.id}) }} "> {{ paramsUser.viewCounter == 1 ? 'Désactiver' : 'Activer' }} </a>
+                </td>
+                <td> {{ paramsUser.emailNotifications == 1 ? 'actif' : 'inactif' }} <br>
+                  <a href="  "> {{ paramsUser.viewCounter == 1 ? 'Désactiver' : 'Activer' }} </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+
+  </div>
+
+{% endblock %}
