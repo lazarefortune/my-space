@@ -33,6 +33,7 @@
 						{% if error %}
 							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 						{% endif %}
+						{% include 'layouts/flash-messages.html.twig' %}
 						<div class="input-group mb-3">
 							<input type="text" name="username" class="form-control" placeholder="Identifiant">
 							<div class="input-group-append">
@@ -77,7 +78,7 @@
 					<!-- /.social-auth-links -->
 
 					<p class="mb-1 mt-3">
-						<a href="{{ path('password_reset') }}">Mot de passe oublié ?</a>
+						<a href="{{ path('forgotten_password') }}">Mot de passe oublié ?</a>
 					</p>
 					<p class="mb-0">
 						<a href="" class="text-center">Créer un compte</a>

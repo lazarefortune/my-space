@@ -66,11 +66,10 @@ class User implements UserInterface
      */
     private $roles = [];
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Projet", mappedBy="idEval")
+   /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $reset_token;
 
     /**
      * Constructor
@@ -179,7 +178,11 @@ class User implements UserInterface
         return $this;
     }
 
-    
+    public function setResetToken(?string $token): self
+    {
+        $this->reset_token = $token;
+        return $this;
+    }    
 
     /**
      * Returning a salt is only needed, if you are not using a modern

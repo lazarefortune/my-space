@@ -2,19 +2,13 @@ home:
     path: /
     controller: App\Controller\HomeController::index
 
+admin_home:
+    path: /my-space
+    controller: App\Controller\Admin\AdminController::index
+
 account:
     path: /my-space/profil
     controller: App\Controller\UserController::index
 
-maintenance:
-    path: /maintenance
-    controller: App\Controller\MaintenanceController::index
 
-password_reset:
-    path: /mot-de-passe/recuperation
-    controller: App\Controller\Auth\AuthController::password_reset_form
-
-admin_home:
-    path: /my-space
-    controller: App\Controller\Admin\AdminController::index
 

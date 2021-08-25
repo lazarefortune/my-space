@@ -11,9 +11,4 @@ class AuthController extends AbstractController
 
         return $this->render('auth/login.html.twig');
     }
-
-    public function password_reset_form(): Response{
-
-        return $this->render('auth/password/reset_form.html.twig');
-    }
 }
