@@ -20,6 +20,10 @@
             <p>
             <b>{{ view.idUser.nom }} {{ view.idUser.prenom }}</b> a vu <b>{{ view.idStory.title }}</b> le
             <b>{{ view.date|date("d/m/Y H:i:s") }}</b>
+            {% if view.commentary %}
+              <br>
+              <i>{{ view.commentary }}</i>
+            {% endif %}
             </p>
         </div>
         

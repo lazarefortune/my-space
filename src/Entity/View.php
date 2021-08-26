@@ -40,6 +40,13 @@ class View
     private $idStory;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="commentary", type="text", length=65535, nullable=true)
+     */
+    private $commentary;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $date;
@@ -69,6 +76,18 @@ class View
     public function setIdStory(?Inspiration $idStory): self
     {
         $this->idStory = $idStory;
+
+        return $this;
+    }
+
+    public function getCommentary(): ?string
+    {
+        return $this->commentary;
+    }
+
+    public function setCommentary(string $commentary): self
+    {
+        $this->commentary = $commentary;
 
         return $this;
     }

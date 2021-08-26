@@ -27,6 +27,8 @@ class StoryController extends AbstractController
         $allStory = $inspirationRepository->findBy([
             'statut' => ["public", "public_anonyme"],
             'trash' => false
+        ], [
+            'created_at' => 'DESC'
         ]);
         return $this->render('admin/story/inspiration.html.twig', [
             'allStory' => $allStory,
@@ -41,6 +43,8 @@ class StoryController extends AbstractController
         $allStory = $inspirationRepository->findBy([
             'idUser' => $this->getUser()->getIdUser(),
             'trash' => false
+        ], [
+            'created_at' => 'DESC'
         ]);
         return $this->render('admin/story/my_inspiration.html.twig', [
             'allStory' => $allStory,
@@ -123,7 +127,10 @@ class StoryController extends AbstractController
             $view->setIdUser($this->getUser());
             $view->setIdStory($story);
             $view->setDate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
-            // dd($view);
+            $isDeleteStory = $story->getTrash();
+            if ( $isDeleteStory ) {
+                $view->setCommentary( "La story est en corbeille (inaccessible)" );
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($view);
             $entityManager->flush();
@@ -218,6 +225,8 @@ class StoryController extends AbstractController
         $allStory = $inspirationRepository->findBy([
             'idUser' => $this->getUser()->getIdUser(),
             'trash' => true
+        ], [
+            'created_at' => 'DESC'
         ]);
         return $this->render('admin/story/my_trash.html.twig', [
             'allStory' => $allStory,
@@ -261,7 +270,9 @@ class StoryController extends AbstractController
      */
     public function show_view(ViewRepository $viewRepository): Response
     {
-        $views = $viewRepository->findAll();
+        $views = $viewRepository->findBy([],[
+            'date' => 'DESC'
+        ]);
 
         return $this->render('admin/story/views.html.twig', [
             "views" => $views
