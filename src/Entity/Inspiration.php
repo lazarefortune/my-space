@@ -33,6 +33,13 @@ class Inspiration
      * @ORM\Column(type="string", nullable=false)
      */
     private $statut;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $trash;
 
     /**
      * @var \User
@@ -48,6 +55,11 @@ class Inspiration
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    public function __construct()
+    {
+        $this->trash = false;
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,18 @@ class Inspiration
     public function setStatut(string $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+    
+    public function getTrash(): ?string
+    {
+        return $this->trash;
+    }
+
+    public function setTrash(string $trashValue): self
+    {
+        $this->trash = $trashValue;
 
         return $this;
     }

@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InspirationRepository;
 use App\Repository\ParametersRepository;
 use App\Repository\ViewRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +25,8 @@ class StoryController extends AbstractController
     {
 
         $allStory = $inspirationRepository->findBy([
-            'statut' => ["public", "public_anonyme"]
+            'statut' => ["public", "public_anonyme"],
+            'trash' => false
         ]);
         return $this->render('admin/story/inspiration.html.twig', [
             'allStory' => $allStory,
@@ -37,7 +39,8 @@ class StoryController extends AbstractController
     public function my_stories(InspirationRepository $inspirationRepository): Response
     {
         $allStory = $inspirationRepository->findBy([
-            'idUser' => $this->getUser()->getIdUser()
+            'idUser' => $this->getUser()->getIdUser(),
+            'trash' => false
         ]);
         return $this->render('admin/story/my_inspiration.html.twig', [
             'allStory' => $allStory,
@@ -205,6 +208,39 @@ class StoryController extends AbstractController
             'formStory' => $form->createView(),
             "story" => $story
         ]);
+    }
+
+    /**
+     * @Route("/my-space/inspiration/corbeille", name="my_trash")
+     */
+    public function my_trash(InspirationRepository $inspirationRepository): Response
+    {
+        $allStory = $inspirationRepository->findBy([
+            'idUser' => $this->getUser()->getIdUser(),
+            'trash' => true
+        ]);
+        return $this->render('admin/story/my_trash.html.twig', [
+            'allStory' => $allStory,
+        ]);
+    }
+
+    /**
+     * @Route("/trash/add/{storyId}" , name="move_to_trash")
+     */
+    public function move_trash( $storyId, EntityManagerInterface $entityManager )
+    {
+        $story = $entityManager->getRepository( Inspiration::class )->find( $storyId );
+        $isInTrash = $story->getTrash();
+        
+        if ( $isInTrash ) {
+            $story->setTrash( false );
+            $this->addFlash( 'info', 'La story a été restauré de la corbeille avec succès' );
+        }else{
+            $story->setTrash( true );
+            $this->addFlash( 'warning', 'La story a été mise à la corbeille avec succès' );
+        }
+        $entityManager->flush();
+        return $this->redirectToRoute( 'my_inspiration' );
     }
 
     /**

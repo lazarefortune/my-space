@@ -1,0 +1,104 @@
+{% extends "layouts/admin.html.twig" %}
+
+{% block stylesheets %}
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+{% endblock %}
+
+{% block admin_content %}
+
+  <div class="row">
+    <div class="col-md-9 mx-auto">
+
+      <h4 class="text-danger"> Votre corbeille </h4>
+
+      {% include 'layouts/flash-messages.html.twig' %}
+
+      <a href="  " class="btn btn-danger mt-2 mb-4">
+        <i class="fas fa-trash-alt ml-1"></i>
+        Vider la corbeille
+      </a>
+
+      {% if allStory is empty %}
+        <div class="alert alert-info">Votre corbeille est vide...
+        </div>
+      {% endif %}
+
+
+      {% for story in allStory %}
+      <div class="card shadow">
+        <div class="card-body">
+        <span class="h5 font-weight-bold text-primary"> {{ story.title }} </span>
+          <p> Publié 
+              <span class="font-italic">
+              {% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
+                  Aujourd'hui à
+                  {{ story.createdAt|date("H:i:s") }}
+                {% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
+                  Hier à
+                  {{ story.createdAt|date("H:i:s") }}
+                {% else %}
+                  (Le
+                  {{ story.createdAt|date("d/m/Y") }}
+                  à
+                  {{ story.createdAt|date("H:i:s") }}
+                  )
+                {% endif %}
+              </span>
+              <br>
+              Story
+              <span class="badge badge-{{ story.statut == 'privee' ? 'danger' : 'success' }}">
+                <i class="fas fa-{{ story.statut == 'privee' ? 'lock' : 'globe-europe' }}"></i>
+                {{ story.statut }}
+              </span>
+                
+            </p>
+          <a href="{{ path('move_to_trash', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
+              Restaurer
+              <i class="fas fa-trash-restore"></i>
+            </a>
+          <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-primary rounded shadow float-right">Lire la story <i class="fas fa-arrow-circle-right ml-2"></i> </a>
+        </div>
+      </div>
+      {% endfor %}
+
+      {# <div class="card">
+        <ul class="list-group list-group-flush">
+          {% for story in allStory %}
+            <li class="list-group-item ">
+              <span class="font-weight-bold">
+                {{ story.title }}
+              </span>
+              <span class="ml-4 font-italic">
+
+                {% if story.createdAt | date("m/d/Y") == "now"|date("m/d/Y") %}
+                  Aujourd'hui à
+                  {{ story.createdAt|date("H:i:s") }}
+                {% elseif story.createdAt | date("m/d/Y") == "yesterday"|date("m/d/Y") %}
+                  Hier à
+                  {{ story.createdAt|date("H:i:s") }}
+                {% else %}
+                  (Le
+                  {{ story.createdAt|date("d-m-Y") }}
+                  à
+                  {{ story.createdAt|date("H:i:s") }}
+                  )
+                {% endif %}
+              </span>
+              <span class="badge badge-{{ story.statut == 'privee' ? 'danger' : 'success' }}">
+                {{ story.statut }}
+              </span>
+              <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-sm btn-primary text-unstyled float-right">Lire ma story
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div> #}
+
+    </div>
+
+  </div>
+
+{% endblock %}

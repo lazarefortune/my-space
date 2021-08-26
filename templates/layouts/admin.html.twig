@@ -219,6 +219,13 @@
                     </a>
                   </li>
                   {% endif %}
+                  <li class="nav-item">
+                    <a href=" {{ path('my_trash') }} " class="nav-link {{ app.request.get('_route') == 'my_trash' ? 'active' }}">
+                      {# <i class="far fa-circle nav-icon"></i> #}
+                      <i class="fas fa-trash nav-icon"></i>
+                      <p>Corbeille</p>
+                    </a>
+                  </li>
                 </ul>
               </li>
               {# <li class="nav-item">

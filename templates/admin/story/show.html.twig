@@ -1,118 +1,180 @@
 {% extends "layouts/admin.html.twig" %}
 
 {% block stylesheets %}
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 {% endblock %}
 
 {% block admin_content %}
 
-  <div class="row">
-    {% include 'layouts/flash-messages.html.twig' %}
+	<div class="row">
+		{% include 'layouts/flash-messages.html.twig' %}
 
-    <div class="col-md-8 mx-auto">
-      <div class="d-flex justify-content-around">
-        <a href="{{ path('create_inspiration') }}" class="btn btn-sm btn-primary shadow mt-2 mb-4">
-          Ajouter une story
-          <i class="fas fa-plus"></i>
-        </a>
-        {% if app.user.idUser == story.idUser.idUser %}
-          <a href="{{ path('edit_inspiration', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
-            Modifier
-            <i class="fas fa-edit"></i>
-          </a>
-          <!-- Button delete modal -->
-          <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-danger shadow mt-2 mb-4">
-            Supprimer
-            <i class="fas fa-trash"></i>
-          </button>
+		<div class="col-md-8 mx-auto">
+			<div class="d-flex justify-content-around">
+				<a href="{{ path('create_inspiration') }}" class="btn btn-sm btn-primary shadow mt-2 mb-4">
+					Ajouter une story
+					<i class="fas fa-plus"></i>
+				</a>
+				{% if app.user.idUser == story.idUser.idUser %}
+					{% if story.trash == false %}
 
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"> Suppression de la story n° {{ story.id }} </h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  Souhaitez vous vraiment supprimer cette story ? <br>
-                  Cette action est irréversible. <hr>
-                  {% if story.statut != "privee" %}
-                    <span class="text-info">Information : </span> <br>
-                    Cette publication est en mode <strong> {{ story.statut }}</strong>, vous pouvez la mettre en <strong>privée</strong> et ainsi être visible uniquement par vous. </strong>
-                  {% endif %}
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                  <a href="{{ path('delete_inspiration', {storyId: story.id}) }}" class="btn btn-danger">
-                    Supprimer la story
-                    <i class="fas fa-trash"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+						<a href="{{ path('edit_inspiration', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
+							Modifier
+							<i class="fas fa-edit"></i>
+						</a>
+						<!-- Button delete modal -->
+						<button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-danger shadow mt-2 mb-4">
+							Supprimer
+							<i class="fas fa-trash"></i>
+						</button>
 
-        {% endif %}
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">
+											Suppression de la story n°
+											{{ story.id }}
+										</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										Souhaitez vous vraiment supprimer cette story ?
+										<br>
+										Elle sera mise en corbeille.
+										<hr>
+										{% if story.statut != "privee" %}
+											<span class="text-info">Information :
+											</span>
+											<br>
+											Cette publication est en mode
+											<strong>
+												{{ story.statut }}</strong>, vous pouvez la mettre en
+											<strong>privée</strong>
+											et ainsi être visible uniquement par vous.
+										</strong>
+									{% endif %}
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+									<a href="{{ path('move_to_trash', {storyId: story.id}) }}" class="btn btn-danger">
+										Supprimer la story
+										<i class="fas fa-trash"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
 
-        <a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
-          Liste des stories
-          <i class="fas fa-arrow-right"></i>
-        </a>
-      </div>
+					<a href="{{ path('my_inspiration') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
+						Liste des stories
+						<i class="fas fa-arrow-right"></i>
+					</a>
+				{% else %}
+					<a href="{{ path('move_to_trash', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
+						Restaurer
+						<i class="fas fa-trash-restore"></i>
+					</a>
 
-      <article class="card shadow mt-4 p-3 mx-auto">
-        <h4 class="font-weight-bold">
-          {{ story.title }}
-        </h4>
-        <p class="mb-0 text-info">
-          Ecrit par :
-          <span class="font-italic font-weight-bold">
-            {% if app.user.idUser == story.idUser.idUser %}
-              Vous
-              {% if story.statut == "public_anonyme" %}
-                (En anonyme)
-              {% endif %}
-            {% else %}
-              {% if story.statut == "public_anonyme" %}
-                un inconnu
-              {% else %}
-                {{ story.idUser.nom }}
-                {{ story.idUser.prenom }}
-              {% endif %}
-            {% endif %}
+					<!-- Button delete modal -->
+					<button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-danger shadow mt-2 mb-4">
+						Supprimer définitivement
+						<i class="fas fa-trash"></i>
+					</button>
 
-          </span>
-        </p>
-        <p class="text-info">
-          Date :
-          <span class=" font-weight-bold">
-            {% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
-              Aujourd'hui à
-              {{ story.createdAt|date("H:i:s") }}
-            {% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
-              Hier à
-              {{ story.createdAt|date("H:i:s") }}
-            {% else %}
-              (Le
-              {{ story.createdAt|date("d/m/Y") }}
-              à
-              {{ story.createdAt|date("H:i:s") }}
-              )
-            {% endif %}
-          </span>
-        </p>
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">
+										Suppression de la story n°
+										{{ story.id }}
+									</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									Souhaitez vous vraiment supprimer cette story ?
+									<br>
+									Cette action est irréversible.
+									<hr>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+									<a href="{{ path('delete_inspiration', {storyId: story.id}) }}" class="btn btn-danger">
+										Supprimer définitivement
+										<i class="fas fa-trash"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+          <a href="{{ path('my_trash') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
+						Corbeille
+						<i class="fas fa-arrow-right"></i>
+					</a>
+				{% endif %}
 
-        <p class="mt-4 text-justify">
-          {{ story.description|raw }}
-        </p>
+			{% else %}
+      <a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
+        Liste des stories
+        <i class="fas fa-arrow-right"></i>
+      </a>
+      {% endif %}
 
-      </article>
+		</div>
 
-    </div>
+		<article class="card shadow mt-4 p-3 mx-auto">
+			<h4 class="font-weight-bold">
+				{{ story.title }}
+			</h4>
+			<p class="mb-0 text-info">
+				Ecrit par :
+				<span class="font-italic font-weight-bold">
+					{% if app.user.idUser == story.idUser.idUser %}
+						Vous
+						{% if story.statut == "public_anonyme" %}
+							(En anonyme)
+						{% endif %}
+					{% else %}
+						{% if story.statut == "public_anonyme" %}
+							un inconnu
+						{% else %}
+							{{ story.idUser.nom }}
+							{{ story.idUser.prenom }}
+						{% endif %}
+					{% endif %}
 
-  </div>
+				</span>
+			</p>
+			<p class="text-info">
+				Date :
+				<span class=" font-weight-bold">
+					{% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
+						Aujourd'hui à
+						{{ story.createdAt|date("H:i:s") }}
+					{% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
+						Hier à
+						{{ story.createdAt|date("H:i:s") }}
+					{% else %}
+						(Le
+						{{ story.createdAt|date("d/m/Y") }}
+						à
+						{{ story.createdAt|date("H:i:s") }}
+						)
+					{% endif %}
+				</span>
+			</p>
 
-{% endblock %}
+			<p class="mt-4 text-justify">
+				{{ story.description|raw }}
+			</p>
+
+		</article>
+
+	</div>
+
+</div>{% endblock %}
