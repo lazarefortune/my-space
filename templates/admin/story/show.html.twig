@@ -52,7 +52,8 @@
 											(Elle sera mise en corbeille)
 											<hr>
 											{% if story.statut != "privee" %}
-                        Elle ne sera plus accessible <br>
+												Elle ne sera plus accessible
+												<br>
 												<span class="text-info">Information :
 												</span>
 												<br>
@@ -138,10 +139,11 @@
 					{{ story.title }}
 				</h4>
 				<p class="mb-0 text-info">
-          <span class="badge badge-{{ story.statut == 'privee' ? 'danger' : 'success' }}">
-                <i class="fas fa-{{ story.statut == 'privee' ? 'lock' : 'globe-europe' }}"></i>
-                {{ story.statut }}
-              </span> <br>
+					<span class="badge badge-{{ story.statut == 'privee' ? 'danger' : 'success' }}">
+						<i class="fas fa-{{ story.statut == 'privee' ? 'lock' : 'globe-europe' }}"></i>
+						{{ story.statut }}
+					</span>
+					<br>
 					Ecrit par :
 					<span class="font-italic font-weight-bold">
 						{% if app.user.idUser == story.idUser.idUser %}
@@ -184,8 +186,40 @@
 				</p>
 
 			</article>
-      {% endif %}
-		</div>
 
+			<div class="mt-2 mb-5">
+				<h4 class=" font-weight-bold mt-5 mb-3">Commentaires :</h4>
+				<ul class="list-group">
+					{% for commentary in commentaries %}
+						<li class="list-group-item my-3">
+							{{ commentary.content }}
+							<br>
+							<small>
+								{{ story.createdAt|date("d/m/Y") }}
+								à
+								{{ story.createdAt|date("H:i:s") }}
+								de
+								<b>{{ commentary.user.nom }} {{ commentary.user.prenom }}</b>
+							</small>
+						{% if commentary.user.idUser == app.user.idUser  %}
+							<a href="" class="btn btn-sm btn-secondary"> <i class="fas fa-edit"></i> </a>
+						{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+
+				<div class="mt-4">
+					{{ form_start( formCommentary ) }}
+				{# <div class="form-group mt-4">
+					<label for="commentary">Laisser un commentaire</label>
+					<textarea name="" class="form-control" id="" cols="30" rows="5"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">Commenter</button> #}
+				{{ form_end( formCommentary ) }}
+				</div>
+			</div>
+
+		{% endif %}
 	</div>
-{% endblock %}
+
+</div>{% endblock %}

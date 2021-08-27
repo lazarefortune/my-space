@@ -72,11 +72,16 @@ class User implements UserInterface
     private $reset_token;
 
     /**
+     * @ORM\OneToMany(targetEntity=CommentaryStory::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $commentaryStories;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-
+        $this->commentaryStories = new ArrayCollection();
     }
 
     public function getIdUser(): ?int
@@ -202,6 +207,36 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|CommentaryStory[]
+     */
+    public function getCommentaryStories(): Collection
+    {
+        return $this->commentaryStories;
+    }
+
+    public function addCommentaryStory(CommentaryStory $commentaryStory): self
+    {
+        if (!$this->commentaryStories->contains($commentaryStory)) {
+            $this->commentaryStories[] = $commentaryStory;
+            $commentaryStory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaryStory(CommentaryStory $commentaryStory): self
+    {
+        if ($this->commentaryStories->removeElement($commentaryStory)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaryStory->getUser() === $this) {
+                $commentaryStory->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 }

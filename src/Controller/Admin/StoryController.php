@@ -2,15 +2,17 @@
 
 namespace App\Controller\Admin;
 
-use App\Form\StoryType;
-use App\Entity\Inspiration;
-use App\Entity\Parameters;
 use App\Entity\View;
+use App\Form\StoryType;
+use App\Entity\Parameters;
+use App\Entity\Inspiration;
+use App\Form\CommentaryType;
+use App\Entity\CommentaryStory;
+use Doctrine\ORM\EntityManager;
+use App\Repository\ViewRepository;
+use App\Repository\ParametersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InspirationRepository;
-use App\Repository\ParametersRepository;
-use App\Repository\ViewRepository;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -73,8 +75,8 @@ class StoryController extends AbstractController
             $story = $inspirationRepository->findByTitle($story->getTitle());
             if ($story->getStatut() == "public") {
 
+                // $toEmail = ["lazarefortune@gmail.com"];
                 $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
-
                 $messageTitle = 'Nouvelle story n°' . $story->getId() . ' disponible';
                 // dd($messageTitle);
                 $message = (new \Swift_Message($messageTitle))
@@ -106,10 +108,30 @@ class StoryController extends AbstractController
     /**
      * @Route("/my-space/inspiration/show/{storyId}", name="show_inspiration")
      */
-    public function show($storyId, \Swift_Mailer $mailer): Response
+    public function show($storyId, \Swift_Mailer $mailer, Request $request): Response
     {
         $repo = $this->getDoctrine()->getRepository(Inspiration::class);
         $story = $repo->find($storyId);
+        $commentaries =  $story->getCommentaryStories();
+
+        $commentary = new CommentaryStory();
+
+        $form = $this->createForm(CommentaryType::class, $commentary);
+        $form->handleRequest($request);
+
+        // Si l'utilisateur a posté un commentaire
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentary->setUser( $this->getUser() );
+            $commentary->setStory( $story );
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($commentary);
+            $entityManager->flush();
+            // dd( $commentary );
+            $this->addFlash('success', 'Commentaire ajouté avec succès');
+            return $this->redirectToRoute('show_inspiration', [ 'storyId' => $story->getId() ] );
+            // return $this->redirect($this->generateUrl('show_inspiration', array('storyId' => $story)));
+        }
 
         $repo = $this->getDoctrine()->getRepository(Parameters::class);
         $result = $repo->findOneBy([
@@ -160,7 +182,9 @@ class StoryController extends AbstractController
         }
 
         return $this->render('admin/story/show.html.twig', [
-            "story" => $story
+            "story" => $story,
+            "commentaries" => $commentaries,
+            "formCommentary" => $form->createView()
         ]);
     }
 
@@ -188,6 +212,7 @@ class StoryController extends AbstractController
             $story = $inspirationRepository->findByTitle($story->getTitle());
 
             if ($story->getStatut() == "public") {
+                // $toEmail = ["lazarefortune@gmail.com"];
                 $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
                 $messageTitle = 'Modification de la story n°' . $story->getId() . ' disponible';
                 $message = (new \Swift_Message($messageTitle))
