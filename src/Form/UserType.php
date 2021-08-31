@@ -19,6 +19,9 @@ class UserType extends AbstractType
             ->add('email', EmailType::class,[
                 'required' => true,
             ])
+            ->add('secondEmail', EmailType::class, [
+                'required' => false
+            ])
             ->add('login', TextType::class)
         ;
     }

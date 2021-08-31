@@ -12,7 +12,7 @@
     {% include 'layouts/flash-messages.html.twig' %}
 
     <div class="col-md-8 mx-auto">
-    <a href=" {{ path('views') }} " class="btn btn-primary mb-4">Voir les vues</a>
+    <a href=" {{ path('admin_views_index') }} " class="btn btn-primary mb-4">Voir les vues</a>
         <table class="table">
         <thead>
             <tr>
@@ -25,11 +25,11 @@
         <tbody>
             {% for paramsUser in paramsUsers %}        
             <tr>
-                <th scope="row">1</th>
+                <th scope="row"> {{ paramsUser.idUser.idUser }} </th>
                 <td> {{ paramsUser.idUser.nom }} {{ paramsUser.idUser.prenom }} </td>
                 <td> 
                   {{ paramsUser.viewCounter == 1 ? 'actif' : 'inactif' }} <br>
-                  <a href=" {{ path('change_view_param', {idParam: paramsUser.id}) }} "> {{ paramsUser.viewCounter == 1 ? 'Désactiver' : 'Activer' }} </a>
+                  <a href=" {{ path('admin_views_change_param', {idParam: paramsUser.id}) }} "> {{ paramsUser.viewCounter == 1 ? 'Désactiver' : 'Activer' }} </a>
                 </td>
                 <td> {{ paramsUser.emailNotifications == 1 ? 'actif' : 'inactif' }} <br>
                   <a href="  "> {{ paramsUser.viewCounter == 1 ? 'Désactiver' : 'Activer' }} </a>

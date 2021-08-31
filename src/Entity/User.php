@@ -77,6 +77,11 @@ class User implements UserInterface
     private $commentaryStories;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $secondEmail;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -235,6 +240,18 @@ class User implements UserInterface
                 $commentaryStory->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSecondEmail(): ?string
+    {
+        return $this->secondEmail;
+    }
+
+    public function setSecondEmail(?string $secondEmail): self
+    {
+        $this->secondEmail = $secondEmail;
 
         return $this;
     }

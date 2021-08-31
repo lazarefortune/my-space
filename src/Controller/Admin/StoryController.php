@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
 use App\Entity\View;
 use App\Form\StoryType;
 use App\Entity\Parameters;
@@ -65,9 +66,15 @@ class StoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $storyExist = $inspirationRepository->findByTitle($story->getTitle());
+            if ( $storyExist ) {
+                $this->addFlash('danger', 'Une story existe déjà avec ce titre');
+                return $this->redirectToRoute('create_inspiration');
+            }
+
             // On attribue l'auteur à la story
             $story->setIdUser($this->getUser());
-            // dd($story);
+            // dd($story->getStatut());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($story);
             $entityManager->flush();
@@ -75,7 +82,21 @@ class StoryController extends AbstractController
             $story = $inspirationRepository->findByTitle($story->getTitle());
             if ($story->getStatut() == "public") {
 
-                $toEmail = ["lazarefortune@gmail.com"];
+                // on recherche les emails de destination
+                $parameters = $this->getDoctrine()
+                    ->getRepository(Parameters::class)
+                    ->findBy([
+                        "emailNotifications" => "true",
+                    ]);
+                $toEmail = [];
+                foreach ($parameters as $parameter) {
+                    $user = $parameter->getIdUser();
+                    $toEmail[] = $user->getEmail();
+                    if ( $user->getSecondEmail() ) {
+                        $toEmail[] = $user->getSecondEmail();
+                    }
+                }
+                // $toEmail = ["lazarefortune@gmail.com"];
                 // $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
                 $messageTitle = 'Nouvelle story n°' . $story->getId() . ' disponible';
                 // dd($messageTitle);
@@ -121,15 +142,15 @@ class StoryController extends AbstractController
 
         // Si l'utilisateur a posté un commentaire
         if ($form->isSubmitted() && $form->isValid()) {
-            $commentary->setUser( $this->getUser() );
-            $commentary->setStory( $story );
+            $commentary->setUser($this->getUser());
+            $commentary->setStory($story);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($commentary);
             $entityManager->flush();
             // dd( $commentary );
             $this->addFlash('success', 'Commentaire ajouté avec succès');
-            return $this->redirectToRoute('show_inspiration', [ 'storyId' => $story->getId() ] );
+            return $this->redirectToRoute('show_inspiration', ['storyId' => $story->getId()]);
             // return $this->redirect($this->generateUrl('show_inspiration', array('storyId' => $story)));
         }
 
@@ -150,18 +171,18 @@ class StoryController extends AbstractController
             $view->setIdStory($story);
             $view->setDate(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
             $isDeleteStory = $story->getTrash();
-            if ( $isDeleteStory ) {
-                $view->setCommentary( "La story est en corbeille (inaccessible)" );
+            if ($isDeleteStory) {
+                $view->setCommentary("La story est en corbeille (inaccessible)");
             }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($view);
             $entityManager->flush();
 
             // Envoie de l'email
-            $userName = $this->getUser()->getNom()." ".$this->getUser()->getPrenom() ;
+            $userName = $this->getUser()->getNom() . " " . $this->getUser()->getPrenom();
             $toEmail = ["lazarefortune@gmail.com"];
-                $messageTitle = 'Nouvelle vue sur story n°' . $story->getId();
-                $message = (new \Swift_Message($messageTitle))
+            $messageTitle = 'Nouvelle vue sur story n°' . $story->getId();
+            $message = (new \Swift_Message($messageTitle))
                 // On attribue l'expéditeur
                 ->setFrom('myspace@lazarefortune.com')
                 // On attribue le destinataire
@@ -174,7 +195,7 @@ class StoryController extends AbstractController
                     ),
                     'text/html'
                 );
-                $mailer->send($message);
+            $mailer->send($message);
         }
 
         if ($this->getUser()->getIdUser() != $story->getIdUser()->getIdUser() and $story->getStatut() == "privee") {
@@ -212,7 +233,22 @@ class StoryController extends AbstractController
             $story = $inspirationRepository->findByTitle($story->getTitle());
 
             if ($story->getStatut() == "public") {
-                $toEmail = ["lazarefortune@gmail.com"];
+
+                // on recherche les utilisateurs souhaitant des emails
+                $parameters = $this->getDoctrine()
+                    ->getRepository(Parameters::class)
+                    ->findBy([
+                        "emailNotifications" => "true",
+                    ]);
+                $toEmail = [];
+                foreach ($parameters as $parameter) {
+                    $user = $parameter->getIdUser();
+                    $toEmail[] = $user->getEmail();
+                    if ( $user->getSecondEmail() ) {
+                        $toEmail[] = $user->getSecondEmail();
+                    }
+                }
+                // $toEmail = ["lazarefortune@gmail.com"];
                 // $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
                 $messageTitle = 'Modification de la story n°' . $story->getId() . ' disponible';
                 $message = (new \Swift_Message($messageTitle))
@@ -261,20 +297,20 @@ class StoryController extends AbstractController
     /**
      * @Route("/trash/add/{storyId}" , name="move_to_trash")
      */
-    public function move_trash( $storyId, EntityManagerInterface $entityManager )
+    public function move_trash($storyId, EntityManagerInterface $entityManager)
     {
-        $story = $entityManager->getRepository( Inspiration::class )->find( $storyId );
+        $story = $entityManager->getRepository(Inspiration::class)->find($storyId);
         $isInTrash = $story->getTrash();
-        
-        if ( $isInTrash ) {
-            $story->setTrash( false );
-            $this->addFlash( 'info', 'La story a été restauré de la corbeille avec succès' );
-        }else{
-            $story->setTrash( true );
-            $this->addFlash( 'warning', 'La story a été mise à la corbeille avec succès' );
+
+        if ($isInTrash) {
+            $story->setTrash(false);
+            $this->addFlash('info', 'La story a été restauré de la corbeille avec succès');
+        } else {
+            $story->setTrash(true);
+            $this->addFlash('warning', 'La story a été mise à la corbeille avec succès');
         }
         $entityManager->flush();
-        return $this->redirectToRoute( 'my_inspiration' );
+        return $this->redirectToRoute('my_inspiration');
     }
 
     /**
@@ -288,58 +324,5 @@ class StoryController extends AbstractController
         $entityManager->flush();
         $this->addFlash('success', 'La story a été supprimé avec succès');
         return $this->redirectToRoute('my_inspiration');
-    }
-
-    /**
-     * @Route("/my-space/inspiration/views", name="views")
-     */
-    public function show_view(ViewRepository $viewRepository): Response
-    {
-        $views = $viewRepository->findBy([],[
-            'date' => 'DESC'
-        ]);
-
-        return $this->render('admin/story/views.html.twig', [
-            "views" => $views
-        ]);
-    }
-
-    /**
-     * @Route("/my-space/inspiration/views/edit", name="views_edit")
-     */
-    public function edit_view(ViewRepository $viewRepository, ParametersRepository $parametersRepository): Response
-    {
-        $views = $viewRepository->findAll();
-
-        $params = $parametersRepository->findAll();
-
-        return $this->render('admin/story/views_edit.html.twig', [
-            "views" => $views,
-            "paramsUsers" => $params,
-        ]);
-    }
-
-    /**
-     * @Route("/my-space/inspiration/views/change_param/{idParam}", name="change_view_param")
-     */
-    public function change_view_param($idParam, ViewRepository $viewRepository, ParametersRepository $parametersRepository): Response
-    {
-        $param = $parametersRepository->findOneBy([
-            'id' => $idParam,
-        ]);
-
-        if ( is_null($param) ) {
-            $this->addFlash('danger', 'Pas de paramètres connu');
-            return $this->redirectToRoute('views_edit');
-        }
-
-        $param->setViewCounter(!$param->getViewCounter());
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($param);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Paramèttres mis à jour avec succès');
-        return $this->redirectToRoute('views_edit');
     }
 }

@@ -1,0 +1,71 @@
+{% extends "layouts/admin.html.twig" %}
+
+{% block stylesheets %}
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+{% endblock %}
+
+{% block admin_content %}
+
+  <div class="row">
+    {% include 'layouts/flash-messages.html.twig' %}
+
+    <h4>Paramètres des utilisateurs</h4>
+    <div class="col-md-8 mx-auto">
+    {# <a href=" {{ path('admin_views_index') }} " class="btn btn-primary mb-4">Voir les vues</a> #}
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom et prénom</th>
+            <th scope="col">Vues</th>
+            <th scope="col">Emails</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paramsUser in paramsUsers %}        
+            <tr>
+                <th scope="row"> {{ paramsUser.idUser.idUser }} </th>
+                <td> {{ paramsUser.idUser.nom }} {{ paramsUser.idUser.prenom }} </td>
+                <td class="d-flex align-items-center justify-content-center"> 
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" data-type="notifView" data-id="{{ paramsUser.id }}" {{ paramsUser.viewCounter == 1 ? 'checked' : '' }} type="checkbox" id="flexSwitchCheckDefault">
+                  </div> 
+                </td>
+                <td> 
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" data-type="notifEmail" data-id="{{ paramsUser.id }}" {{ paramsUser.emailNotifications == 1 ? 'checked' : '' }} type="checkbox" id="flexSwitchCheckDefault">
+                  </div> 
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script>
+    window.onload = () => {
+      let change = document.querySelectorAll("[type=checkbox]")
+      for( let bouton of change ){
+        bouton.addEventListener("click", function(){
+          let xmlhttp = new XMLHttpRequest;
+          console.log(bouton.dataset)
+          if( bouton.dataset.type == "notifView" ){
+            xmlhttp.open("get", `change/notification/view/${this.dataset.id}`)
+          }
+          if ( bouton.dataset.type == "notifEmail" ) {
+            xmlhttp.open("get", `change/notification/email/${this.dataset.id}`)
+          }
+          xmlhttp.send()
+        })
+      }
+    }
+  </script>
+{% endblock %}
