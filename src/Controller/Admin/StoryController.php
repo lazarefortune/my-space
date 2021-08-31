@@ -75,8 +75,8 @@ class StoryController extends AbstractController
             $story = $inspirationRepository->findByTitle($story->getTitle());
             if ($story->getStatut() == "public") {
 
-                // $toEmail = ["lazarefortune@gmail.com"];
-                $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
+                $toEmail = ["lazarefortune@gmail.com"];
+                // $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
                 $messageTitle = 'Nouvelle story n°' . $story->getId() . ' disponible';
                 // dd($messageTitle);
                 $message = (new \Swift_Message($messageTitle))
@@ -212,8 +212,8 @@ class StoryController extends AbstractController
             $story = $inspirationRepository->findByTitle($story->getTitle());
 
             if ($story->getStatut() == "public") {
-                // $toEmail = ["lazarefortune@gmail.com"];
-                $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
+                $toEmail = ["lazarefortune@gmail.com"];
+                // $toEmail = ["lazarefortune@gmail.com", "jessyjess00021@gmail.com", "jessicatemba.s@gmail.com"];
                 $messageTitle = 'Modification de la story n°' . $story->getId() . ' disponible';
                 $message = (new \Swift_Message($messageTitle))
                     // On attribue l'expéditeur
