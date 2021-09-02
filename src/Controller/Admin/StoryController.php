@@ -18,11 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+/**
+ * @Route("/story",name="story_")
+ */
 class StoryController extends AbstractController
 {
     /**
-     * @Route("/my-space/inspiration", name="inspiration")
+     * @Route("/public", name="index")
      */
     public function index(InspirationRepository $inspirationRepository): Response
     {
@@ -39,7 +41,7 @@ class StoryController extends AbstractController
     }
 
     /**
-     * @Route("/my-space/inspiration/mes-stories", name="my_inspiration")
+     * @Route("/my", name="my")
      */
     public function my_stories(InspirationRepository $inspirationRepository): Response
     {
@@ -55,7 +57,7 @@ class StoryController extends AbstractController
     }
 
     /**
-     * @Route("/my-space/inspiration/create", name="create_inspiration")
+     * @Route("/create", name="create")
      */
     public function create(Request $request, \Swift_Mailer $mailer, InspirationRepository $inspirationRepository): Response
     {
@@ -69,7 +71,7 @@ class StoryController extends AbstractController
             $storyExist = $inspirationRepository->findByTitle($story->getTitle());
             if ( $storyExist ) {
                 $this->addFlash('danger', 'Une story existe déjà avec ce titre');
-                return $this->redirectToRoute('create_inspiration');
+                return $this->redirectToRoute('story_create');
             }
 
             // On attribue l'auteur à la story
@@ -118,7 +120,7 @@ class StoryController extends AbstractController
 
             $this->addFlash('success', 'Nouvelle story ajoutée avec succès');
 
-            return $this->redirectToRoute('inspiration');
+            return $this->redirectToRoute('story_index');
         }
 
         return $this->render('admin/story/create.html.twig', [
@@ -127,7 +129,7 @@ class StoryController extends AbstractController
     }
 
     /**
-     * @Route("/my-space/inspiration/show/{storyId}", name="show_inspiration")
+     * @Route("/show/{storyId}", name="show")
      */
     public function show($storyId, \Swift_Mailer $mailer, Request $request): Response
     {
@@ -150,8 +152,8 @@ class StoryController extends AbstractController
             $entityManager->flush();
             // dd( $commentary );
             $this->addFlash('success', 'Commentaire ajouté avec succès');
-            return $this->redirectToRoute('show_inspiration', ['storyId' => $story->getId()]);
-            // return $this->redirect($this->generateUrl('show_inspiration', array('storyId' => $story)));
+            return $this->redirectToRoute('story_show', ['storyId' => $story->getId()]);
+            // return $this->redirect($this->generateUrl('story_show', array('storyId' => $story)));
         }
 
         $repo = $this->getDoctrine()->getRepository(Parameters::class);
@@ -210,7 +212,7 @@ class StoryController extends AbstractController
     }
 
     /**
-     * @Route("/my-space/inspiration/edit/{storyId}", name="edit_inspiration")
+     * @Route("/edit/{storyId}", name="edit")
      */
     public function edit($storyId, Request $request, \Swift_Mailer $mailer, InspirationRepository $inspirationRepository)
     {
@@ -269,7 +271,7 @@ class StoryController extends AbstractController
 
             $this->addFlash('success', 'Story mis à jour avec succès');
 
-            return $this->redirectToRoute('inspiration');
+            return $this->redirectToRoute('story_index');
         }
 
         return $this->render('admin/story/edit.html.twig', [
@@ -279,7 +281,7 @@ class StoryController extends AbstractController
     }
 
     /**
-     * @Route("/my-space/inspiration/corbeille", name="my_trash")
+     * @Route("/trash", name="trash")
      */
     public function my_trash(InspirationRepository $inspirationRepository): Response
     {
@@ -310,11 +312,11 @@ class StoryController extends AbstractController
             $this->addFlash('warning', 'La story a été mise à la corbeille avec succès');
         }
         $entityManager->flush();
-        return $this->redirectToRoute('my_inspiration');
+        return $this->redirectToRoute('story_my');
     }
 
     /**
-     * @Route("/my-space/inspiration/delete/{storyId}", name="delete_inspiration")
+     * @Route("/delete/{storyId}", name="delete")
      */
     public function delete($storyId, EntityManagerInterface $entityManager): Response
     {
@@ -323,6 +325,6 @@ class StoryController extends AbstractController
         $entityManager->remove($story);
         $entityManager->flush();
         $this->addFlash('success', 'La story a été supprimé avec succès');
-        return $this->redirectToRoute('my_inspiration');
+        return $this->redirectToRoute('story_my');
     }
 }

@@ -18,14 +18,14 @@
 				</div>
 			{% else %}
 				<div class="d-flex justify-content-around">
-					<a href="{{ path('create_inspiration') }}" class="btn btn-sm btn-primary shadow mt-2 mb-4">
+					<a href="{{ path('story_create') }}" class="btn btn-sm btn-primary shadow mt-2 mb-4">
 						Ajouter une story
 						<i class="fas fa-plus"></i>
 					</a>
 					{% if app.user.idUser == story.idUser.idUser %}
 						{% if story.trash == false %}
 
-							<a href="{{ path('edit_inspiration', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
+							<a href="{{ path('story_edit', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
 								Modifier
 								<i class="fas fa-edit"></i>
 							</a>
@@ -67,7 +67,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-										<a href="{{ path('move_to_trash', {storyId: story.id}) }}" class="btn btn-warning">
+										<a href="{{ path('story_move_to_trash', {storyId: story.id}) }}" class="btn btn-warning">
 											Mettre à la corbeille
 											<i class="fas fa-trash"></i>
 										</a>
@@ -76,12 +76,12 @@
 							</div>
 						</div>
 
-						<a href="{{ path('my_inspiration') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
+						<a href="{{ path('story_my') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
 							Liste des stories
 							<i class="fas fa-arrow-right"></i>
 						</a>
 					{% else %}
-						<a href="{{ path('move_to_trash', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
+						<a href="{{ path('story_move_to_trash', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
 							Restaurer
 							<i class="fas fa-trash-restore"></i>
 						</a>
@@ -111,7 +111,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-										<a href="{{ path('delete_inspiration', {storyId: story.id}) }}" class="btn btn-danger">
+										<a href="{{ path('story_delete', {storyId: story.id}) }}" class="btn btn-danger">
 											Supprimer définitivement
 											<i class="fas fa-trash"></i>
 										</a>
@@ -119,14 +119,14 @@
 								</div>
 							</div>
 						</div>
-						<a href="{{ path('my_trash') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
+						<a href="{{ path('story_trash') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
 							Corbeille
 							<i class="fas fa-arrow-right"></i>
 						</a>
 					{% endif %}
 
 				{% else %}
-					<a href="{{ path('inspiration') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
+					<a href="{{ path('story_index') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
 						Liste des stories
 						<i class="fas fa-arrow-right"></i>
 					</a>

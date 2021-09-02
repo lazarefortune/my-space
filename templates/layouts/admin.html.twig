@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ path('admin_home') }}" class="nav-link">Accueil</a>
+            <a href="{{ path('home') }}" class="nav-link">Accueil</a>
           </li>
           {# <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Contact</a>
@@ -135,7 +135,7 @@
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="{{ path('admin_home') }}" class="brand-link">
+        <a href="{{ path('home') }}" class="brand-link">
           <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
           <span class="brand-text font-weight-light">
             My Space
@@ -183,20 +183,20 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href=" {{ path('admin_home') }} " class="nav-link {{ app.request.get('_route') == 'admin_home' ? 'active' }}">
+                    <a href=" {{ path('home') }} " class="nav-link {{ app.request.get('_route') == 'home' ? 'active' }}">
                       <i class="fas fa-home nav-icon"></i>
                       <p>Accueil</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href=" {{ path('create_inspiration') }} " class="nav-link {{ app.request.get('_route') == 'create_inspiration' ? 'active' }}">
+                    <a href=" {{ path('story_create') }} " class="nav-link {{ app.request.get('_route') == 'story_create' ? 'active' }}">
                       {# <i class="far fa-circle nav-icon"></i> #}
                       <i class="fas fa-plus nav-icon"></i>
                       <p>Ajouter une story</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href=" {{ path('inspiration') }} " class="nav-link {{ app.request.get('_route') == 'inspiration' ? 'active' }}">
+                    <a href=" {{ path('story_index') }} " class="nav-link {{ app.request.get('_route') == 'story_index' ? 'active' }}">
                       {# <i class="far fa-circle nav-icon"></i> #}
                       <p>
                         <i class="fas fa-globe-europe nav-icon"></i>
@@ -204,7 +204,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href=" {{ path('my_inspiration') }} " class="nav-link {{ app.request.get('_route') == 'my_inspiration' ? 'active' }}">
+                    <a href=" {{ path('story_my') }} " class="nav-link {{ app.request.get('_route') == 'story_my' ? 'active' }}">
                       {# <i class="far fa-circle nav-icon"></i> #}
                       <i class="fas fa-atlas nav-icon"></i>
                       <p>Mes stories</p>
@@ -227,7 +227,7 @@
                   </li>
                   {% endif %}
                   <li class="nav-item">
-                    <a href=" {{ path('my_trash') }} " class="nav-link {{ app.request.get('_route') == 'my_trash' ? 'active' }}">
+                    <a href=" {{ path('story_trash') }} " class="nav-link {{ app.request.get('_route') == 'story_trash' ? 'active' }}">
                       {# <i class="far fa-circle nav-icon"></i> #}
                       <i class="fas fa-trash nav-icon"></i>
                       <p>Corbeille</p>
@@ -236,7 +236,7 @@
                 </ul>
               </li>
               {# <li class="nav-item">
-								<a href=" {{ path('inspiration') }} " class="nav-link {{ app.request.get('_route') == 'inspiration' ? 'active' }}">
+								<a href=" {{ path('story_index') }} " class="nav-link {{ app.request.get('_route') == 'story_index' ? 'active' }}">
 									<i class="nav-icon fas fa-th"></i>
 									<p>
 										Liste des histoires
@@ -264,7 +264,7 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item">
-                    <a href="{{ path('admin_home') }}">Accueil</a>
+                    <a href="{{ path('home') }}">Accueil</a>
                   </li>
                   <li class="breadcrumb-item active">Apps</li>
                 </ol>

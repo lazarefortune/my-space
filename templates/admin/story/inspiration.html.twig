@@ -15,7 +15,7 @@
 
       {% include 'layouts/flash-messages.html.twig' %}
 
-      <a href="{{ path('create_inspiration') }}" class="btn btn-primary shadow mt-2 mb-4">
+      <a href="{{ path('story_create') }}" class="btn btn-primary shadow mt-2 mb-4">
         Ajouter
         <i class="fas fa-plus"></i>
       </a>
@@ -64,7 +64,7 @@
                 </span> <br>
                 
             </p>
-          <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-primary rounded shadow float-right">Lire la story <i class="fas fa-arrow-circle-right ml-2"></i> </a>
+          <a href="{{ path('story_show', {storyId: story.id} ) }}" class="btn btn-primary rounded shadow float-right">Lire la story <i class="fas fa-arrow-circle-right ml-2"></i> </a>
         </div>
       </div>
       {% endfor %}
@@ -109,7 +109,7 @@
                 {% endif %}
                 </strong> >>
               </span>
-              <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-sm btn-primary text-unstyled float-right">Lire la story
+              <a href="{{ path('story_show', {storyId: story.id} ) }}" class="btn btn-sm btn-primary text-unstyled float-right">Lire la story
                 <i class="fas fa-arrow-right"></i>
               </a>
             </li>

@@ -54,11 +54,11 @@
               </span>
                 
             </p>
-          <a href="{{ path('move_to_trash', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
+          <a href="{{ path('story_move_to_trash', {storyId: story.id}) }}" class="btn btn-sm btn-warning shadow mt-2 mb-4">
               Restaurer
               <i class="fas fa-trash-restore"></i>
             </a>
-          <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-primary rounded shadow float-right">Lire la story <i class="fas fa-arrow-circle-right ml-2"></i> </a>
+          <a href="{{ path('story_show', {storyId: story.id} ) }}" class="btn btn-primary rounded shadow float-right">Lire la story <i class="fas fa-arrow-circle-right ml-2"></i> </a>
         </div>
       </div>
       {% endfor %}
@@ -89,7 +89,7 @@
               <span class="badge badge-{{ story.statut == 'privee' ? 'danger' : 'success' }}">
                 {{ story.statut }}
               </span>
-              <a href="{{ path('show_inspiration', {storyId: story.id} ) }}" class="btn btn-sm btn-primary text-unstyled float-right">Lire ma story
+              <a href="{{ path('story_show', {storyId: story.id} ) }}" class="btn btn-sm btn-primary text-unstyled float-right">Lire ma story
                 <i class="fas fa-arrow-right"></i>
               </a>
             </li>

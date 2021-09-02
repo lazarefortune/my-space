@@ -1,13 +1,14 @@
 home:
     path: /
-    controller: App\Controller\HomeController::index
+    controller: App\Controller\Admin\AdminController::index
+    # controller: App\Controller\HomeController::index
 
-admin_home:
+myspace_home:
     path: /my-space
     controller: App\Controller\Admin\AdminController::index
 
 account:
-    path: /my-space/profil
+    path: /profil
     controller: App\Controller\UserController::index
 
 
