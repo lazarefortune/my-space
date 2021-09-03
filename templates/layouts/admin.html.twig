@@ -210,7 +210,7 @@
                       <p>Mes stories</p>
                     </a>
                   </li>
-                  {% if app.user.idUser == 1 %}  
+                  {% if is_granted('ROLE_SUPER_ADMIN') %}												
                   <li class="nav-item">
                     <a href=" {{ path('admin_views_index') }} " class="nav-link {{ app.request.get('_route') == 'admin_views_index' ? 'active' }}">
                       {# <i class="far fa-circle nav-icon"></i> #}
@@ -225,7 +225,7 @@
                       <p>Paramètres utilisateurs</p>
                     </a>
                   </li>
-                  {% endif %}
+								  {% endif %} 
                   <li class="nav-item">
                     <a href=" {{ path('story_trash') }} " class="nav-link {{ app.request.get('_route') == 'story_trash' ? 'active' }}">
                       {# <i class="far fa-circle nav-icon"></i> #}

@@ -56,12 +56,12 @@ security:
     access_control:
         - { path: ^/connexion, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/mot-de-passe/recuperation, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/my-space, roles: ROLE_ADMIN }
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/, roles: ROLE_USER }
+        # - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
 
     role_hierarchy:
-        ROLE_ETUDIANT: ROLE_USER
-        ROLE_EVALUATOR: [ROLE_USER]
-        ROLE_ADMIN:       [ROLE_EDITOR]
+        ROLE_EDITOR: ROLE_USER
+        ROLE_ADMIN:  ROLE_EDITOR
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]

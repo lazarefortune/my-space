@@ -166,7 +166,8 @@ class StoryController extends AbstractController
             $canCountView = $result->getViewCounter();
         }
 
-        if ($this->getUser()->getIdUser() != $story->getIdUser()->getIdUser() && $this->getUser()->getIdUser() != 1 && $canCountView) {
+        $isSuperAdmin = $this->isGranted('ROLE_SUPER_ADMIN');
+        if ($this->getUser()->getIdUser() != $story->getIdUser()->getIdUser() && !$isSuperAdmin && $canCountView) {
 
             $view = new View();
             $view->setIdUser($this->getUser());
@@ -219,8 +220,9 @@ class StoryController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Inspiration::class);
         $story = $repo->find($storyId);
 
-        if ($this->getUser()->getIdUser() != $story->getIdUser()->getIdUser()) {
-            return $this->denyAccessUnlessGranted('ROLE_EDIT', $story, 'Vous n\'avez pas le droit de consulter cette story.');
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        if ($this->getUser()->getIdUser() != $story->getIdUser()->getIdUser() && !$hasAccess) {
+            return $this->denyAccessUnlessGranted('ROLE_EDIT', $story, 'Action non autorisée.');
         }
 
         $form = $this->createForm(StoryType::class, $story);
@@ -321,7 +323,12 @@ class StoryController extends AbstractController
     public function delete($storyId, EntityManagerInterface $entityManager): Response
     {
         $story = $entityManager->getRepository(Inspiration::class)->find($storyId);
-        // dd($story);
+
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        if ( $this->getUser()->getIdUser() != $story->getIdUser()->getIdUser() &&  !$hasAccess ) {
+            return $this->denyAccessUnlessGranted('ROLE_DELETE', $story, 'Action non autorisée.');
+        }
+
         $entityManager->remove($story);
         $entityManager->flush();
         $this->addFlash('success', 'La story a été supprimé avec succès');
