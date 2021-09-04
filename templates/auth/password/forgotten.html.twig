@@ -1,57 +1,53 @@
-{% extends "layouts/admin_simple.html.twig" %}
+{% extends "layouts/auth.html.twig" %}
 
-{% block admin_content %}
+{% block auth_content %}
+	<div class="form-container">
+		<div class="form-form">
+			<div class="form-form-wrap">
+				<div class="form-container">
+					<div class="form-content">
 
+						<h4 class="">Réinitialisation du mot de passe</h4>
+						<p class="signup-link">Entrez votre identifiant ou votre adresse mail et vous recevrez les instructions!</p>
+						<div class="text-left">
+							{{ form_start(emailForm) }}
+							<div class="form">
+								{% include 'layouts/flash-messages.html.twig' %}
+								<div id="email-field" class="field-wrapper input">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign">
+										<circle cx="12" cy="12" r="4"></circle>
+										<path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+									</svg>
+									<input name="reset_password[email]" id="reset_password_email" type="text" required placeholder="Identifiant">
+									{% do emailForm.email.setRendered %}
+								</div>
+								<div class="d-sm-flex justify-content-between">
+									<div class="field-wrapper">
+										<button type="submit" class="btn btn-primary" value="">Réinitialiser</button>
+									</div>
+								</div>
 
-	<div class="row">
-		<div class="col-md-5 mx-auto">
-			<main class="auth">
-				<!-- form -->
-				{# <form class="auth-form"> #}
-				{{ form_start(emailForm) }}
-					<div class="mb-4"> <a href="{{ path('home') }}">
-						<div class="mb-3">
-							<img class="rounded" src="{{ asset('assets/images/Logo_IUT_Metz.Info_UL.small.png') }}" alt="" height="72">
+							</div>
+							{{ form_end(emailForm) }}
+							<p class="text-center text-muted mt-4">
+								<a href="{{ path('app_login') }}">Revenir à la connexion</a>
+							</p>
 						</div>
-					</a>
-					<h5 class="h5 mt-4">
-						Mot de passe oublié
-					</h5>
-					<div class="legend">
-						<p>Vous allez recevoir un lien de réinitialisation de votre mot de passe par email</p>
+						<p class="terms-conditions">© 2021 Tous les droits sont réservés.
+								<a href="">My Space</a>
+								est une production de.
+								<a href="https://www.lazarefortune.com" target="_blank">Lazare Fortune</a>
+							</p>
+
 					</div>
 				</div>
-				<!-- <p class="text-left mb-4"> Don't have a account? <a href="auth-signup.html">Create One</a> </p> -->
-				<!-- .form-group -->
-				{% include 'layouts/flash-messages.html.twig' %}
-
-				<div class="form-group mb-4">
-					{# <label class="d-block text-left" for="inputUser">Adresse mail</label>
-					<input type="text" id="inputUser" class="form-control form-control-lg" required=""> #}
-					<label class="d-block text-left" for="reset_password_email">Identifiant ou adresse e-mail</label>
-					<input type="text" name="reset_password[email]" id="reset_password_email" class="form-control form-control-lg" required="" autofocus="">
-					{% do emailForm.email.setRendered %}
-				</div>
-				<!-- /.form-group -->
-				<!-- .form-group -->
-				<div class="form-group mb-4">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Envoyer le lien</button>
-				</div>
-				<!-- /.form-group -->
-				<p class="text-center text-muted">
-					<a href="{{ path('app_login') }}">Revenir à la connexion</a>
-				</p>
-				<!-- copyright -->
-				<p class="mb-0 px-3 text-muted text-center">
-					© 2021 All Rights Reserved.
-				</p>
-				{# </form> #}
-				{{ form_end( emailForm ) }}
-				<!-- /.auth-form -->
-			</main>
-			<!-- /.auth -->
+			</div>
+		</div>
+		<div class="form-image">
+			<div class="l-image"></div>
 		</div>
 	</div>
+
 
 
 {% endblock %}

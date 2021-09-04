@@ -1,19 +1,20 @@
 {% extends "layouts/admin.html.twig" %}
 
 {% block stylesheets %}
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+	{# <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> #}
+	{# <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet"> #}
+	{# <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script> #}
+	<link href=" {{ asset('assets/css/scrollspyNav.css') }} " rel="stylesheet" type="text/css"/> <link rel="stylesheet" type="text/css" href=" {{ asset('assets/css/forms/switches.css') }} ">
 {% endblock %}
 
-{% block admin_content %}
+{% block site_content %}
 
 	<div class="row">
 		{% include 'layouts/flash-messages.html.twig' %}
 
-		<h4>Paramètres des utilisateurs</h4>
 		<div
 			class="col-md-8 mx-auto">
+		<h4 class="mb-5">Paramètres des utilisateurs</h4>
 			{# <a href=" {{ path('admin_views_index') }} " class="btn btn-primary mb-4">Voir les vues</a> #}
 			<table class="table">
 				<thead>
@@ -36,19 +37,33 @@
 								{{ paramsUser.idUser.prenom }}
 							</td>
 							<td class="d-flex align-items-center justify-content-center">
-								<div class="form-check form-switch">
+								{# <div class="form-check form-switch">
 									<input class="form-check-input" data-type="notifView" data-id="{{ paramsUser.id }}" {{ paramsUser.viewCounter == 1 ? 'checked' : '' }} type="checkbox" id="flexSwitchCheckDefault">
+								</div> #}
+
+								<div class="col-lg-3 col-md-3 col-sm-4 col-6">
+									<label class="switch s-icons s-outline  s-outline-primary  mb-4 mr-2">
+										<input type="checkbox" data-type="notifView" data-id="{{ paramsUser.id }}" {{ paramsUser.viewCounter == 1 ? 'checked' : '' }}>
+										<span class="slider round"></span>
+									</label>
 								</div>
 							</td>
 							<td>
-								<div class="form-check form-switch">
+								{# <div class="form-check form-switch">
 									<input class="form-check-input" data-type="notifEmail" data-id="{{ paramsUser.id }}" {{ paramsUser.emailNotifications == 1 ? 'checked' : '' }} type="checkbox" id="flexSwitchCheckDefault">
+								</div> #}
+
+								<div class="col-lg-3 col-md-3 col-sm-4 col-6">
+									<label class="switch s-icons s-outline  s-outline-primary  mb-4 mr-2">
+										<input type="checkbox" data-type="notifEmail" data-id="{{ paramsUser.id }}" {{ paramsUser.emailNotifications == 1 ? 'checked' : '' }}>
+										<span class="slider round"></span>
+									</label>
 								</div>
 							</td>
 							<td>
-              {% for role in paramsUser.idUser.roles %}    
-                {{ role }}
-              {% endfor %}
+								{% for role in paramsUser.idUser.roles %}
+									{{ role }}
+								{% endfor %}
 							</td>
 						</tr>
 					{% endfor %}
@@ -62,6 +77,8 @@
 {% endblock %}
 
 {% block javascripts %}
+	<script src=" {{ asset('assets/js/scrollspyNav.js') }} "></script>
+
 	<script>
 		window.onload = () => {
 let change = document.querySelectorAll("[type=checkbox]")

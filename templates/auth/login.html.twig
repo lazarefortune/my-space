@@ -1,101 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>MySpace | LF</title>
-		 <!-- CSS only -->
-    	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-		<!-- Google Font: Source Sans Pro -->
-		<link
-		rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-		<!-- Font Awesome -->
-		<link
-		rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
-		<!-- icheck bootstrap -->
-		<link
-		rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-		<!-- Theme style -->
-		<link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
-	</head>
-	<body class="hold-transition login-page">
-		<div
-			class="login-box">
-			<!-- /.login-logo -->
-			<div class="card card-outline card-primary">
-				<div class="card-header text-center">
-					<a href="" class="h1">
-						<b>My</b>Space</a>
+{% extends "layouts/auth.html.twig" %}
+
+{% block auth_content %}
+<div class="form-container">
+			<div class="form-form">
+				<div class="form-form-wrap">
+					<div class="form-container">
+						<div class="form-content">
+
+							<h1 class="">
+								<a href="">
+									<span class="brand-name">My Space</span>
+								</a>
+							</h1>
+							<p class="signup-link">Nouveau membre?
+								<a href="">Créer un compte</a>
+							</p>
+							<form class="text-left" method="post">
+								<div class="form">
+									{% if error %}
+										<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+									{% endif %}
+									{% include 'layouts/flash-messages.html.twig' %}
+									<div id="username-field" class="field-wrapper input">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+											<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+											<circle cx="12" cy="7" r="4"></circle>
+										</svg>
+										<input id="username" name="username" type="text" class="form-control" placeholder="Identifiant">
+									</div>
+
+									<div id="password-field" class="field-wrapper input mb-2">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock">
+											<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+											<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+										</svg>
+										<input id="password" name="password" type="password" class="form-control" placeholder="Mot de passe">
+									</div>
+									<div class="d-sm-flex justify-content-between">
+										<div class="field-wrapper toggle-pass">
+											<p class="d-inline-block">Afficher le mot de passe</p>
+											<label class="switch s-primary">
+												<input type="checkbox" id="toggle-password" class="d-none">
+												<span class="slider round"></span>
+											</label>
+										</div>
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+										<div class="field-wrapper">
+											<button type="submit" class="btn btn-primary" value="">Se connecter</button>
+										</div>
+
+									</div>
+
+									<div class="field-wrapper text-center keep-logged-in">
+										<div class="n-chk new-checkbox checkbox-outline-primary">
+											<label class="new-control new-checkbox checkbox-outline-primary">
+												<input type="checkbox" class="new-control-input" name="_remember_me" checked>
+												<span class="new-control-indicator"></span>Rester connecté
+											</label>
+										</div>
+									</div>
+
+									<div class="field-wrapper">
+										<a href="{{ path('forgotten_password') }}" class="forgot-pass-link">Mot de passe oublié?</a>
+									</div>
+
+								</div>
+							</form>
+							<p class="terms-conditions">© 2021 Tous les droits sont réservés.
+								<a href="">My Space</a>
+								est une production de.
+								<a href="https://www.lazarefortune.com" target="_blank">Lazare Fortune</a>
+							</p>
+
+						</div>
+					</div>
 				</div>
-				<div class="card-body">
-					<p class="login-box-msg">Connectez vous à votre espace</p>
-
-					<form method="post">
-						{% if error %}
-							<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-						{% endif %}
-						{% include 'layouts/flash-messages.html.twig' %}
-						<div class="input-group mb-3">
-							<input type="text" name="username" class="form-control" placeholder="Identifiant">
-							<div class="input-group-append">
-								<div class="input-group-text">
-									<span class="fas fa-user"></span>
-								</div>
-							</div>
-						</div>
-						<div class="input-group mb-3">
-							<input type="password" name="password" class="form-control" placeholder="Password">
-							<div class="input-group-append">
-								<div class="input-group-text">
-									<span class="fas fa-lock"></span>
-								</div>
-							</div>
-						</div>
-						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-						<div class="row">
-							<div class="col-8">
-								<div class="icheck-primary">
-									<input type="checkbox" id="remember" name="_remember_me" checked>
-									<label for="remember">
-										Se souvenir de moi
-									</label>
-								</div>
-							</div>
-							<!-- /.col -->
-							<!-- /.col -->
-						</div>
-						<div class="input-group">
-							<button type="submit" class="btn btn-primary btn-block">Se connecter</button>
-						</div>
-					</form>
-
-					{# <div class="social-auth-links text-center mt-2 mb-3">
-						<a href="#" class="btn btn-block btn-danger disabled">
-							<i class="fab fa-google mr-2"></i>
-							Se connecter avec Google (indisponible)
-						</a>
-					</div> #}
-					<!-- /.social-auth-links -->
-
-					<p class="mb-1 mt-3">
-						<a href="{{ path('forgotten_password') }}">Mot de passe oublié ?</a>
-					</p>
-					<p class="mb-0">
-						<a href="" class="text-center">Créer un compte</a>
-					</p>
-				</div>
-				<!-- /.card-body -->
 			</div>
-			<!-- /.card -->
+			<div class="form-image">
+				<div class="l-image"></div>
+			</div>
 		</div>
-		<!-- /.login-box -->
-
-		<!-- jQuery -->
-		<script src="../../plugins/jquery/jquery.min.js"></script>
-		<!-- Bootstrap 4 -->
-		<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<!-- AdminLTE App -->
-		<script src="../../dist/js/adminlte.min.js"></script>
-	</body>
-</html>
+{% endblock %}

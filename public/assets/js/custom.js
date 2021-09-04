@@ -1,76 +1,134 @@
-(function($) {
-  var toggle = document.getElementById("menu-toggle");
-  var menu = document.getElementById("menu");
-  var close = document.getElementById("menu-close");
+/*
+=========================================
+|                                       |
+|           Scroll To Top               |
+|                                       |
+=========================================
+*/ 
+$('.scrollTop').click(function() {
+    $("html, body").animate({scrollTop: 0});
+});
 
-  toggle.addEventListener("click", function(e) {
-    if (menu.classList.contains("open")) {
-      menu.classList.remove("open");
-    } else {
-      menu.classList.add("open");
-    }
-  });
 
-  close.addEventListener("click", function(e) {
-    menu.classList.remove("open");
-  });
+$('.navbar .dropdown.notification-dropdown > .dropdown-menu, .navbar .dropdown.message-dropdown > .dropdown-menu ').click(function(e) {
+    e.stopPropagation();
+});
 
-  // Close menu after click on smaller screens
-  $(window).on("resize", function() {
-    if ($(window).width() < 846) {
-      $(".main-menu a").on("click", function() {
-        menu.classList.remove("open");
-      });
-    }
-  });
+/*
+=========================================
+|                                       |
+|       Multi-Check checkbox            |
+|                                       |
+=========================================
+*/
 
-  $(".owl-carousel").owlCarousel({
-    items: 4,
-    lazyLoad: true,
-    loop: true,
-    dots: true,
-    margin: 30,
-    responsiveClass: true,
-    responsive: {
-      0: {
-        items: 1
-      },
-      600: {
-        items: 1
-      },
-      1000: {
-        items: 1
-      }
-    }
-  });
+function checkall(clickchk, relChkbox) {
 
-  $(".hover").mouseleave(function() {
-    $(this).removeClass("hover");
-  });
+    var checker = $('#' + clickchk);
+    var multichk = $('.' + relChkbox);
 
-  $(".isotope-wrapper").each(function() {
-    var $isotope = $(".isotope-box", this);
-    var $filterCheckboxes = $('input[type="radio"]', this);
 
-    var filter = function() {
-      var type = $filterCheckboxes.filter(":checked").data("type") || "*";
-      if (type !== "*") {
-        type = '[data-type="' + type + '"]';
-      }
-      $isotope.isotope({ filter: type });
-    };
+    checker.click(function () {
+        multichk.prop('checked', $(this).prop('checked'));
+    });    
+}
 
-    $isotope.isotope({
-      itemSelector: ".isotope-item",
-      layoutMode: "masonry"
-    });
 
-    $(this).on("change", filter);
-    filter();
-  });
+/*
+=========================================
+|                                       |
+|           MultiCheck                  |
+|                                       |
+=========================================
+*/
 
-  lightbox.option({
-    resizeDuration: 200,
-    wrapAround: true
-  });
-})(jQuery);
+/*
+    This MultiCheck Function is recommanded for datatable
+*/
+
+function multiCheck(tb_var) {
+    tb_var.on("change", ".chk-parent", function() {
+        var e=$(this).closest("table").find("td:first-child .child-chk"), a=$(this).is(":checked");
+        $(e).each(function() {
+            a?($(this).prop("checked", !0), $(this).closest("tr").addClass("active")): ($(this).prop("checked", !1), $(this).closest("tr").removeClass("active"))
+        })
+    }),
+    tb_var.on("change", "tbody tr .new-control", function() {
+        $(this).parents("tr").toggleClass("active")
+    })
+}
+
+/*
+=========================================
+|                                       |
+|           MultiCheck                  |
+|                                       |
+=========================================
+*/
+
+function checkall(clickchk, relChkbox) {
+
+    var checker = $('#' + clickchk);
+    var multichk = $('.' + relChkbox);
+
+
+    checker.click(function () {
+        multichk.prop('checked', $(this).prop('checked'));
+    });    
+}
+
+/*
+=========================================
+|                                       |
+|               Tooltips                |
+|                                       |
+=========================================
+*/
+
+$('.bs-tooltip').tooltip();
+
+/*
+=========================================
+|                                       |
+|               Popovers                |
+|                                       |
+=========================================
+*/
+
+$('.bs-popover').popover();
+
+
+/*
+================================================
+|                                              |
+|               Rounded Tooltip                |
+|                                              |
+================================================
+*/
+
+$('.t-dot').tooltip({
+    template: '<div class="tooltip status rounded-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+})
+
+
+/*
+================================================
+|            IE VERSION Dector                 |
+================================================
+*/
+
+function GetIEVersion() {
+  var sAgent = window.navigator.userAgent;
+  var Idx = sAgent.indexOf("MSIE");
+
+  // If IE, return version number.
+  if (Idx > 0) 
+    return parseInt(sAgent.substring(Idx+ 5, sAgent.indexOf(".", Idx)));
+
+  // If IE 11 then look for Updated user agent string.
+  else if (!!navigator.userAgent.match(/Trident\/7\./)) 
+    return 11;
+
+  else
+    return 0; //It is not IE
+}

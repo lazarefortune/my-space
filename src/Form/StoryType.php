@@ -27,6 +27,7 @@ class StoryType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 "label" => "Description*",
+                "required" => true,
                 "attr" => [
                     'id' => "summernote",
                     "placeholder" => "Ecrivez ce que vous souhaitez ...",

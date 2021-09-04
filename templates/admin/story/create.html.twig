@@ -1,141 +1,187 @@
 {% extends "layouts/admin.html.twig" %}
 
 {% block stylesheets %}
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href=" {{ asset('plugins/bootstrap-select/bootstrap-select.min.css') }} ">
 {% endblock %}
 
-{% block admin_content %}
+{% block site_content %}
 
-  <div class="row">
+	<div class="row">
 
-	<div class="col-md-8 mx-auto">
-      {% include 'layouts/flash-messages.html.twig' %}
-      <div class="d-flex justify-content-around">
-        <a href="{{ path('story_index') }}" class="btn btn-sm btn-secondary shadow">
-          Liste des stories
-          <i class="fas fa-arrow-right"></i>
-        </a>
-      </div>
-
-      <article class="card border border-primary shadow mt-4 p-3 mx-auto">
-      {{ form_start(formStory) }}
-		<p>Ravis de te revoir {{ app.user.nom }} {{ app.user.prenom }} ;-) Quoi de neuf ? Ecrit ton histoire...</p>
-        <h5 class="font-weight-bold">
-          {# {{ story.title }} #}
-          {{ form_row(formStory.title) }}
-        </h5>
-        <p class="mb-0 text-info">
-          <i class="fas fa-edit"></i>
-		  Ecrit par :
-          <span class="font-italic font-weight-bold">
-            {{ app.user.nom }}
-            {{ app.user.prenom }}
-          </span>
-        </p>
-        <p class="">
-			<label for="story_created_at"> <i class="fas fa-clock"></i> Date de publication</label>
-          {{ form_widget(formStory.created_at) }}
-        </p>
-
-        <p class="mt-4 text-justify">
-          
-          {{ form_row(formStory.description) }}
-        </p>
-		<div class="form-group">
-			<label for="story_statut"> <i class="fas fa-lock"></i> Confidentialité</label>
-			{{ form_widget(formStory.statut) }}
-			{# <select class="custom-select" name="story_statut" id="story_statut">
-				<option selected> Public (visible par tous) </option>
-				<option value=""> Publier en anonyme (votre nom sera invisible) </option>
-				<option value=""> Privée </option>
-			</select> #}
-		</div>
-		{% do formStory.statut.setRendered %}
-
-      {{ form_end(formStory) }}
-      </article>
-
-    </div>
-
-
-    <div class="col-md-9 mx-auto">
-
-      {# <div class="bg-white shadow rounded px-4 py-2">
-	  	<h4 class="font-weight-bold">Ajouter une nouvelle story :-)
-      </h4>
-      <h6 class="">Content de vous revoir
-        <span class="text-capitalize font-weight-bold">{{ app.user.nom }}
-          {{ app.user.prenom }}</span>
-        <br>
-      </h6>
-	  </div> #}
-
-      <div class="mt-4">
-      {# <form method="post"> #}
-      {# <div class="form-group">
-					<label for="summernote">Mon inspiration *</label>
-					<textarea name="" id="summernote" cols="30" rows="10"></textarea>
-				</div>
-				<div class="form-group my-3">
-					<label for="publishAt">Date de publication *</label>
-					<input type="date" class="form-control" id="publishAt" required>
-				</div>
-				
-				<div class="form-group my-3">
-					<label for="publishHourAt">Heure de publication *</label>
-					<input type="time" class="form-control" id="publishHourAt" required>
-				</div> #}
-
-      {# <button type="submit" class="btn btn-primary my-4 text-center">
-					Publier mon inspiration
+		<div class="col-md-8 mx-auto">
+			{% include 'layouts/flash-messages.html.twig' %}
+			<div class="d-flex justify-content-around">
+				<a href="{{ path('story_index') }}" class="btn btn-sm btn-secondary shadow">
+					Liste des stories
 					<i class="fas fa-arrow-right"></i>
-				</button> #}
-      {# </form> #}
-	  </div>
+				</a>
+			</div>
 
-    </div>
+			<article class="card border border-primary shadow mt-4 p-3 mx-auto">
+				{{ form_start(formStory) }}
+				<p>Ravis de te revoir
+					{{ app.user.nom }}
+					{{ app.user.prenom }}
+					;-) Quoi de neuf ? Ecrit ton histoire...</p>
+				<h5
+					class="font-weight-bold">
+					{# {{ story.title }} #}
+					{{ form_row(formStory.title) }}
+				</h5>
+				<p class="mb-0 text-info">
+					<i class="fas fa-edit"></i>
+					Ecrit par :
+					<span class="font-italic font-weight-bold">
+						{{ app.user.nom }}
+						{{ app.user.prenom }}
+					</span>
+				</p>
 
-  </div>
+				{# <p class="">
+													<label for="story_created_at">
+														<i class="fas fa-clock"></i>
+														Date de publication</label>
+													{{ form_widget(formStory.created_at) }}
+												</p> #}
 
-  {% block javascripts %}
-    <script>
-      $('#story_description').summernote({
-        placeholder: 'Ecrivez ce que vous voulez ...',
-        tabsize: 2,
-        height: 220,
-        toolbar: [
-          [
-            'style', ['style']
-          ],
-          [
-            'font',
-            [
-              'bold', 'underline', 'clear'
-            ]
-          ],
-          [
-            'color', ['color']
-          ],
-          [
-            'para',
-            [
-              'ul', 'ol', 'paragraph'
-            ]
-          ],
-          [
-            'insert', ['link']
-          ],
-          [
-            'view',
-            [
-              'fullscreen', 'codeview', 'help'
-            ]
-          ]
-        ]
-      });
-    </script>
-  {% endblock %}
+				<!-- ne pas supprimer -->
+				<div class="form-group d-none">
+					<input id="basicFlatpickr" value="2019-09-04" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Select Date..">
+				</div>
+				<!-- ne pas supprimer -->
 
+				<div class="form-group my-3">
+					<input id="dateTimeFlatpickr" name="story[created_at]" value="" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Selectionnez une date..">
+					{% do formStory.created_at.setRendered %}
+				</div>
+
+				<p class="mt-4 text-justify">
+
+					{{ form_row(formStory.description) }}
+				</p>
+
+				<div class="form-group">
+					<label for="story_statut">
+						<i class="fas fa-lock"></i>
+						Confidentialité</label>
+					{# {{ form_widget(formStory.statut) }} #}
+					{# <select class="custom-select " name="story_statut" id="story_statut">
+						<option selected>
+							Public (visible par tous)
+						</option>
+						<option value="">
+							Publier en anonyme (votre nom sera invisible)
+						</option>
+						<option value="">
+							Privée
+						</option>
+					</select> #}
+				</div>
+
+				<select class="selectpicker mb-3" name="story[statut]" id="story_statut">
+					<option value="public">Public</option>
+					<option value="public_anonyme">Anonyme</option>
+					<option value="privee">Privée</option>
+				</select>
+				{% do formStory.statut.setRendered %}
+				{{ form_end(formStory) }}
+			</article>
+
+		</div>
+
+
+		<div
+			class="col-md-9 mx-auto">
+
+			{# <div class="bg-white shadow rounded px-4 py-2">
+										  	<h4 class="font-weight-bold">Ajouter une nouvelle story :-)
+									      </h4>
+									      <h6 class="">Content de vous revoir
+									        <span class="text-capitalize font-weight-bold">{{ app.user.nom }}
+									          {{ app.user.prenom }}</span>
+									        <br>
+									      </h6>
+										  </div> #}
+
+			<div class="mt-4">{# <form method="post"> #}
+				{# <div class="form-group">
+																	<label for="summernote">Mon inspiration *</label>
+																	<textarea name="" id="summernote" cols="30" rows="10"></textarea>
+																</div>
+																<div class="form-group my-3">
+																	<label for="publishAt">Date de publication *</label>
+																	<input type="date" class="form-control" id="publishAt" required>
+																</div>
+																
+																<div class="form-group my-3">
+																	<label for="publishHourAt">Heure de publication *</label>
+																	<input type="time" class="form-control" id="publishHourAt" required>
+																</div> #}
+
+				{# <button type="submit" class="btn btn-primary my-4 text-center">
+																	Publier mon inspiration
+																	<i class="fas fa-arrow-right"></i>
+																</button> #}
+				{# </form> #}
+			</div>
+
+		</div>
+
+	</div>
+
+{% endblock %}
+{% block javascripts %}
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src=" {{ asset('assets/js/scrollspyNav.js') }} "></script>
+	<script src=" {{ asset('plugins/flatpickr/flatpickr.js') }} "></script>
+	<script src=" {{ asset('plugins/noUiSlider/nouislider.min.js') }} "></script>
+
+	<script src=" {{ asset('plugins/flatpickr/custom-flatpickr.js') }} "></script>
+	<script src=" {{ asset('plugins/noUiSlider/custom-nouiSlider.js') }} "></script>
+	<script src="plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js"></script>
+	<!-- END PAGE LEVEL SCRIPTS -->
+
+	<script src=" {{ asset('plugins/bootstrap-select/bootstrap-select.min.js') }} "></script>
+
+
+	<script>
+		$('#story_description').summernote({
+placeholder: 'Ecrivez ce que vous voulez ...',
+tabsize: 2,
+height: 220,
+toolbar: [
+[
+'style', ['style']
+],
+[
+'font',
+[
+'bold', 'underline', 'clear'
+]
+],
+[
+'color', ['color']
+],
+[
+'para',
+[
+'ul', 'ol', 'paragraph'
+]
+],
+[
+'insert', ['link']
+],
+[
+'view',
+[
+'fullscreen', 'codeview', 'help'
+]
+]
+]
+});
+	</script>
 {% endblock %}

@@ -38,13 +38,13 @@
         </div> <!-- header hero --> #}
 {% endblock %}
 
-{% block admin_content %}
+{% block site_content %}
 
 	<div class="row">
 		<div
 			class="col-md-9 mx-auto">
 
-			<div class="card  mt-4 p-3">
+			<div class="card shadow my-3 p-3">
 				<p>Bienvenue <b>{{ app.user.nom }} {{ app.user.prenom }}</b></p>
 			</div>
 
@@ -53,8 +53,8 @@
 			<!-- /.row -->
 			<div class="row">
 				<!-- /.col-md-6 -->
-				<div class="col-lg-6">
-					<div class="card card-success card-outline">
+				<div class="col-lg-6 my-3">
+					<div class="card card-success shadow card-outline">
 						<div class="card-header">
 							<h5 class="m-0 font-weight-bold">Les histoires du monde</h5>
 						</div>
@@ -71,8 +71,8 @@
 			<!-- /.row -->
 			<div class="row">
 				<!-- /.col-md-6 -->
-				<div class="col-lg-6">
-					<div class="card card-primary card-outline">
+				<div class="col-lg-6 my-3">
+					<div class="card card-primary shadow card-outline">
 						<div class="card-header">
 							<h5 class="m-0">Espace de stockage</h5>
 						</div>
@@ -86,8 +86,8 @@
 				</div>
 				<!-- /.col-md-6 -->
 				<!-- /.col-md-6 -->
-				<div class="col-lg-6">
-					<div class="card card-warning card-outline">
+				<div class="col-lg-6 my-3">
+					<div class="card card-warning shadow card-outline">
 						<div class="card-header">
 							<h5 class="m-0">Vos projets</h5>
 						</div>

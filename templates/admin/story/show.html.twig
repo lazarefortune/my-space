@@ -6,12 +6,12 @@
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 {% endblock %}
 
-{% block admin_content %}
+{% block site_content %}
 
 	<div class="row">
-		{% include 'layouts/flash-messages.html.twig' %}
 
 		<div class="col-md-8 mx-auto">
+		{% include 'layouts/flash-messages.html.twig' %}
 			{% if app.user.idUser != story.idUser.idUser and story.trash == true %}
 				<div class="alert alert-info">
 					Cette story a été supprimé temporairement par son auteur.
@@ -29,25 +29,34 @@
 								Modifier
 								<i class="fas fa-edit"></i>
 							</a>
+
+
+							<!-- Fin Suppression modal -->
+
 							<!-- Button delete modal -->
-							<button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-danger shadow mt-2 mb-4">
+							<button data-toggle="modal" data-target="#deleteStory" class="btn btn-sm btn-danger shadow mt-2 mb-4">
 								Supprimer
 								<i class="fas fa-trash"></i>
 							</button>
+							{# <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteStory">
+								Supprimer
+								<i class="fas fa-trash"></i>
+							</button> #}
 
 							<!-- Modal -->
-							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog">
+							<div class="modal fade" id="deleteStory" tabindex="-1" role="dialog" aria-labelledby="deleteStoryLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">
-												Suppression de la story n°
-												{{ story.id }}
-											</h5>
-											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											<h5 class="modal-title" id="deleteStoryLabel">Suppression de la story n°
+												{{ story.id }}</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												x
+											</button>
 										</div>
 										<div class="modal-body">
-											Souhaitez vous vraiment supprimer cette story ?
+											<p class="modal-text">
+												Souhaitez vous vraiment supprimer cette story ?
 											<br>
 											(Elle sera mise en corbeille)
 											<hr>
@@ -64,17 +73,21 @@
 												et ainsi être visible uniquement par vous.
 											</strong>
 										{% endif %}
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-										<a href="{{ path('story_move_to_trash', {storyId: story.id}) }}" class="btn btn-warning">
+											</p>
+										</div>
+										<div class="modal-footer">
+											<button class="btn" data-dismiss="modal">
+												<i class="flaticon-cancel-12"></i>
+												Annuler</button>
+											<a href="{{ path('story_move_to_trash', {storyId: story.id}) }}" class="btn btn-warning">
 											Mettre à la corbeille
 											<i class="fas fa-trash"></i>
 										</a>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+							
 
 						<a href="{{ path('story_my') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
 							Liste des stories
@@ -87,37 +100,40 @@
 						</a>
 
 						<!-- Button delete modal -->
-						<button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-danger shadow mt-2 mb-4">
+						<button data-toggle="modal" data-target="#deletePermentlyStory" class="btn btn-sm btn-danger shadow mt-2 mb-4">
 							Supprimer définitivement
 							<i class="fas fa-trash"></i>
 						</button>
 
 						<!-- Modal -->
-						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">
-											Suppression de la story n°
-											{{ story.id }}
-										</h5>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									<div class="modal-body">
-										Souhaitez vous vraiment supprimer cette story ?
+						<div class="modal fade" id="deletePermentlyStory" tabindex="-1" role="dialog" aria-labelledby="deletePermentlyStoryLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="deleteStoryLabel">Suppression de la story n°
+												{{ story.id }}</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												x
+											</button>
+										</div>
+										<div class="modal-body">
+											<p>Souhaitez vous vraiment supprimer cette story ?
 										<br>
 										Cette action est irréversible.
-										<hr>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-										<a href="{{ path('story_delete', {storyId: story.id}) }}" class="btn btn-danger">
+										<hr></p>
+										</div>
+										<div class="modal-footer">
+											<button class="btn" data-dismiss="modal">
+												<i class="flaticon-cancel-12"></i>
+												Annuler</button>
+											<a href="{{ path('story_delete', {storyId: story.id}) }}" class="btn btn-danger">
 											Supprimer définitivement
 											<i class="fas fa-trash"></i>
 										</a>
+										</div>
 									</div>
 								</div>
-							</div>
+							
 						</div>
 						<a href="{{ path('story_trash') }}" class="btn btn-sm btn-secondary shadow mt-2 mb-4">
 							Corbeille
@@ -199,23 +215,26 @@
 								à
 								{{ story.createdAt|date("H:i:s") }}
 								de
-								<b>{{ commentary.user.nom }} {{ commentary.user.prenom }}</b>
+								<b>{{ commentary.user.nom }}
+									{{ commentary.user.prenom }}</b>
 							</small>
-						{% if commentary.user.idUser == app.user.idUser  %}
-							<a href="" class="btn btn-sm btn-secondary"> <i class="fas fa-edit"></i> </a>
-						{% endif %}
+							{% if commentary.user.idUser == app.user.idUser  %}
+								<a href="" class="btn btn-sm btn-secondary">
+									<i class="fas fa-edit"></i>
+								</a>
+							{% endif %}
 						</li>
 					{% endfor %}
 				</ul>
 
 				<div class="mt-4">
 					{{ form_start( formCommentary ) }}
-				{# <div class="form-group mt-4">
-					<label for="commentary">Laisser un commentaire</label>
-					<textarea name="" class="form-control" id="" cols="30" rows="5"></textarea>
-				</div>
-				<button type="submit" class="btn btn-primary">Commenter</button> #}
-				{{ form_end( formCommentary ) }}
+					{# <div class="form-group mt-4">
+															<label for="commentary">Laisser un commentaire</label>
+															<textarea name="" class="form-control" id="" cols="30" rows="5"></textarea>
+														</div>
+														<button type="submit" class="btn btn-primary">Commenter</button> #}
+					{{ form_end( formCommentary ) }}
 				</div>
 			</div>
 
