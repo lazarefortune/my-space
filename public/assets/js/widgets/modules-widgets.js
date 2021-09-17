@@ -929,7 +929,7 @@ var options = {
         type: 'donut',
         width: 380
     },
-    colors: ['#1b55e2', '#009688', '#e7515a', '#e2a03f'],
+    colors: ['#5c1ac3', '#e2a03f', '#e7515a', '#e2a03f'],
     dataLabels: {
       enabled: false
     },

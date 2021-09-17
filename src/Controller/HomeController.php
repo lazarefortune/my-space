@@ -1,15 +1,19 @@
 <?php
 
 namespace App\Controller;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+    /**
+     * @Route("/" , name="home")
+     */
     public function index(): Response{
-        
-        // return $this->render('index.html.twig');
-        return $this->redirect('my-space');
+
+        return $this->render('index.html.twig');
     }
 }

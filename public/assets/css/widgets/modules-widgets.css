@@ -29,18 +29,11 @@
   -moz-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
   box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07); }
 
-body.minimal .widget {
-  border: 1px solid #e0e6ed !important;
-  box-shadow: none; }
-
 /*
     ==================
         Notification
     ==================
 */
-body.minimal .widget-card-four {
-  padding: 25px 32px; }
-
 .widget-card-four {
   padding: 25px 32px;
   background: #fff; }
@@ -408,13 +401,10 @@ body.minimal .widget-card-four {
         Balance
     ==================
 */
-body.minimal .widget-account-invoice-two {
-  padding: 22px 19px; }
-
 .widget-account-invoice-two {
   padding: 22px 19px;
   background: #e2a03f;
-  background-image: linear-gradient(to top, #276b6b 0%, #46177e 100%); }
+  background: linear-gradient(to right, #0081ff 0%, #0045ff 100%); }
   .widget-account-invoice-two .account-box .info {
     display: flex;
     justify-content: space-between;
@@ -451,9 +441,6 @@ body.minimal .widget-account-invoice-two {
         Statistics
     ==================
 */
-body.minimal .widget-card-one {
-  padding: 20px 0; }
-
 .widget-card-one {
   background: #fff;
   padding: 20px 0;
@@ -507,9 +494,6 @@ body.minimal .widget-card-one {
         Visitors by Browser
     ===========================
 */
-body.minimal .widget-four {
-  padding: 20px; }
-
 .widget-four {
   position: relative;
   background: #fff;
@@ -595,9 +579,6 @@ body.minimal .widget-four {
         Dev Summit
     ==================
 */
-body.minimal .widget-card-two {
-  padding: 20px 0px; }
-
 .widget-card-two {
   background: #fff;
   padding: 20px 0px; }
@@ -659,9 +640,6 @@ body.minimal .widget-card-two {
         Task Indicator
     =====================
 */
-body.minimal .widget-five {
-  padding: 28px 0 0 0; }
-
 .widget-five {
   background: #fff;
   padding: 28px 0 0 0;
@@ -761,10 +739,6 @@ body.minimal .widget-five {
         Total Sales
     ==================
 */
-body.minimal .widget-two {
-  border: 1px solid #e0e6ed !important;
-  box-shadow: none; }
-
 .widget-two {
   position: relative;
   background: #fff;
@@ -895,10 +869,6 @@ body.minimal .widget-two {
         Order Summary
     ====================
 */
-body.minimal .widget-three {
-  border: 1px solid #e0e6ed !important;
-  box-shadow: none; }
-
 .widget-three {
   position: relative;
   background: #fff;

@@ -1,0 +1,51 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}MailSend index
+{% endblock %}
+
+{% block site_content %}
+
+	<div class="row">
+		<div class="col-md-10 mx-auto">
+			<h1>MailSend index</h1>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Title</th>
+						<th>Content</th>
+						<th>FromEmail</th>
+						<th>CopyEmail</th>
+						<th>ToEmail</th>
+						<th>Created_at</th>
+						<th>actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for mail_send in mail_sends %}
+						<tr>
+							<td>{{ mail_send.id }}</td>
+							<td>{{ mail_send.title }}</td>
+							<td>{{ mail_send.content[:50] }}</td>
+							<td>{{ mail_send.fromEmail }}</td>
+							<td>{{ mail_send.copyEmail ? mail_send.copyEmail|join(', ') : '' }}</td>
+							<td>{{ mail_send.toEmail ? mail_send.toEmail|join(', ') : '' }}</td>
+							<td>{{ mail_send.createdAt ? mail_send.createdAt|date('d/m/Y à H:i:s') : '' }}</td>
+							<td>
+								<a href="{{ path('admin_mail_send_show', {'id': mail_send.id}) }}">show</a>
+								<a href="{{ path('admin_mail_send_edit', {'id': mail_send.id}) }}">edit</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="8">Aucun mail trouvé</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<a href="{{ path('admin_mail_send_new') }}" class="btn btn-sm btn-primary">Create new</a>
+		</div>
+	</div>
+
+{% endblock %}

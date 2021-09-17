@@ -1,81 +1,163 @@
 {% extends "layouts/admin.html.twig" %}
 
 {% block site_content %}
+
+	{# <div class="row mt-4">
+					
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-bottom:24px;">
+						<div class="statbox widget box box-shadow">
+							<div class="widget-header">
+								<div class="row">
+									<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+										<h4>Profil</h4>
+									</div>
+								</div>
+							</div>
+							<div class="widget-content widget-content-area" style="height: 571px;">
+								<form>
+									<div class="form-row mb-4">
+										<div class="form-group col-md-6">
+											<label for="inputEmail4">Email</label>
+											<input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+										</div>
+										<div class="form-group col-md-6">
+											<label for="inputPassword4">Password</label>
+											<input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+										</div>
+									</div>
+									<div class="form-group mb-4">
+										<label for="inputAddress">Address</label>
+										<input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+									</div>
+									<div class="form-group mb-4">
+										<label for="inputAddress2">Address 2</label>
+										<input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+									</div>
+									<div class="form-row mb-4">
+										<div class="form-group col-md-6">
+											<label for="inputCity">City</label>
+											<input type="text" class="form-control" id="inputCity">
+										</div>
+										<div class="form-group col-md-4">
+											<label for="inputState">State</label>
+											<select id="inputState" class="form-control">
+												<option selected="">Choose...</option>
+												<option>...</option>
+											</select>
+										</div>
+										<div class="form-group col-md-2">
+											<label for="inputZip">Zip</label>
+											<input type="text" class="form-control" id="inputZip">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="form-check pl-0">
+											<div class="custom-control custom-checkbox checkbox-info">
+												<input type="checkbox" class="custom-control-input" id="gridCheck">
+												<label class="custom-control-label" for="gridCheck">Check me out</label>
+											</div>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-primary mt-3">Sign in</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div> #}
+
 	<div class="row mt-4">
-		<div class="mx-auto col-md-11">
+		<div class="mx-auto col-md-12">
 
 			{% include 'layouts/flash-messages.html.twig' %}
-				
-			<div class="card card-fluid border border-dark">
-				<h6 class="card-header font-weight-bold bg-dark">
-					Profil
-				</h6>
+
+			<div
+				class="statbox widget box box-shadow mb-5">
+				{# <h6 class="card-header font-weight-bold bg-dark">
+																	Profil
+																</h6> #}
+				<div class="widget-header">
+					<div class="row">
+						<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+							<h4>Profil</h4>
+						</div>
+					</div>
+				</div>
 				<!-- .card-body -->
 				<div
-					class="card-body">
+					class="widget-content widget-content-area">
 					<!-- form -->
-						{{ form_start(formUser) }}
-						<!-- form row -->
-						<div
-							class="form-row">
-							<!-- form column -->
-							<div class="col-md-6 mb-3">
-								<label for="form_nomEval">Nom <span class="text-danger">*</span> </label>								
-								{{ form_widget(formUser.nom) }}
-								{{ form_errors(formUser.nom) }}
-							</div>
-							<!-- /form column -->
-							<!-- form column -->
-							<div class="col-md-6 mb-3">
-								<label for="input02">Prénom <span class="text-danger">*</span></label>
-								{{ form_widget(formUser.prenom) }}
-								{{ form_errors(formUser.prenom) }}
-							</div>
-							<!-- /form column -->
+					{{ form_start(formUser) }}
+					<!-- form row -->
+					<div
+						class="form-row">
+						<!-- form column -->
+						<div class="col-md-6 mb-3">
+							<label for="form_nomEval">Nom
+								<span class="text-danger">*</span>
+							</label>
+							{{ form_widget(formUser.nom) }}
+							{{ form_errors(formUser.nom) }}
 						</div>
-						<!-- /form row -->
-						<!-- .form-group -->
-						<div class="form-group">
-							<label for="input03">Adresse e-mail <span class="text-danger">*</span></label>
-							{{ form_widget(formUser.email) }}
-							{{ form_errors(formUser.email) }}
+						<!-- /form column -->
+						<!-- form column -->
+						<div class="col-md-6 mb-3">
+							<label for="input02">Prénom
+								<span class="text-danger">*</span>
+							</label>
+							{{ form_widget(formUser.prenom) }}
+							{{ form_errors(formUser.prenom) }}
 						</div>
-						<!-- /.form-group -->
-						<!-- .form-group -->
-						<div class="form-group">
-							<label for="input03">Adresse e-mail secondaire</label>
-							{{ form_widget(formUser.secondEmail) }}
-							{{ form_errors(formUser.secondEmail) }}
+						<!-- /form column -->
+					</div>
+					<!-- /form row -->
+					<!-- .form-group -->
+					<div class="form-group">
+						<label for="input03">Adresse e-mail
+							<span class="text-danger">*</span>
+						</label>
+						{{ form_widget(formUser.email) }}
+						{{ form_errors(formUser.email) }}
+					</div>
+					<!-- /.form-group -->
+					<!-- .form-group -->
+					<div class="form-group">
+						<label for="input03">Adresse e-mail secondaire</label>
+						{{ form_widget(formUser.secondEmail) }}
+						{{ form_errors(formUser.secondEmail) }}
+					</div>
+					<!-- /.form-group -->
+					<!-- .form-group -->
+					<div class="form-group">
+						<label for="identifiant">Identifiant de connexion</label>
+						{{ form_widget(formUser.login) }}
+						{{ form_errors(formUser.login) }}
+						<div class=" mt-1">
+							<span class="badge badge-primary">
+								<small id="sh-text4" class="form-text mt-0">Cet identifiant est unique et vous permet de vous connecter à la plateforme.</small>
+							</span>
 						</div>
-						<!-- /.form-group -->
-						<!-- .form-group -->
-						<div class="form-group">
-							<label for="identifiant">Identifiant de connexion</label>
-							{{ form_widget(formUser.login) }}
-							{{ form_errors(formUser.login) }}
-							<small class="text-muted">Cet identifiant est unique et vous permet de vous connecter à la plateforme.</small>
-						</div>
-						<!-- /.form-group -->
-						<!-- .form-group -->
-						<div class="form-group">
-							<label for="newPassword">Nouveau mot de passe</label>
-							<input type="password" class="form-control" name="newPassword" id="newPassword">
-							<small>Uniquement si vous Souhaitez modifier votre mot de passe, sinon laissez vide.</small>
-						</div>
-						<!-- /.form-group -->
-						{# <hr> #}
-						<!-- .form-actions -->
-							<!-- enable submit btn when user type their current password -->
-						<div
-							class="form-group">
-							<label for="oldPassword">Mot de passe actuel *</label>
-							<input type="password" class="form-control mr-3" name="oldPassword" id="oldPassword" placeholder="Entrez votre mot de passe actuel" required="">
-							<small>Obligatoire pour mettre à jour vos données.</small>
-						</div> 
-							<button type="submit" class="btn btn-primary text-nowrap ml-auto" id="send" disabled>Mettre à jour</button>
-						<!-- /.form-actions -->
+						{# <small class="text-muted">Cet identifiant est unique et vous permet de vous connecter à la plateforme.</small> #}
+					</div>
+					<!-- /.form-group -->
+					<!-- .form-group -->
+					<div class="form-group">
+						<label for="newPassword">Nouveau mot de passe</label>
+						<input type="password" class="form-control" name="newPassword" id="newPassword">
+						<small>Uniquement si vous Souhaitez modifier votre mot de passe, sinon laissez vide.</small>
+					</div>
+					<!-- /.form-group -->
+					{# <hr> #}
+					<!-- .form-actions -->
+					<!-- enable submit btn when user type their current password -->
+						<div class="form-group"> <label for="oldPassword">Mot de passe actuel *</label>
+						<input
+						type="password" class="form-control mr-3" name="oldPassword" id="oldPassword" placeholder="Entrez votre mot de passe actuel" required="">
+					{# <small>Obligatoire pour mettre à jour vos données.</small> #}
+					</div>
+					<button type="submit" class="btn btn-primary text-nowrap ml-auto" id="send" disabled>Mettre à jour</button>
+					<!-- /.form-actions -->
 					{{ form_end(formUser) }}
-					
+
 					<!-- /form -->
 				</div>
 				<!-- /.card-body -->
@@ -87,17 +169,17 @@
 
 	<div>
 
-{% endblock %}
+	{% endblock %}
 
-{% block javascripts %}
-	<script>
-		document.getElementById("oldPassword").addEventListener("keyup", function() {
-			var nameInput = document.getElementById('oldPassword').value;
-			if (nameInput != "") {
-				document.getElementById('send').removeAttribute("disabled");
-			} else {
-				document.getElementById('send').setAttribute("disabled", null);
-			}
-		});
-	</script>
-{% endblock %}
+	{% block javascripts %}
+		<script>
+			document.getElementById("oldPassword").addEventListener("keyup", function () {
+var nameInput = document.getElementById('oldPassword').value;
+if (nameInput != "") {
+document.getElementById('send').removeAttribute("disabled");
+} else {
+document.getElementById('send').setAttribute("disabled", null);
+}
+});
+		</script>
+	{% endblock %}

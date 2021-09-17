@@ -9,6 +9,7 @@ use App\Entity\Parameters;
 use App\Entity\Inspiration;
 use App\Form\CommentaryType;
 use App\Entity\CommentaryStory;
+use App\Entity\MailSend;
 use Doctrine\ORM\EntityManager;
 use App\Repository\ViewRepository;
 use App\Repository\ParametersRepository;
@@ -198,7 +199,18 @@ class StoryController extends AbstractController
                     ),
                     'text/html'
                 );
-            $mailer->send($message);
+            // $mailer->send($message);
+
+            // $email = new MailSend();
+            // $email->setAuthor( $this->getUser() );
+            // $email->setTitle( $messageTitle );
+            // $email->setToEmail( implode( ",", $toEmail ) );
+            // $email->setContent( $message->getBody() );
+            // $email->setFromEmail( "myspace@lazarefortune.com" );
+            // dd( $email->getContent() );
+            // $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($email);
+            // $entityManager->flush();
         }
 
         if ($this->getUser()->getIdUser() != $story->getIdUser()->getIdUser() and $story->getStatut() == "privee") {

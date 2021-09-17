@@ -1,0 +1,20 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}New MailSend{% endblock %}
+
+{% block site_content %}
+    <h1>Create new MailSend</h1>
+
+    {# {{ include('admin_mail_send/_form.html.twig') }} #}
+    <div class="row">
+        <div class="col-md-7 mx-auto">
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn">{{ button_label|default('Save') }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+
+    <a href="{{ path('admin_mail_send_index') }}">back to list</a>
+{% endblock %}

@@ -8,9 +8,6 @@
 			@Import	Mixins
 	===============================
 */
-body.minimal .widget-content-area {
-  border: none !important; }
-
 .widget-content-area {
   box-shadow: none !important; }
 

@@ -1,0 +1,53 @@
+{% extends "layouts/auth.html.twig" %}
+
+{% block auth_content %}
+	<div class="form-container">
+		<div class="form-form">
+			<div class="form-form-wrap">
+				<div class="form-container">
+					<div class="form-content">
+
+						<h4 class="">Réinitialisation du mot de passe</h4>
+						<p class="signup-link">Entrez votre identifiant ou votre adresse mail et vous recevrez les instructions!</p>
+						<div class="text-left">
+							{{ form_start(emailForm) }}
+							<div class="form">
+								{% include 'layouts/flash-messages.html.twig' %}
+								<div id="email-field" class="field-wrapper input">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign">
+										<circle cx="12" cy="12" r="4"></circle>
+										<path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+									</svg>
+									<input name="reset_password[email]" id="reset_password_email" type="text" required placeholder="Identifiant">
+									{% do emailForm.email.setRendered %}
+								</div>
+								<div class="d-sm-flex justify-content-between">
+									<div class="field-wrapper">
+										<button type="submit" class="btn btn-primary" value="">Réinitialiser</button>
+									</div>
+								</div>
+
+							</div>
+							{{ form_end(emailForm) }}
+							<p class="text-center text-muted mt-4">
+								<a href="{{ path('app_login') }}">Revenir à la connexion</a>
+							</p>
+						</div>
+						<p class="terms-conditions">© 2021 Tous les droits sont réservés.
+								<a href="">My Space</a>
+								est une production de.
+								<a href="https://www.lazarefortune.com" target="_blank">Lazare Fortune</a>
+							</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-image">
+			<div class="l-image"></div>
+		</div>
+	</div>
+
+
+
+{% endblock %}

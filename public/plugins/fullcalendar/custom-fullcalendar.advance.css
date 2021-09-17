@@ -8,9 +8,6 @@
 			@Import	Mixins
 	===============================
 */
-.layout-px-spacing {
-  min-height: auto !important; }
-
 .ps--active-y > .ps__rail-y {
   z-index: 20; }
 
@@ -21,7 +18,7 @@
   height: calc(100vh - 312px); }
 
 #calendar {
-  height: calc(100vh - 257px); }
+  height: calc(100vh - 301px); }
 
 .popover {
   border: none;
@@ -154,12 +151,12 @@ a.bg-primary:hover, a.bg-success:hover, a.bg-warning:hover, a.bg-danger:hover {
 .fc-scroller {
   height: 100% !important;
   position: relative;
-  height: calc(100vh - 311px) !important; }
+  height: calc(100vh - 362px) !important; }
   .fc-scroller.fc-time-grid-container {
     height: calc(100vh - 420px) !important; }
 
 .fc-agendaWeek-view .fc-scroller.fc-time-grid-container, .fc-agendaDay-view .fc-scroller.fc-time-grid-container {
-  height: calc(100vh - 360px) !important; }
+  height: calc(100vh - 408px) !important; }
 
 /*
     Modal

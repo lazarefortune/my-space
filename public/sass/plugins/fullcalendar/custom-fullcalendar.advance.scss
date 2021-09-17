@@ -3,9 +3,7 @@
 //  =================
 
 @import '../../base/base';    // Base Variables
-.layout-px-spacing {
-    min-height: auto!important;
-}
+
 .ps--active-y > .ps__rail-y {
   z-index: 20;
 }
@@ -18,7 +16,7 @@
 }
 
 #calendar {
-  height: calc(100vh - 257px);
+  height: calc(100vh - 301px);
 }
 
 .popover {
@@ -190,7 +188,7 @@ a {
 .fc-scroller {
   height: 100% !important;
   position: relative;
-  height: calc(100vh - 311px) !important;
+  height: calc(100vh - 362px) !important;
 
   &.fc-time-grid-container {
     height: calc(100vh - 420px) !important;
@@ -198,7 +196,7 @@ a {
 }
 
 .fc-agendaWeek-view .fc-scroller.fc-time-grid-container, .fc-agendaDay-view .fc-scroller.fc-time-grid-container {
-  height: calc(100vh - 360px) !important;
+  height: calc(100vh - 408px) !important;
 }
 
 /*

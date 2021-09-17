@@ -1,0 +1,50 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block title %}MailSend{% endblock %}
+
+{% block site_content %}
+    <h1>MailSend</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mail_send.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ mail_send.title }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ mail_send.content }}</td>
+            </tr>
+            <tr>
+                <th>Auteur</th>
+                <td>{{ mail_send.author.nom }} {{ mail_send.author.prenom }}</td>
+            </tr>
+            <tr>
+                <th>FromEmail</th>
+                <td>{{ mail_send.fromEmail }}</td>
+            </tr>
+            <tr>
+                <th>CopyEmail</th>
+                <td>{{ mail_send.copyEmail ? mail_send.copyEmail|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ToEmail</th>
+                <td>{{ mail_send.toEmail ? mail_send.toEmail|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ mail_send.createdAt ? mail_send.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('admin_mail_send_index') }}">back to list</a> #}
+
+    {# <a href="{{ path('admin_mail_send_edit', {'id': mail_send.id}) }}">edit</a> #}
+
+    {# {{ include('admin_mail_send/_delete_form.html.twig') }} #}
+{% endblock %}

@@ -32,7 +32,7 @@ $('.user-list-box .person').on('click', function(event) {
       $(this).parents('.user-list-box').removeClass('user-list-box-show');
     }
     $('.chat-meta-user').addClass('chat-active');
-    $('.chat-box').css('height', 'calc(100vh - 188px)');
+    $('.chat-box').css('height', 'calc(100vh - 233px)');
     $('.chat-footer').addClass('chat-active');
 
   const ps = new PerfectScrollbar('.chat-conversation-box', {

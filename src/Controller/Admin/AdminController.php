@@ -2,17 +2,32 @@
 
 namespace App\Controller\Admin;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
+/**
+ * @isGranted("ROLE_ADMIN")
+ * @Route("/admin" , name="admin_")
+ */
 class AdminController extends AbstractController
 {
-    
-    public function index(): Response
+    /**
+     * @Route("/" , name="home")
+     *
+     * @return Response
+     */
+    public function index( Request $request ): Response
     {
-
+        // $ip = $request->getClientIp();
+        $id = $this->container->get('request_stack')->getCurrentRequest()->getClientIp();
+        $ip = $_SERVER;
+        $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        dd($hostname);
+        dd($ip);
+        // dd($id);
         return $this->render('admin/index.html.twig');
     }
 

@@ -3,13 +3,12 @@
         Balance
     ==================
 */
-body.minimal .widget-account-invoice-two {
-    padding: 22px 19px;
-}
+
 .widget-account-invoice-two {
   padding: 22px 19px;
   background: $warning;
-  background-image: linear-gradient(to top, #276b6b 0%, #46177e 100%);
+  background: linear-gradient(to right, #0081ff 0%, #0045ff 100%);
+
   .account-box {
     .info {
       display: flex;

@@ -3,9 +3,7 @@
 //  =================
 
 @import '../../base/base';    // Base Variables
-.layout-px-spacing {
-    min-height: auto!important;
-}
+
 @keyframes fadeInUp {
   from {
     transform: translate3d(0, 40px, 0);
@@ -64,10 +62,7 @@
     padding: 4px 16px;
   }
 }
-body.minimal .doc-container {
-    border: 1px solid #e0e6ed!important;
-    box-shadow: none;
-}
+
 .doc-container {
   position: relative;
   display: flex;
@@ -76,7 +71,6 @@ body.minimal .doc-container {
   -webkit-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
   -moz-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
   box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
-  margin-bottom: 10px;
 }
 
 .tab-title {
@@ -119,7 +113,7 @@ body.minimal .doc-container {
     margin: auto;
     overflow: auto;
     border-right: 1px solid $m-color_3;
-    height: calc(100vh - 194px);
+    height: calc(100vh - 238px);
   }
 
   .nav-item {
@@ -202,7 +196,7 @@ body.minimal .doc-container {
   overflow-y: auto;
   max-width: 100%;
   width: 100%;
-  height: calc(100vh - 135px);
+  height: calc(100vh - 179px);
 
   .inv-not-selected {
     display: flex;
@@ -279,7 +273,7 @@ body.minimal .doc-container {
 }
 
 .invoice .content-section {
-  height: calc(100vh - 185px);
+  height: calc(100vh - 193px);
 
   .inv--head-section {
     margin-bottom: 50px;

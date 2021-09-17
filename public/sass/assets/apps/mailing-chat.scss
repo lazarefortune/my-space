@@ -4,9 +4,6 @@
 
 @import '../../base/base';    // Base Variables
 
-.layout-px-spacing {
-    min-height: auto!important;
-}
 .wrapper {
   position: relative;
   left: 50%;
@@ -17,18 +14,13 @@
   -webkit-transform: translate(-50%, 0);
   transform: translate(-50%, 0);
 }
-body.minimal .chat-system {
-    border: 1px solid #e0e6ed!important;
-    box-shadow: none;
-    border-radius: 5px;
-}
+
 .chat-system {
   display: flex;
   -webkit-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
   -moz-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
   box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
-  height: calc(100vh - 135px);
-  margin-bottom: 10px;
+  height: calc(100vh - 179px);
 
   .hamburger {
     display: none;
@@ -78,7 +70,7 @@ body.minimal .chat-system {
       margin: auto;
       width: 100%;
       overflow: auto;
-      height: calc(100vh - 208px);
+      height: calc(100vh - 252px);
 
       .person {
         position: relative;
@@ -173,7 +165,7 @@ body.minimal .chat-system {
     background-image: url(../../img/bg.png);
     border-bottom-right-radius: 6px;
     border-top-right-radius: 6px;
-    height: calc(100vh - 135px);
+    height: calc(100vh - 179px);
 
     .chat-not-selected {
       display: flex;
@@ -208,7 +200,7 @@ body.minimal .chat-system {
       display: none;
       position: absolute;
       width: 100%;
-      height: calc(100vh - 135px);
+      height: calc(100vh - 179px);
       z-index: 4 !important;
       opacity: 0;
       transition: all 0.5s ease-in-out;
@@ -326,7 +318,7 @@ body.minimal .chat-system {
       display: none;
       position: absolute;
       width: 100%;
-      height: calc(100vh - 135px);
+      height: calc(100vh - 179px);
       z-index: 4 !important;
       opacity: 0;
       transition: all 0.5s ease-in-out;
@@ -557,7 +549,7 @@ body.minimal .chat-system {
         position: relative;
         margin: auto;
         width: 100%;
-        height: calc(100% - 80px);
+        height: calc(100% - 79px);
         overflow: auto;
 
         .chat-conversation-box-scroll {}

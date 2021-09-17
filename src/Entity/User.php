@@ -82,11 +82,17 @@ class User implements UserInterface
     private $secondEmail;
 
     /**
+     * @ORM\OneToMany(targetEntity=MailSend::class, mappedBy="author", orphanRemoval=true)
+     */
+    private $mailSends;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->commentaryStories = new ArrayCollection();
+        $this->mailSends = new ArrayCollection();
     }
 
     public function getIdUser(): ?int
@@ -257,6 +263,36 @@ class User implements UserInterface
     public function setSecondEmail(?string $secondEmail): self
     {
         $this->secondEmail = $secondEmail;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MailSend[]
+     */
+    public function getMailSends(): Collection
+    {
+        return $this->mailSends;
+    }
+
+    public function addMailSend(MailSend $mailSend): self
+    {
+        if (!$this->mailSends->contains($mailSend)) {
+            $this->mailSends[] = $mailSend;
+            $mailSend->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailSend(MailSend $mailSend): self
+    {
+        if ($this->mailSends->removeElement($mailSend)) {
+            // set the owning side to null (unless already changed)
+            if ($mailSend->getAuthor() === $this) {
+                $mailSend->setAuthor(null);
+            }
+        }
 
         return $this;
     }

@@ -1,13 +1,3 @@
-/*
-	===============================
-			@Import	Function
-	===============================
-*/
-/*
-	===============================
-			@Import	Mixins
-	===============================
-*/
 html {
   min-height: 100%; }
 
@@ -19,7 +9,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   letter-spacing: 0.0312rem;
-  font-family: 'Quicksand', sans-serif; }
+  font-family: 'Nunito', sans-serif; }
 
 h1, h2, h3, h4, h5, h6 {
   color: #3b3f5c; }
@@ -30,11 +20,13 @@ h1, h2, h3, h4, h5, h6 {
 ::-moz-selection {
   /* Code for Firefox */
   color: #1b55e2;
-  background: transparent; }
+  /* background: transparent;  */
+}
 
 ::selection {
   color: #1b55e2;
-  background: transparent; }
+  /* background: transparent;  */
+}
 
 p {
   margin-top: 0;
@@ -211,8 +203,6 @@ span.red {
   height: calc(1.4em + 1.4rem + 2px);
   padding: .75rem 1.25rem;
   border-radius: 6px; }
-  .form-control[type="range"] {
-    padding: 0; }
   .form-control:focus {
     box-shadow: 0 0 5px 2px rgba(194, 213, 255, 0.619608);
     border-color: #1b55e2;
@@ -523,7 +513,6 @@ select.form-control.form-custom {
   border-color: initial;
   border-image: initial; }
   .dropdown:not(.custom-dropdown-icon) .dropdown-menu a.dropdown-item {
-    border-radius: 5px;
     font-size: 12px;
     font-weight: 700;
     color: #888ea8;

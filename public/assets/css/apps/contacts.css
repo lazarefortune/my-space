@@ -8,6 +8,16 @@
 			@Import	Mixins
 	===============================
 */
+#content:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: rgba(136, 142, 168, 0.211765);
+  width: 100%;
+  height: 183px;
+  z-index: -1; }
+
 /*----------Theme checkbox---------*/
 .new-control {
   padding-left: 0;

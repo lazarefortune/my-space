@@ -1,4 +1,4 @@
-{% extends "layouts/admin.html.twig" %}
+{% extends "layouts/dashboard.html.twig" %}
 
 {% block header_home %}
 	{# <div id="home" class="header-hero bg_cover d-lg-flex align-items-center">
@@ -45,63 +45,8 @@
 			class="col-md-9 mx-auto">
 
 			<div class="card shadow my-3 p-3">
-				<p>Bienvenue <b>{{ app.user.nom }} {{ app.user.prenom }}</b></p>
-			</div>
-
-			
-
-			<!-- /.row -->
-			<div class="row">
-				<!-- /.col-md-6 -->
-				<div class="col-lg-6 my-3">
-					<div class="card card-success shadow card-outline">
-						<div class="card-header">
-							<h5 class="m-0 font-weight-bold">Les histoires du monde</h5>
-						</div>
-						<div class="card-body">
-							<h6 class="card-title">Espace de partage de stories</h6>
-
-							<p class="card-text">Un espace conçu pour partager vos histoires.</p>
-							<a href="{{ path('story_index') }}" class="btn btn-success">Consulter</a>
-						</div>
-					</div>
-				</div>
-				<!-- /.col-md-6 -->
-			</div>
-			<!-- /.row -->
-			<div class="row">
-				<!-- /.col-md-6 -->
-				<div class="col-lg-6 my-3">
-					<div class="card card-primary shadow card-outline">
-						<div class="card-header">
-							<h5 class="m-0">Espace de stockage</h5>
-						</div>
-						<div class="card-body">
-							<h6 class="card-title">Espace de 500 Go</h6>
-
-							<p class="card-text">Sur cet espace vous pouvez y mettre vos données.</p>
-							<span class="text-danger">(Bientôt disponible)</span>
-						</div>
-					</div>
-				</div>
-				<!-- /.col-md-6 -->
-				<!-- /.col-md-6 -->
-				<div class="col-lg-6 my-3">
-					<div class="card card-warning shadow card-outline">
-						<div class="card-header">
-							<h5 class="m-0">Vos projets</h5>
-						</div>
-						<div class="card-body">
-							<h6 class="card-title">Tous vos projets en un seul endroit</h6>
-
-							<p class="card-text">Sur cet espace vous pouvez deposer tous vos projets.</p>
-							<span class="text-danger">(Bientôt disponible)</span>
-						</div>
-					</div>
-				</div>
-				<!-- /.col-md-6 -->
-			</div>
-			
+				<p>Bienvenue <b>Administrateur {{ app.user.nom }} {{ app.user.prenom }}</b></p>
+			</div>		
 
 		</div>
 
@@ -229,4 +174,17 @@
     
     <!--====== DOWNLOAD PART ENDS ======-->
 
+{% endblock %}
+
+{% block admin_content %}
+    <h1>hello administrateur</h1>
+
+    <form action="" method="post">
+        <div class="form-group">
+            <input type="email" class="form-control" name="" id="">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Valider</button>
+        </div>
+    </form>
 {% endblock %}

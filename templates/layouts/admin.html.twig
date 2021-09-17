@@ -1,483 +1,338 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-		<title>My Space</title>
-		<link
-		rel="icon" type="image/x-icon" href=" {{ asset('assets/img/favicon.ico') }} "/>
+		<title>
+			My Space
+		</title>
+		{# <link rel="icon" type="image/x-icon" href=" {{ asset('assets/img/favicon.ico') }} "/> #}
+		<link href=" {{ asset('assets/css/loader.css') }} " rel="stylesheet" type="text/css"/>
+		<script src=" {{ asset('assets/js/loader.js') }} "></script>
+
 		<!-- BEGIN GLOBAL MANDATORY STYLES -->
-		<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 		<link href=" {{ asset('bootstrap/css/bootstrap.min.css') }} " rel="stylesheet" type="text/css"/>
 		<link href=" {{ asset('assets/css/plugins.css') }} " rel="stylesheet" type="text/css"/>
 		<!-- END GLOBAL MANDATORY STYLES -->
 
-		<!-- BEGIN THEME GLOBAL STYLES -->
-		<link href=" {{ asset('plugins/flatpickr/flatpickr.css') }} " rel="stylesheet" type="text/css"> <link href="plugins/noUiSlider/nouislider.min.css" rel="stylesheet" type="text/css">
-		<!-- END THEME GLOBAL STYLES -->
+		<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->{% block stylesheets %}
+		{% endblock %}
+		<style>
+::-moz-selection {
+	/* Code for Firefox */
+	color: red !important;
+	background: yellow !important;
+}
 
-		<!--  BEGIN CUSTOM STYLE FILE  -->
-		<link href=" {{ asset('assets/css/scrollspyNav.css') }} " rel="stylesheet" type="text/css"/> <link href="plugins/flatpickr/custom-flatpickr.css" rel="stylesheet" type="text/css">
-		<link href=" {{ asset('plugins/noUiSlider/custom-nouiSlider.css') }} " rel="stylesheet" type="text/css">
-		<link
-		href=" {{ asset('plugins/bootstrap-range-Slider/bootstrap-slider.css') }} " rel="stylesheet" type="text/css">
-	<!--  END CUSTOM STYLE FILE  -->
+::selection {
+	color: red !important;
+	background: yellow !important;
+}
+.layout-px-spacing {
+	min-height: calc(100vh - 166px) !important;
+}
+</style>
 
-		{% block stylesheets %}{% endblock %}
-	</head>
-	<body
-		class="sidebar-noneoverflow" data-spy="scroll" data-target="#navSection" data-offset="100">
+	<!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
-		<!--  BEGIN NAVBAR  -->
-		<div class="header-container fixed-top">
-			<header class="header navbar navbar-expand-sm">
-				<ul class="navbar-item flex-row">
-					<li class="nav-item align-self-center page-heading">
-						<div class="page-header">
-							<div class="page-title">
-								<h3>My Space</h3>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
-						<line x1="8" y1="6" x2="21" y2="6"></line>
-						<line x1="8" y1="12" x2="21" y2="12"></line>
-						<line x1="8" y1="18" x2="21" y2="18"></line>
-						<line x1="3" y1="6" x2="3" y2="6"></line>
-						<line x1="3" y1="12" x2="3" y2="12"></line>
-						<line x1="3" y1="18" x2="3" y2="18"></line>
-					</svg>
-				</a>
+</head>
+<body>
+	<!-- BEGIN LOADER -->
+	<div id="load_screen">
+		<div class="loader">
+			<div class="loader-content">
+				<div class="spinner-grow align-self-center"></div>
+			</div>
+		</div>
+	</div>
+	<!--  END LOADER -->
 
-				<ul class="navbar-item flex-row search-ul">
-					{# <li class="nav-item align-self-center search-animated">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search">
-							<circle cx="11" cy="11" r="8"></circle>
-							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+	<!--  BEGIN NAVBAR  -->
+	<div class="header-container fixed-top">
+		<header class="header navbar navbar-expand-sm">
+
+			<ul
+				class="navbar-item theme-brand flex-row  text-center">
+				{# <li class="nav-item theme-logo">
+												                    <a href="{{ path('home') }}">
+												                        <img src=" {{ asset('assets/img/90x90.jpg') }} " class="navbar-logo" alt="logo">
+												                    </a>
+												                </li> #}
+				<li class="nav-item theme-text">
+					<a href="{{ path('home') }}" class="nav-link">
+						My Space
+					</a>
+				</li>
+			</ul>
+
+			<ul class="navbar-item flex-row ml-md-auto">
+
+				<li class="nav-item dropdown user-profile-dropdown">
+					<a
+						href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						{# <img src=" {{ asset('assets/img/90x90.jpg') }} " alt="avatar"> #}
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+							<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+							<circle cx="12" cy="7" r="4"></circle>
 						</svg>
-						<form class="form-inline search-full form-inline search" role="search">
-							<div class="search-bar">
-								<input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="Rechercher ...">
-							</div>
-						</form>
-					</li> #}
-				</ul>
-
-				<ul class="navbar-item flex-row navbar-dropdown">
-					{# <li class="nav-item dropdown language-dropdown more-dropdown">
-						<div class="dropdown  custom-dropdown-icon">
-							<a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/img/ca.png" class="flag-width" alt="flag"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down">
-									<polyline points="6 9 12 15 18 9"></polyline>
-								</svg>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-right animated fadeInUp" aria-labelledby="customDropdown">
-								<a class="dropdown-item" data-img-value="fr" data-value="French" href="javascript:void(0);"><img src="assets/img/fr.png" class="flag-width" alt="flag">
-									French</a>
-								<a class="dropdown-item" data-img-value="ca" data-value="English" href="javascript:void(0);"><img src="assets/img/ca.png" class="flag-width" alt="flag">
-									English</a>
-							</div>
-						</div>
-					</li> #}
-
-					{# <li class="nav-item dropdown notification-dropdown">
-						<a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
-								<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-								<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-							</svg>
-							<span class="badge badge-success"></span>
-						</a>
-						<div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="notificationDropdown">
-							<div class="notification-scroll">
-
-								<div class="dropdown-item">
-									<div class="media server-log">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-server">
-											<rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
-											<rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
-											<line x1="6" y1="6" x2="6" y2="6"></line>
-											<line x1="6" y1="18" x2="6" y2="18"></line>
-										</svg>
-										<div class="media-body">
-											<div class="data-info">
-												<h6 class="">Server Rebooted</h6>
-												<p class="">45 min ago</p>
-											</div>
-
-											<div class="icon-status">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-													<line x1="18" y1="6" x2="6" y2="18"></line>
-													<line x1="6" y1="6" x2="18" y2="18"></line>
-												</svg>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="dropdown-item">
-									<div class="media ">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
-											<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-										</svg>
-										<div class="media-body">
-											<div class="data-info">
-												<h6 class="">Licence Expiring Soon</h6>
-												<p class="">8 hrs ago</p>
-											</div>
-
-											<div class="icon-status">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-													<line x1="18" y1="6" x2="6" y2="18"></line>
-													<line x1="6" y1="6" x2="18" y2="18"></line>
-												</svg>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="dropdown-item">
-									<div class="media file-upload">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
-											<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-											<polyline points="14 2 14 8 20 8"></polyline>
-											<line x1="16" y1="13" x2="8" y2="13"></line>
-											<line x1="16" y1="17" x2="8" y2="17"></line>
-											<polyline points="10 9 9 9 8 9"></polyline>
-										</svg>
-										<div class="media-body">
-											<div class="data-info">
-												<h6 class="">Kelly Portfolio.pdf</h6>
-												<p class="">670 kb</p>
-											</div>
-
-											<div class="icon-status">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check">
-													<polyline points="20 6 9 17 4 12"></polyline>
-												</svg>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li> #}
-
-					<li class="nav-item dropdown user-profile-dropdown  order-lg-0 order-1">
-						<a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
-								<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-								<circle cx="12" cy="7" r="4"></circle>
-							</svg>
-						</a>
-						<div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="userProfileDropdown">
-							<div class="user-profile-section">
-								<div class="media mx-auto">
-									<div class="media-body">
-										<h5> {{ app.user.nom }} {{ app.user.prenom }} </h5>
-										{# <p>Project Leader</p> #}
-									</div>
-								</div>
-							</div>
+					</a>
+					<div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
+						<div class="">
 							<div class="dropdown-item">
-								<a href="{{ path('account') }}">
+								<a class="" href=" {{ path('account') }} ">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
 										<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
 										<circle cx="12" cy="7" r="4"></circle>
 									</svg>
-									<span>Mon profil</span>
-								</a>
+									Mon compte</a>
 							</div>
 							{# <div class="dropdown-item">
-								<a href="apps_mailbox.html">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox">
-										<polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
-										<path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
-									</svg>
-									<span>My Inbox</span>
-								</a>
-							</div>
+																					                                <a class="" href="apps_mailbox.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg> Inbox</a>
+																					                            </div>
+																					                            <div class="dropdown-item">
+																					                                <a class="" href="auth_lockscreen.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Lock Screen</a>
+																					                            </div> #}
 							<div class="dropdown-item">
-								<a href="auth_lockscreen.html">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock">
-										<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-										<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-									</svg>
-									<span>Lock Screen</span>
-								</a>
-							</div> #}
-							<div class="dropdown-item">
-								<a href="{{ path('app_logout') }}">
+								<a class="" href="{{ path('app_logout') }}">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
 										<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
 										<polyline points="16 17 21 12 16 7"></polyline>
 										<line x1="21" y1="12" x2="9" y2="12"></line>
 									</svg>
-									<span>Se déconnecter</span>
+									Se déconnecter
 								</a>
 							</div>
 						</div>
-					</li>
-				</ul>
-			</header>
-		</div>
-		<!--  END NAVBAR  -->
-
-		<!--  BEGIN MAIN CONTAINER  -->
-		<div class="main-container" id="container">
-
-			<div class="overlay"></div>
-			<div class="cs-overlay"></div>
-			<div class="search-overlay"></div>
-
-			<!--  BEGIN SIDEBAR  -->
-			<div class="sidebar-wrapper sidebar-theme">
-
-				<nav id="compactSidebar">
-
-					<div class="theme-logo">
-						<a href="{{ path('home') }}">
-							<img src=" {{ asset('assets/img/90x90.jpg') }} " class="navbar-logo" alt="logo">
-						</a>
 					</div>
+				</li>
+			</ul>
+		</header>
+	</div>
+	<!--  END NAVBAR  -->
 
-					<ul class="menu-categories">
-						{% if is_granted('ROLE_SUPER_ADMIN') %}	
-						<li class="menu">
-							<a href=" {{ path('home') }} " class="menu-toggle">
-								<div class="base-menu">
-									<div class="base-icons">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
-											<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-											<polyline points="9 22 9 12 15 12 15 22"></polyline>
-										</svg>
-									</div>
-								</div>
-							</a>
-							<div class="tooltip">
-								<span>Accueil</span>
+	<!--  BEGIN NAVBAR  -->
+	<div class="sub-header-container">
+		<header class="header navbar navbar-expand-sm">
+			<a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+					<line x1="3" y1="12" x2="21" y2="12"></line>
+					<line x1="3" y1="6" x2="21" y2="6"></line>
+					<line x1="3" y1="18" x2="21" y2="18"></line>
+				</svg>
+			</a>
+
+			<ul class="navbar-nav flex-row">
+				<li>
+					<div class="page-header">
+						<div class="page-title">
+							<h3>
+								Accueil /
+								{{ app.request.get('_route') }}
+							</h3>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</header>
+	</div>
+	<!--  END NAVBAR  -->
+
+	<!--  BEGIN MAIN CONTAINER  -->
+	<div class="main-container pt-4" id="container">
+
+		<div class="overlay"></div>
+		<div class="search-overlay"></div>
+
+		<!--  BEGIN SIDEBAR  -->
+		<div class="sidebar-wrapper sidebar-theme">
+
+			<nav id="sidebar">
+				<div class="shadow-bottom"></div>
+
+				<ul class="list-unstyled menu-categories" id="accordionExample">
+					<li class="menu">
+						<a href=" {{ path('home') }} " aria-expanded="false" class="dropdown-toggle">
+							<div class="">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+									<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+									<polyline points="9 22 9 12 15 12 15 22"></polyline>
+								</svg>
+								<span>
+									Accueil</span>
 							</div>
-						</li>
-						{% endif %}
+						</a>
+					</li>
 
-						<li class="menu active">
-							<a href="#forms" data-active="true" class="menu-toggle">
-								<div class="base-menu">
-									<div class="base-icons">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard">
-											<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-											<rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-										</svg>
-									</div>
-								</div>
-							</a>
-							<div class="tooltip">
+					<li class="menu">
+						<a href="#starter-kit" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+							<div class="">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-terminal">
+									<polyline points="4 17 10 11 4 5"></polyline>
+									<line x1="12" y1="19" x2="20" y2="19"></line>
+								</svg>
 								<span>Stories</span>
 							</div>
-						</li>
-						{% if is_granted('ROLE_SUPER_ADMIN') %}	
-						<li class="menu">
-							<a href="#tables" data-active="false" class="menu-toggle">
-								<div class="base-menu">
-									<div class="base-icons">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout">
-											<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-											<line x1="3" y1="9" x2="21" y2="9"></line>
-											<line x1="9" y1="21" x2="9" y2="9"></line>
-										</svg>
-									</div>
-								</div>
-							</a>
-							<div class="tooltip">
-								<span>Admin</span>
-							</div>
-						</li>
-						{% endif %}
-					</ul>
-
-					<div class="external-links">
-						<a href="" target="">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open">
-								<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-								<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-							</svg>
-							<div class="tooltip">
-								<span>Documentation</span>
+							<div>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+									<polyline points="9 18 15 12 9 6"></polyline>
+								</svg>
 							</div>
 						</a>
-					</div>
-				</nav>
-
-				<div id="compact_submenuSidebar" class="submenu-sidebar">
-
-					<div class="theme-brand-name">
-						<a href="{{ path('home') }}">My Space</a>
-					</div>
-
-					{# <div class="submenu" id="dashboard">
-						<div class="category-info">
-							<h5>Accueil</h5>
-						</div>
-
-						<ul class="submenu-list" data-parent-element="#dashboard">
-							<li>
-								<a href="{{ path('home') }}">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart">
-										<path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-										<path d="M22 12A10 10 0 0 0 12 2v10z"></path>
-									</svg>
-									Stories
-								</a>
-							</li>
-							<li>
-								<a href="index2.html">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
-										<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-										<line x1="3" y1="6" x2="21" y2="6"></line>
-										<path d="M16 10a4 4 0 0 1-8 0"></path>
-									</svg>
-									Sales
-								</a>
-							</li>
-						</ul>
-					</div> #}
-
-					<div class="submenu" id="forms">
-						<div class="category-info">
-							<h5>Stories</h5>
-							<p>Un espace pour le partage de stories.</p>
-						</div>
-						<ul class="submenu-list" data-parent-element="#forms">
+						<ul class="submenu list-unstyled collapse show" id="starter-kit" data-parent="#accordionExample" style="">
 							<li class="{{ app.request.get('_route') == 'story_index' ? 'active' }}">
 								<a href=" {{ path('story_index') }} ">
-									<span class="icon">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-											<circle cx="12" cy="12" r="10"></circle>
-										</svg>
-									</span>
-									Les stories publics
+									Toutes les stories
 								</a>
 							</li>
 							<li class="{{ app.request.get('_route') == 'story_my' ? 'active' }}">
 								<a href=" {{ path('story_my') }} ">
-									<span class="icon">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-											<circle cx="12" cy="12" r="10"></circle>
-										</svg>
-									</span>
-									Vos stories
+									Mes stories
 								</a>
 							</li>
 							<li class="{{ app.request.get('_route') == 'story_trash' ? 'active' }}">
 								<a href=" {{ path('story_trash') }} ">
-									<span class="icon">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
-											<circle cx="12" cy="12" r="10"></circle>
-										</svg>
-									</span>
 									Corbeille
 								</a>
 							</li>
 						</ul>
-					</div>
+					</li>
 
+					{% if is_granted('ROLE_SUPER_ADMIN') %}
 
-					<div class="submenu" id="tables">
-						<div class="category-info">
-							<h5>Tables</h5>
-							<p>Lorem ipsum dolor sit amet sed incididunt ut labore et dolore magna aliqua.</p>
-						</div>
-						<ul class="submenu-list" data-parent-element="#tables">
-							<li>
-								<a href=" {{ path('admin_users_parameters_index') }} ">
-									<span class="icon">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-											<circle cx="12" cy="12" r="10"></circle>
-										</svg>
-									</span>
-									Paramètres
-								</a>
-							</li>
-							<li>
-								<a href=" {{ path('admin_views_index') }} ">
-									<span class="icon">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-											<circle cx="12" cy="12" r="10"></circle>
-										</svg>
-									</span>
-									Vues
-								</a>
-							</li>
-							<li class="sub-submenu">
-								<a role="menu" class="collapsed" data-toggle="collapse" data-target="#datatables" aria-expanded="false">
-									<div>
-										<span class="icon">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle">
-												<circle cx="12" cy="12" r="10"></circle>
-											</svg>
-										</span>
-										Datatables</div>
+						<li class="menu">
+							<a href="#submenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+								<div class="">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay">
+										<path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
+										<polygon points="12 15 17 21 7 21 12 15"></polygon>
+									</svg>
+									<span>
+										Admin</span>
+								</div>
+								<div>
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
 										<polyline points="9 18 15 12 9 6"></polyline>
 									</svg>
-								</a>
-								<ul id="datatables" class="collapse" data-parent="#compact_submenuSidebar">
-									<li>
-										<a href="table_dt_basic.html">
-											Basic
-										</a>
-									</li>
-									<li>
-										<a href="table_dt_basic-dark.html">
-											Dark
-										</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
+								</div>
+							</a>
+							<ul class="collapse submenu list-unstyled" id="submenu" data-parent="#accordionExample">
+								<li class="{{ app.request.get('_route') == 'admin_views_index' ? 'active' }}">
+									<a href=" {{ path('admin_views_index') }} ">
+										Vues
+									</a>
+								</li>
+								<li class="{{ app.request.get('_route') == 'admin_users_parameters_index' ? 'active' }}">
+									<a href=" {{ path('admin_users_parameters_index') }} ">
+										Paramètres
+									</a>
+								</li>
+							</ul>
+						</li>
+					{% endif %}
 
+
+					{# <li class="menu">
+											<a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+												<div class="">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+														<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+														<polyline points="13 2 13 9 20 9"></polyline>
+													</svg>
+													<span>
+														Menu 3</span>
+												</div>
+												<div>
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+														<polyline points="9 18 15 12 9 6"></polyline>
+													</svg>
+												</div>
+											</a>
+											<ul class="collapse submenu list-unstyled" id="submenu2" data-parent="#accordionExample">
+												<li>
+													<a href="javascript:void(0);">
+														Submenu 1
+													</a>
+												</li>
+												<li>
+													<a href="#sm2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+														Submenu 2
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+															<polyline points="9 18 15 12 9 6"></polyline>
+														</svg>
+													</a>
+													<ul class="collapse list-unstyled sub-submenu" id="sm2" data-parent="#submenu2">
+														<li>
+															<a href="javascript:void(0);">
+																Sub-Submenu 1
+															</a>
+														</li>
+														<li>
+															<a href="javascript:void(0);">
+																Sub-Submenu 2
+															</a>
+														</li>
+														<li>
+															<a href="javascript:void(0);">
+																Sub-Submenu 3
+															</a>
+														</li>
+													</ul>
+												</li>
+											</ul>
+										</li> #}
+				</ul>
+
+			</nav>
+
+		</div>
+		<!--  END SIDEBAR  -->
+
+		<!--  BEGIN CONTENT PART  -->
+		<div id="content" class="main-content">
+			<div class="layout-px-spacing"> 
+            {% block site_content %}{% endblock %}
+				{# <div class="row layout-top-spacing">
+												
+												
+												                </div> #}
 
 				</div>
-
+				<div class="footer-wrapper">
+					<div class="footer-section f-section-1">
+						<p class="">Copyright © 2021
+														Tous droits réservés.</p>
+					</div>
+					<div class="footer-section f-section-2">
+						<p class="">Conçu avec
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
+								<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+							</svg>
+						</p>
+					</div>
+				</div>
 			</div>
-			<!--  END SIDEBAR  -->
-
-			<!--  BEGIN CONTENT AREA  -->
-			<div id="content" class="main-content">
-				{# <div class="container"> #}
-
-					{% block site_content %}{% endblock %}
-					
-				{# </div> #}
-			</div>
-			<!--  END CONTENT AREA  -->
-
+			<!--  END CONTENT PART  -->
 
 		</div>
 		<!-- END MAIN CONTAINER -->
 
-		<!-- BEGIN GLOBAL MANDATORY STYLES -->
-		<script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
-		<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+		<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+		<script src=" {{ asset('assets/js/libs/jquery-3.1.1.min.js') }} "></script>
 		<script src=" {{ asset('bootstrap/js/popper.min.js') }} "></script>
-		<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-		<script src="{{ asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-		<script src="{{ asset('assets/js/app.js') }}"></script>
-
+		<script src=" {{ asset('bootstrap/js/bootstrap.min.js') }} "></script>
+		<script src=" {{ asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js') }} "></script>
+		<script src=" {{ asset('assets/js/app.js') }} "></script>
 		<script>
 			$(document).ready(function () {
 App.init();
 });
 		</script>
-		<script src="{{ asset('plugins/highlight/highlight.pack.js') }}"></script>
-		<script src="{{ asset('assets/js/custom.js') }}"></script>
-		<!-- END GLOBAL MANDATORY STYLES -->
+		<script src=" {{ asset('assets/js/custom.js') }} "></script>
+		<!-- END GLOBAL MANDATORY SCRIPTS -->
 
-		{% block javascripts %}{% endblock %}
-		
-	</body>
-</html>
+		<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+		<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->{% block javascripts %}
+	{% endblock %}
+</body></html>
