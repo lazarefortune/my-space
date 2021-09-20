@@ -61,7 +61,7 @@ class SecurityController extends AbstractController
             // Si l'utilisateur n'existe pas
             if ( $user === null ) {
                 // On envoie une alerte disant que l'adresse e-mail est inconnue
-                $this->addFlash( 'danger', 'Cet identifiant est inconnu' );
+                $this->addFlash( 'danger', 'Cet identifiant est inconnu de nos services' );
 
                 // On retourne sur la page d'oublie de mot de passe
                 return $this->redirectToRoute( 'forgotten_password' );

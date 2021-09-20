@@ -14,7 +14,7 @@
 						<form class="text-left" method="post">
 							<div class="form">
 								{% if error %}
-									<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+									<div class="alert alert-danger mt-2 mb-0 text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 								{% endif %}
 								{% include 'layouts/flash-messages.html.twig' %}
 								<div id="username-field" class="field-wrapper input">
@@ -68,7 +68,7 @@
 																</div> #}
 
 								<p class="signup-link">Pas encore de compte ?
-									<a href="auth_register_boxed.html">Créer un compte</a>
+									<a href=" {{ path('app_register') }} ">Créer un compte</a>
 								</p>
 
 							</div>

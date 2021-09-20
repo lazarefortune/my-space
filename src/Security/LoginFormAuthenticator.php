@@ -79,18 +79,22 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         )
         ->setParameter('query', $credentials['username'])
         ->getOneOrNullResult();
-
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Identifiant ou mot de passe incorrect');
         }
+        // dd($user);
 
         return $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        $passwordCheckResponse = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        if ( !$passwordCheckResponse ) {
+            throw new CustomUserMessageAuthenticationException('Identifiant ou mot de passe incorrect');
+        }
+        return $passwordCheckResponse;
     }
 
     /**

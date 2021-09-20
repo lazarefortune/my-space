@@ -24,12 +24,19 @@ class UserController extends AbstractController
 
     /**
      * @Route("/profil", name="account")
+     */
+    public  function show(){
+        return $this->render('user/index.html.twig');
+    }
+    
+    /**
+     * @Route("/profil/edition", name="account_edit")
      *
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return void
      */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder){
+    public function edit(Request $request, UserPasswordEncoderInterface $encoder){
 
         // $user =  new User();
 
@@ -73,10 +80,10 @@ class UserController extends AbstractController
                     $this->addFlash('danger', 'Mot de passe actuel incorrect');
                 }
                 
-                return $this->redirectToRoute('account');
+                return $this->redirectToRoute('account_edit');
             }
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/edit.html.twig', [
             'formUser' => $form->createView()
         ]);
     }

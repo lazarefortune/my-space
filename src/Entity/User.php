@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -12,6 +13,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity
+ * @UniqueEntity(fields={"email"}, message="Il y a déjà un compte avec cet email")
+ * @UniqueEntity(fields={"login"}, message="Il y a déjà un compte avec cet identifiant")
  */
 class User implements UserInterface
 {
@@ -87,12 +90,23 @@ class User implements UserInterface
     private $mailSends;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activation_token;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->commentaryStories = new ArrayCollection();
         $this->mailSends = new ArrayCollection();
+        $this->roles = ['ROLE_USER'];
     }
 
     public function getIdUser(): ?int
@@ -293,6 +307,30 @@ class User implements UserInterface
                 $mailSend->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
