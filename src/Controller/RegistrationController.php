@@ -64,7 +64,7 @@ class RegistrationController extends AbstractController
 
             // envoie de l'email
             $message = (new \Swift_Message( 'Activation de votre compte' ))
-                ->setFrom( 'servicefortuneindustry@gmail.com' )
+                ->setFrom( 'service@lazarefortune.com' )
                 ->setTo( $user->getEmail() )
                 ->setBody( 
                     $this->renderView( 
@@ -129,12 +129,13 @@ class RegistrationController extends AbstractController
 
         // Sinon on supprime le token 
         $user->setActivationToken( null );
+        $user->setIsVerified( true );
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
 
         // On envoie un message flash pour dire que le compte a été activé. 
-        $this->addFlash( 'message' , 'Adresse mail vérifié avec succès' );
+        $this->addFlash( 'success' , 'Adresse mail vérifié avec succès' );
 
         return $this->redirectToRoute( 'account' );
     }

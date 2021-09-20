@@ -133,7 +133,7 @@ class UserController extends AbstractController
         $entityManager->flush();
 
         $message = (new \Swift_Message('Activation de votre compte'))
-            ->setFrom('servicefortuneindustry@gmail.com')
+            ->setFrom('service@lazarefortune.com')
             ->setTo($user->getEmail())
             ->setBody(
                 $this->renderView(
@@ -144,8 +144,8 @@ class UserController extends AbstractController
                 ),
                 'text/html'
             );
-        $rep = $mailer->send($message);
-        dump( $rep );
+        $mailer->send($message);
+        
         $this->addFlash( 'success', 'Email envoyé avec succès');
         return $this->redirectToRoute('account');
     }
