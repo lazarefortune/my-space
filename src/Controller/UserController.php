@@ -97,7 +97,7 @@ class UserController extends AbstractController
      *
      * 
      */
-    public function delete($id, EntityManagerInterface $entityManager)
+    public function delete($id, EntityManagerInterface $entityManager, \Swift_Mailer $mailer)
     {
         $currentUserId = $this->getUser()->getIdUser();
         // if ($currentUserId == $id) {
@@ -105,8 +105,21 @@ class UserController extends AbstractController
         //     $session = new Session();
         //     $session->invalidate();
         // }
-
         $user = $entityManager->getRepository(User::class)->find($id);
+
+        $message = (new \Swift_Message('Suppression de votre compte'))
+            ->setFrom('service@lazarefortune.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->renderView(
+                    'emails/delete_account.html.twig', [
+                        'nom' => $user->getNom()." ".$user->getPrenom()
+                    ]
+                ),
+                'text/html'
+            );
+        $mailer->send($message);
+        
         // $user = $this->getUser();
         $this->container->get('security.token_storage')->setToken(null);
 
