@@ -1,0 +1,4 @@
+<h1>Activation de votre compte</h1>
+{{ token }}
+<p>Vous avez créer un compte sur My Space, veuillez cliquer sur le lien ci-dessous pour l'activer</p>
+<p> <a href=" {{ absolute_url( path('email_verify', {'token': token }) ) }} ">Activer le compte</a> </p>

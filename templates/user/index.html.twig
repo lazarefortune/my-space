@@ -84,6 +84,7 @@
 								<input type="email" name="" class="form-control" value=" {{ app.user.email }} " disabled id="">
 								<small class="text-{{ app.user.isVerified == 1 ? 'success' : 'danger'}}">
 									{{ app.user.isVerified == 1 ? '<i data-feather="check-circle"></i>Adresse mail vérifiée' : '<i data-feather="x-circle"></i>Adresse mail non vérifié. <a href="" class="text-primary">Vérifier maintenant</a>' }}
+									<a href=" {{ path('send_verify_email') }} " class="text-primary">Vérifier maintenant</a>
 								</small>
 							</div>
 						</div>
@@ -97,6 +98,10 @@
 							<!-- /.form-group -->
 						</div>
 					</div>
+
+					
+					<a href=" {{ path('delete_account', { 'id': app.user.idUser }) }} " class="btn btn-danger">Supprimer mon compte</a>
+					
 					<!-- /.form-group -->
 				<!-- .form-group -->
 					{# <div class="form-group">
