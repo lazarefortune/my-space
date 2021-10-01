@@ -38,6 +38,12 @@ class Parameters
      */
     private $idUser;
 
+    public function __construct()
+    {
+        $this->setViewCounter( true );
+        $this->setEmailNotifications( true );
+    }
+
     public function getId(): ?int
     {
         return $this->id;

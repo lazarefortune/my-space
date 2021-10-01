@@ -16,4 +16,12 @@ class HomeController extends AbstractController
 
         return $this->render('index.html.twig');
     }
+
+    /**
+     * @Route("/email", name="email_test")
+     */
+    public function emailTest(): Response
+    {
+        return $this->render('layouts/emails/test.html.twig');
+    }
 }

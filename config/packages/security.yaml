@@ -63,6 +63,6 @@ security:
 
 
     role_hierarchy:
-        ROLE_EDITOR: ROLE_USER
-        ROLE_ADMIN:  ROLE_EDITOR
+        ROLE_ADMIN:  ROLE_USER
+        ROLE_MEMBER: ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]

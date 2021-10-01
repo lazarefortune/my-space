@@ -25,8 +25,8 @@ class AdminController extends AbstractController
         $id = $this->container->get('request_stack')->getCurrentRequest()->getClientIp();
         $ip = $_SERVER;
         $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-        dd($hostname);
-        dd($ip);
+        // dd($hostname);
+        // dd($ip);
         // dd($id);
         return $this->render('admin/index.html.twig');
     }

@@ -81,24 +81,25 @@
 
 	<script>
 		window.onload = () => {
-let change = document.querySelectorAll("[type=checkbox]")
-for (let bouton of change) {
-bouton.addEventListener("click", function () {
-let xmlhttp = new XMLHttpRequest;
-console.log(bouton.dataset)
-if (bouton.dataset.type == "notifView") {
-xmlhttp.open("get", `change/notification/view/${
-this.dataset.id
-}`)
-}
-if (bouton.dataset.type == "notifEmail") {
-xmlhttp.open("get", `change/notification/email/${
-this.dataset.id
-}`)
-}
-xmlhttp.send()
-})
-}
-}
+			let change = document.querySelectorAll("[type=checkbox]")
+
+			for (let bouton of change) {
+				bouton.addEventListener("click", function () {
+					let xmlhttp = new XMLHttpRequest;
+					console.log(bouton.dataset)
+					if (bouton.dataset.type == "notifView") {
+						xmlhttp.open("get", `change/notification/view/${
+						this.dataset.id
+						}`)
+					}
+					if (bouton.dataset.type == "notifEmail") {
+						xmlhttp.open("get", `change/notification/email/${
+						this.dataset.id
+						}`)
+					}
+					xmlhttp.send()
+				})
+			}
+		}
 	</script>
 {% endblock %}

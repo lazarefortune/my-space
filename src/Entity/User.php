@@ -106,7 +106,7 @@ class User implements UserInterface
     {
         $this->commentaryStories = new ArrayCollection();
         $this->mailSends = new ArrayCollection();
-        $this->roles = ['ROLE_USER'];
+        $this->roles = ['ROLE_MEMBER'];
     }
 
     public function getIdUser(): ?int
@@ -201,7 +201,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }

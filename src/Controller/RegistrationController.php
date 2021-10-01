@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Parameters;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -46,9 +47,23 @@ class RegistrationController extends AbstractController
                 
             $user->setActivationToken(md5(uniqid()));
 
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            
+            $userRefresh = $entityManager->getRepository(User::class)->findOneBy( [
+                'login' => $user->getLogin()
+            ] );
+            // dd( $userRefresh );
+            if( $userRefresh ){
+
+                $param = new Parameters();
+                $param->setIdUser( $userRefresh );
+                $entityManager->persist($param);
+                $entityManager->flush();
+            }
+            // dd($param);
 
             // generate a signed url and email it to the user
             // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -68,7 +83,10 @@ class RegistrationController extends AbstractController
                 ->setTo( $user->getEmail() )
                 ->setBody( 
                     $this->renderView( 
-                        'emails/activation_email.html.twig', ['token' => $user->getActivationToken()]
+                        'emails/activation_email.html.twig', [
+                            'token' => $user->getActivationToken(),
+                            'user' => $user
+                            ]
                     ),
                     'text/html'
                  );
@@ -134,7 +152,7 @@ class RegistrationController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        // On envoie un message flash pour dire que le compte a été activé. 
+         
         $this->addFlash( 'success' , 'Adresse mail vérifié avec succès' );
 
         return $this->redirectToRoute( 'account' );

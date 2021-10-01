@@ -42,12 +42,18 @@
 																														</div>
 																													</div> #}
 						<h4>Profil</h4>
-						<a href=" {{ path('account_edit') }} " class="mt-2 edit-profile">
+						{# <a href=" {{ path('account_edit') }} " class="mt-2 edit-profile">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3">
 								<path d="M12 20h9"></path>
 								<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
 							</svg>
-						</a>
+						</a> #}
+						<button class="btn btn-primary btn-sm rounded" id="edit-btn" >
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3">
+								<path d="M12 20h9"></path>
+								<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+							</svg>
+						</button>
 					</div>
 
 					<!-- form row -->
@@ -58,7 +64,7 @@
 							<label for="form_nomEval">Nom
 								<span class="text-danger">*</span>
 							</label>
-							<input type="text" name="" disabled class="form-control" value=" {{ app.user.nom }} " id="">
+							<input type="text" name="" disabled class="form-control editable" value=" {{ app.user.nom }} " id="">
 						</div>
 						<!-- /form column -->
 						<!-- form column -->
@@ -66,7 +72,7 @@
 							<label for="input02">Prénom
 								<span class="text-danger">*</span>
 							</label>
-							<input type="text" name="" disabled class="form-control" value=" {{ app.user.prenom }} " id="">
+							<input type="text" name="" disabled class="form-control editable" value=" {{ app.user.prenom }} " id="">
 
 						</div>
 						<!-- /form column -->
@@ -81,10 +87,12 @@
 								<label for="input03">Adresse e-mail
 									<span class="text-danger">*</span>
 								</label>
-								<input type="email" name="" class="form-control" value=" {{ app.user.email }} " disabled id="">
+								<input type="email" name="" class="form-control editable" value=" {{ app.user.email }} " disabled id="">
 								<small class="text-{{ app.user.isVerified == 1 ? 'success' : 'danger'}}">
-									{{ app.user.isVerified == 1 ? '<i data-feather="check-circle"></i>Adresse mail vérifiée' : '<i data-feather="x-circle"></i>Adresse mail non vérifié. <a href="" class="text-primary">Vérifier maintenant</a>' }}
-									<a href=" {{ path('send_verify_email') }} " class="text-primary">Vérifier maintenant</a>
+									{{ app.user.isVerified == 1 ? '<i data-feather="check-circle"></i>Adresse mail vérifiée' : '<i data-feather="x-circle"></i>Adresse mail non vérifié.' }}
+									{% if not app.user.isVerified %}
+										<a href=" {{ path('send_verify_email') }} " class="text-primary">Vérifier maintenant</a>
+									{% endif %}
 								</small>
 							</div>
 						</div>
@@ -93,7 +101,7 @@
 							<!-- .form-group -->
 							<div class="form-group">
 								<label for="input03">Adresse e-mail secondaire</label>
-								<input type="email" class="form-control" value=" {{ app.user.secondEmail }} " disabled name="" id="">
+								<input type="email" class="form-control editable" value=" {{ app.user.secondEmail }} " disabled name="" id="">
 							</div>
 							<!-- /.form-group -->
 						</div>
@@ -183,12 +191,22 @@
 	{% block javascripts %}
 		<script>
 			document.getElementById("oldPassword").addEventListener("keyup", function () {
-var nameInput = document.getElementById('oldPassword').value;
-if (nameInput != "") {
-document.getElementById('send').removeAttribute("disabled");
-} else {
-document.getElementById('send').setAttribute("disabled", null);
-}
-});
+			var nameInput = document.getElementById('oldPassword').value;
+			if (nameInput != "") {
+			document.getElementById('send').removeAttribute("disabled");
+			} else {
+			document.getElementById('send').setAttribute("disabled", null);
+			}
+			});
+
+			document.getElementById("edit-btn").addEventListener("onclick", function (){
+				let test = document.querySelectorAll( '.editable' );
+				test.forEach( item ){
+					console.log(item);
+				};
+
+			})
+			function test(){
+			}
 		</script>
 	{% endblock %}
