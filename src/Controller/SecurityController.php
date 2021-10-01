@@ -91,8 +91,8 @@ class SecurityController extends AbstractController
             $url = $this->generateUrl('reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
             // On génère l'e-mail
-            $message = (new \Swift_Message('Mot de passe oublié - EPT - IUT de Metz'))
-                ->setFrom('servicefortuneindustry@gmail.com')
+            $message = (new \Swift_Message('Réinitialisation du mot de passe - My Space'))
+                ->setFrom('service@lazarefortune.com')
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView('emails/password/reset_password.html.twig',
