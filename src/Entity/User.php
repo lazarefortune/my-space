@@ -100,6 +100,26 @@ class User implements UserInterface
     private $isVerified = false;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $last_connexion;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $agree_rgpd;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -331,6 +351,54 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getLastConnexion(): ?\DateTimeInterface
+    {
+        return $this->last_connexion;
+    }
+
+    public function setLastConnexion(?\DateTimeInterface $last_connexion): self
+    {
+        $this->last_connexion = $last_connexion;
+
+        return $this;
+    }
+
+    public function getAgreeRgpd(): ?bool
+    {
+        return $this->agree_rgpd;
+    }
+
+    public function setAgreeRgpd(?bool $agree_rgpd): self
+    {
+        $this->agree_rgpd = $agree_rgpd;
 
         return $this;
     }

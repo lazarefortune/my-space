@@ -75,6 +75,9 @@ class UserController extends AbstractController
                     $user->setPassword($passwordEncoded);
                 }
 
+                $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+                $user->setUpdatedAt( $today );
+              
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();

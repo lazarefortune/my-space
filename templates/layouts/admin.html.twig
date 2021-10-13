@@ -11,6 +11,25 @@
 		<link href=" {{ asset('assets/css/loader.css') }} " rel="stylesheet" type="text/css"/>
 		<script src=" {{ asset('assets/js/loader.js') }} "></script>
 
+		<!-- Favicon -->
+		<link rel="apple-touch-icon" sizes="57x57" href=" {{ asset('assets/favicon/apple-icon-57x57.png') }} ">
+		<link rel="apple-touch-icon" sizes="60x60" href=" {{ asset('assets/favicon/apple-icon-60x60.png') }} ">
+		<link rel="apple-touch-icon" sizes="72x72" href=" {{ asset('assets/favicon/apple-icon-72x72.png') }} ">
+		<link rel="apple-touch-icon" sizes="76x76" href=" {{ asset('assets/favicon/apple-icon-76x76.png') }} ">
+		<link rel="apple-touch-icon" sizes="114x114" href=" {{ asset('assets/favicon/apple-icon-114x114.png') }} ">
+		<link rel="apple-touch-icon" sizes="120x120" href=" {{ asset('assets/favicon/apple-icon-120x120.png') }} ">
+		<link rel="apple-touch-icon" sizes="144x144" href=" {{ asset('assets/favicon/apple-icon-144x144.png') }} ">
+		<link rel="apple-touch-icon" sizes="152x152" href=" {{ asset('assets/favicon/apple-icon-152x152.png') }} ">
+		<link rel="apple-touch-icon" sizes="180x180" href=" {{ asset('assets/favicon/apple-icon-180x180.png') }} ">
+		<link rel="icon" type="image/png" sizes="192x192"  href=" {{ asset('assets/favicon/android-icon-192x192.png') }} ">
+		<link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('assets/favicon/favicon-32x32.png') }} ">
+		<link rel="icon" type="image/png" sizes="96x96" href=" {{ asset('assets/favicon/favicon-96x96.png') }} ">
+		<link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('assets/favicon/favicon-16x16.png') }} ">
+		<link rel="manifest" href=" {{ asset('assets/favicon/manifest.json') }} ">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content=" {{ asset('assets/favicon/ms-icon-144x144.png') }} ">
+		<meta name="theme-color" content="#ffffff">
+
 		<!-- BEGIN GLOBAL MANDATORY STYLES -->
 		<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 		<link href=" {{ asset('bootstrap/css/bootstrap.min.css') }} " rel="stylesheet" type="text/css"/>
@@ -173,6 +192,16 @@
 									</svg>
 									Mon compte</a>
 							</div>
+							{% if is_granted('ROLE_SUPER_ADMIN') %}
+							<div class="dropdown-item">
+								<a class="" href=" {{ path('admin_home') }} ">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+										<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+										<circle cx="12" cy="7" r="4"></circle>
+									</svg>
+									Admin</a>
+							</div>
+							{% endif %}
 							{# <div class="dropdown-item">
 																					                                <a class="" href="apps_mailbox.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg> Inbox</a>
 																					                            </div>

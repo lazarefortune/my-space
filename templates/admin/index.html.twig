@@ -1,14 +1,20 @@
 {% extends "layouts/dashboard.html.twig" %}
 
 {% block admin_content %}
-    <h1>hello administrateur</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto mt-5">
+                <h4>hello administrateur <b>{{ app.user.nom }} {{ app.user.prenom }}</b> </h4>
 
-    <form action="" method="post">
-        <div class="form-group">
-            <input type="email" class="form-control" name="" id="">
+                <form action="" method="post">
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="" id="">
+                    </div>
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Valider</button>
-        </div>
-    </form>
+    </div>
 {% endblock %}

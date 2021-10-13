@@ -45,8 +45,12 @@ class RegistrationController extends AbstractController
                     )
                 );
                 
+            $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
             $user->setActivationToken(md5(uniqid()));
 
+            $user->setCreatedAt( $today );
+            $user->setUpdatedAt( $today );
+            $user->setLastConnexion( $today );
             
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -55,7 +59,7 @@ class RegistrationController extends AbstractController
             $userRefresh = $entityManager->getRepository(User::class)->findOneBy( [
                 'login' => $user->getLogin()
             ] );
-            // dd( $userRefresh );
+
             if( $userRefresh ){
 
                 $param = new Parameters();
@@ -63,7 +67,6 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($param);
                 $entityManager->flush();
             }
-            // dd($param);
 
             // generate a signed url and email it to the user
             // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
