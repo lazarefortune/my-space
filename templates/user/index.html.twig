@@ -109,6 +109,27 @@
 						</div>
 					</div>
 
+					<div class="form-row">
+						<div
+							class="col-md-6 mb-3">
+							<!-- .form-group -->
+							<div class="form-group">
+								<label for="input03">Date de création du compte</label>
+								<input type="email" class="form-control editable" value=" {{ app.user.createdAt | date( "d/m/Y à H:i:s" ) }} " disabled name="" id="">
+							</div>
+							<!-- /.form-group -->
+						</div>
+						<div
+							class="col-md-6 mb-3">
+							<!-- .form-group -->
+							<div class="form-group">
+								<label for="input03">Dernière mise à jour du compte</label>
+								<input type="email" class="form-control editable" value=" {{ app.user.updatedAt | date( "d/m/Y à H:i:s" ) }} " disabled name="" id="">
+							</div>
+							<!-- /.form-group -->
+						</div>
+					</div>
+
 					{% if not is_granted('ROLE_ADMIN') %}
 
 						<button type="button" class="btn btn-outline-danger mb-2 mr-2" data-toggle="modal" data-target="#exampleModal">
