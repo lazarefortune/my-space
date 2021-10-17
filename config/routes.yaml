@@ -2,7 +2,8 @@
 #     path: /
 #     controller: App\Controller\Admin\AdminController::index
     # controller: App\Controller\HomeController::index
-
+elfinder:
+     resource: '@FMElfinderBundle/Resources/config/routing.yaml'
 # myspace_home:
 #     path: /my-space
 #     controller: App\Controller\Admin\AdminController::index
