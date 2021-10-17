@@ -32,14 +32,14 @@
 					{# {{ story.title }} #}
 					{{ form_row(formStory.title) }}
 				</h5>
-				<p class="mb-0 text-info">
+				{# <p class="mb-0 text-info">
 					<i class="fas fa-edit"></i>
 					Ecrit par :
 					<span class="font-italic font-weight-bold">
 						{{ app.user.nom }}
 						{{ app.user.prenom }}
 					</span>
-				</p>
+				</p> #}
 
 				{# <p class="">
 					<label for="story_created_at">
@@ -49,16 +49,15 @@
 				</p> #}
 
 				<!-- ne pas supprimer -->
-				<div class="form-group d-none">
+				{# <div class="form-group d-none">
 					<input id="basicFlatpickr" value="2019-09-04" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Select Date..">
-				</div>
+				</div> #}
 				<!-- ne pas supprimer -->
 
-				<div class="form-group my-3">
+				{# <div class="form-group my-3">
 					<input id="dateTimeFlatpickr" name="story[created_at]" value="" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Selectionnez une date..">
 					{% do formStory.created_at.setRendered %}
-				</div>
-				<input type="range" name="" min="1" max="100" value="80" id="">
+				</div> #}
 				<p class="mt-4 text-justify">
 
 					{{ form_row(formStory.description) }}
@@ -82,7 +81,7 @@
 					</select> #}
 				</div>
 
-				<select class="selectpicker mb-3" name="story[statut]" id="story_statut">
+				<select class="selectpicker mb-3" name="story_create[statut]" id="story_statut">
 					<option value="public">Public</option>
 					<option value="public_anonyme">Anonyme</option>
 					<option value="privee">Privée</option>

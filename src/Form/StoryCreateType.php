@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class StoryType extends AbstractType
+class StoryCreateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -26,26 +26,26 @@ class StoryType extends AbstractType
                     "placeholder" => "Donnez un titre à votre story"
                 ]
             ])
-            // ->add('description', CKEditorType::class, [
-            //     "label" => "Description*",
-            //     "required" => true,
-            //     "attr" => [
-            //         'id' => "summernote",
-            //                 "placeholder" => "Ecrivez ce que vous souhaitez ...",
-            //                 "cols" => 30,
-            //                 "rows" => 10
-            //                 ]
-            //             ])
-            ->add('description', TextareaType::class, [
+            ->add('description', CKEditorType::class, [
                 "label" => "Description*",
                 "required" => true,
                 "attr" => [
                     'id' => "summernote",
-                    "placeholder" => "Ecrivez ce que vous souhaitez ...",
-                    "cols" => 30,
-                    "rows" => 10
-                    ]
-                ])
+                            "placeholder" => "Ecrivez ce que vous souhaitez ...",
+                            "cols" => 30,
+                            "rows" => 10
+                            ]
+                        ])
+            // ->add('description', TextareaType::class, [
+            //     "label" => "Description*",
+            //     "required" => true,
+            //     "attr" => [
+            //         'id' => "summernote",
+            //         "placeholder" => "Ecrivez ce que vous souhaitez ...",
+            //         "cols" => 30,
+            //         "rows" => 10
+            //         ]
+            //     ])
             // ->add('created_at', DateTimeType::class, [
             //     "label" => "Date de publication*",
             //     "attr" => [
@@ -53,26 +53,26 @@ class StoryType extends AbstractType
             //         'value' => date("Y-m-d H:i:s", strtotime("now") )
             //         ]
             // ] )
-            ->add('created_at', DateTimeType::class , [
-                'label' => "Date de publication",
-                'widget' => 'single_text',
-                'attr' => [
-                    'id' => 'datepicker',
-                    'required' => true,
-                    'value' => date("Y-m-d H:i", strtotime( "+2 hours now") )
-                ],
-                ])
+            // ->add('created_at', DateTimeType::class , [
+            //     'label' => "Date de publication",
+            //     'widget' => 'single_text',
+            //     'attr' => [
+            //         'id' => 'datepicker',
+            //         'required' => true,
+            //         'value' => date("Y-m-d H:i", strtotime( "+2 hours now") )
+            //     ],
+            //     ])
             ->add('statut', ChoiceType::class, [
-                'multiple' => false,
-                'attr' => [
-                    'class' => "form-select col-md-8"
-                ],
-                'choices' => [
-                    'Public (visible par tous)' => 'public',
-                    'Publier en anonyme (votre nom sera invisible)' => 'public_anonyme',
-                    'Privée' => 'privee'
-                ]
-        ])
+                    'multiple' => false,
+                    'attr' => [
+                        'class' => "form-select col-md-8"
+                    ],
+                    'choices' => [
+                        'Public (visible par tous)' => 'public',
+                        'Publier en anonyme (votre nom sera invisible)' => 'public_anonyme',
+                        'Privée' => 'privee'
+                    ]
+            ])
             ->add("Publier", SubmitType::class, [
                 "label" => "Publier la story",
                 "attr" => [

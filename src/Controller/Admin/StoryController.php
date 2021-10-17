@@ -5,11 +5,12 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Entity\View;
 use App\Form\StoryType;
+use App\Entity\MailSend;
 use App\Entity\Parameters;
 use App\Entity\Inspiration;
 use App\Form\CommentaryType;
+use App\Form\StoryCreateType;
 use App\Entity\CommentaryStory;
-use App\Entity\MailSend;
 use Doctrine\ORM\EntityManager;
 use App\Repository\ViewRepository;
 use App\Repository\ParametersRepository;
@@ -64,7 +65,7 @@ class StoryController extends AbstractController
     {
         $story = new Inspiration();
 
-        $form = $this->createForm(StoryType::class, $story);
+        $form = $this->createForm(StoryCreateType::class, $story);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -77,7 +78,9 @@ class StoryController extends AbstractController
 
             // On attribue l'auteur à la story
             $story->setIdUser($this->getUser());
-            // dd($story->getStatut());
+            // On définie l'heure
+            $story->setCreatedAt(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($story);
             $entityManager->flush();
@@ -111,8 +114,11 @@ class StoryController extends AbstractController
                     // On crée le texte avec la vue
                     ->setBody(
                         $this->renderView(
-                            'layouts/emails/contact.html.twig',
-                            compact('story')
+                            'layouts/emails/new_story.html.twig',
+                            [
+                                'story' => $story,
+                                'user' => $user
+                            ]
                         ),
                         'text/html'
                     );
