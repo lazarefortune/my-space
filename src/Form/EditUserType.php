@@ -29,7 +29,7 @@ class EditUserType extends AbstractType
                     'required' => true,
                     'attr' => [
                         'class' => 'form-control',
-                        'readonly' => true
+                        // 'readonly' => true
                     ]
             ])
             ->add('secondEmail', EmailType::class, [
@@ -37,13 +37,13 @@ class EditUserType extends AbstractType
                 'label' => 'Deuxième adresse email',
                 'attr' => [
                     'class' => 'form-control',
-                    'readonly' => true
+                    // 'readonly' => true
                 ]
             ])
             ->add('login', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'readonly' => true
+                    // 'readonly' => true
                 ]
             ])
             // ->add('password')
