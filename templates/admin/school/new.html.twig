@@ -1,0 +1,11 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{% block admin_title %}New School{% endblock %}
+
+{% block admin_content %}
+    <h1>Create new School</h1>
+
+    {{ include('admin/school/_form.html.twig') }}
+
+    <a href="{{ path('admin_school_index') }}" class="btn btn-sm btn-secondary">back to list</a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{% block admin_title %}New Module{% endblock %}
+
+{% block admin_content %}
+    <h1>Create new Module</h1>
+
+    {{ include('admin/module/_form.html.twig') }}
+
+
+    <a href="{{ path('admin_module_index') }}">back to list</a>
+{% endblock %}

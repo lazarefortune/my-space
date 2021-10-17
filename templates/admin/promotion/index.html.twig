@@ -1,0 +1,41 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{% block admin_title %}Promotions{% endblock %}
+
+{% block admin_content %}
+    <h1>Liste des promotions</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Date de création</th>
+                <th>Dernière mise à jour</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for promotion in promotions %}
+            <tr>
+                <td>{{ promotion.id }}</td>
+                <td>{{ promotion.name }}</td>
+                <td>{{ promotion.description }}</td>
+                <td>{{ promotion.createdAt ? promotion.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ promotion.updatedAt ? promotion.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('admin_promotion_show', {'id': promotion.id}) }}" class="btn btn-sm btn-warning">Consulter</a>
+                    <a href="{{ path('admin_promotion_edit', {'id': promotion.id}) }}" class="btn btn-sm btn-outline-info">Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucune promotion</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_promotion_new') }}" class="btn btn-sm btn-success">Créer une promotion</a>
+{% endblock %}

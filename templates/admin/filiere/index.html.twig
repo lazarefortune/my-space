@@ -1,0 +1,37 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{% block admin_title %}Filiere index{% endblock %}
+
+{% block admin_content %}
+    <h1>Filiere index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for filiere in filieres %}
+            <tr>
+                <td>{{ filiere.id }}</td>
+                <td>{{ filiere.name }}</td>
+                <td>{{ filiere.description }}</td>
+                <td>
+                    <a href="{{ path('admin_filiere_show', {'id': filiere.id}) }}">show</a>
+                    <a href="{{ path('admin_filiere_edit', {'id': filiere.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_filiere_new') }}">Create new</a>
+{% endblock %}

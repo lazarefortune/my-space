@@ -1,104 +1,210 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta
-		name="viewport" content="width=device-width, initial-scale=1">
 
-		<!-- Bootstrap CSS -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>
+		{% block admin_title %}{% endblock %} - My Space
+	</title>
+	<!-- Favicon -->
+	<link rel="apple-touch-icon" sizes="57x57" href=" {{ asset('assets/favicon/apple-icon-57x57.png') }} ">
+	<link rel="apple-touch-icon" sizes="60x60" href=" {{ asset('assets/favicon/apple-icon-60x60.png') }} ">
+	<link rel="apple-touch-icon" sizes="72x72" href=" {{ asset('assets/favicon/apple-icon-72x72.png') }} ">
+	<link rel="apple-touch-icon" sizes="76x76" href=" {{ asset('assets/favicon/apple-icon-76x76.png') }} ">
+	<link rel="apple-touch-icon" sizes="114x114" href=" {{ asset('assets/favicon/apple-icon-114x114.png') }} ">
+	<link rel="apple-touch-icon" sizes="120x120" href=" {{ asset('assets/favicon/apple-icon-120x120.png') }} ">
+	<link rel="apple-touch-icon" sizes="144x144" href=" {{ asset('assets/favicon/apple-icon-144x144.png') }} ">
+	<link rel="apple-touch-icon" sizes="152x152" href=" {{ asset('assets/favicon/apple-icon-152x152.png') }} ">
+	<link rel="apple-touch-icon" sizes="180x180" href=" {{ asset('assets/favicon/apple-icon-180x180.png') }} ">
+	<link rel="icon" type="image/png" sizes="192x192"  href=" {{ asset('assets/favicon/android-icon-192x192.png') }} ">
+	<link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('assets/favicon/favicon-32x32.png') }} ">
+	<link rel="icon" type="image/png" sizes="96x96" href=" {{ asset('assets/favicon/favicon-96x96.png') }} ">
+	<link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('assets/favicon/favicon-16x16.png') }} ">
+	<link rel="manifest" href=" {{ asset('assets/favicon/manifest.json') }} ">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content=" {{ asset('assets/favicon/ms-icon-144x144.png') }} ">
+	<meta name="theme-color" content="#ffffff">
+
+	<!-- Custom Style -->
+	{% block stylesheets %}{% endblock %}
+
+	<!-- Bootstrap CSS -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href=" {{ asset('admin/css/dashboard_style.css') }} ">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
-		<title>Admin | My Space</title>
+    <!-- Font Awesome CSS	 -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
-		<!-- Favicon -->
-		<link rel="apple-touch-icon" sizes="57x57" href=" {{ asset('assets/favicon/apple-icon-57x57.png') }} ">
-		<link rel="apple-touch-icon" sizes="60x60" href=" {{ asset('assets/favicon/apple-icon-60x60.png') }} ">
-		<link rel="apple-touch-icon" sizes="72x72" href=" {{ asset('assets/favicon/apple-icon-72x72.png') }} ">
-		<link rel="apple-touch-icon" sizes="76x76" href=" {{ asset('assets/favicon/apple-icon-76x76.png') }} ">
-		<link rel="apple-touch-icon" sizes="114x114" href=" {{ asset('assets/favicon/apple-icon-114x114.png') }} ">
-		<link rel="apple-touch-icon" sizes="120x120" href=" {{ asset('assets/favicon/apple-icon-120x120.png') }} ">
-		<link rel="apple-touch-icon" sizes="144x144" href=" {{ asset('assets/favicon/apple-icon-144x144.png') }} ">
-		<link rel="apple-touch-icon" sizes="152x152" href=" {{ asset('assets/favicon/apple-icon-152x152.png') }} ">
-		<link rel="apple-touch-icon" sizes="180x180" href=" {{ asset('assets/favicon/apple-icon-180x180.png') }} ">
-		<link rel="icon" type="image/png" sizes="192x192"  href=" {{ asset('assets/favicon/android-icon-192x192.png') }} ">
-		<link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('assets/favicon/favicon-32x32.png') }} ">
-		<link rel="icon" type="image/png" sizes="96x96" href=" {{ asset('assets/favicon/favicon-96x96.png') }} ">
-		<link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('assets/favicon/favicon-16x16.png') }} ">
-		<link rel="manifest" href=" {{ asset('assets/favicon/manifest.json') }} ">
-		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content=" {{ asset('assets/favicon/ms-icon-144x144.png') }} ">
-		<meta name="theme-color" content="#ffffff">
+</head>
 
-		<!-- Custom Style -->
-		{% block stylesheets %}{% endblock %}
-	</head>
-	<body>
+<body>
 
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
-			<div class="container-fluid">
-				<a class="navbar-brand" href=" {{ path('admin_home') }} ">
-					<img src=" {{ asset('assets/img/my_space_logo.png') }} " width="50" alt="">
-				</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div id="dismiss">
+                <i class="fas fa-arrow-left"></i>
+            </div>
 
-				<div class="collapse navbar-collapse" id="navbarsExample04">
-					<ul class="navbar-nav me-auto mb-2 mb-md-0">
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href=" {{ path('admin_home') }} ">Accueil</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link disabled" href=" {{ path('admin_mail_send_index') }} ">Email</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Utilisateurs</a>
-							<ul class="dropdown-menu" aria-labelledby="dropdown04">
-								<li>
-									<a class="dropdown-item" href=" {{ path('admin_users_list') }} ">Liste</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href=" {{ path('admin_users_parameters_index') }} ">Paramètres</a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Compte</a>
-							<ul class="dropdown-menu" aria-labelledby="dropdown04">
-								<li>
-									<a class="dropdown-item" href=" {{ path('account') }} ">Profil</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="  ">Paramètres</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href=" {{ path('app_logout') }} ">Se déconnceter</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-					<form>
-						<input class="form-control" type="text" placeholder="Search" aria-label="Search">
-					</form>
-				</div>
-			</div>
-		</nav>
+            <div class="sidebar-header">
+                <h3>My Space</h3>
+            </div>
 
-		<main class="container">
-			{% block admin_content %}{% endblock %}
-		</main>
+            <ul class="list-unstyled components">
+                <p> Admin <b>{{ app.user.nom }} {{ app.user.prenom }}</b> </p>
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Accueil</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Home 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Utilisateurs</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="{{ path('admin_users_list') }}">Liste</a>
+                        </li>
+                        <li>
+                            <a href=" {{ path('admin_users_parameters_index') }} ">Paramètres</a>
+                        </li>
+                    </ul>
+                    <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">Promotions</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu2">
+                        <li>
+                            <a href="{{ path('admin_promotion_new') }}">Ajouter</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_promotion_index') }}">Liste</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="">
+					<a href=" {{ path('admin_mail_send_index') }} ">Email</a>
+				</li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
 
-		<!-- Optional JavaScript; choose one of the two! -->
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="" class="download">Download datas</a>
+                </li>
+                <li>
+                    <a href="https://lazarefortune.com" class="">Voir l'auteur</a>
+                </li>
+            </ul>
+        </nav>
 
-		{% block javascripts %}{% endblock %}
-		<!-- Option 1: Bootstrap Bundle with Popper -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <!-- Page Content  -->
+        <div id="content">
 
-		<!-- Option 2: Separate Popper and Bootstrap JS -->
-		<!--
-				    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
-				    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
-				    -->
-	</body>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Menu</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href=" {{ path('admin_home') }} ">Accueil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href=" {{ path('admin_school_index') }} "> Ecoles </a>
+                            </li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Utilisateurs</a>
+								<ul class="dropdown-menu" aria-labelledby="dropdown04">
+									<li>
+										<a class="dropdown-item" href=" {{ path('admin_users_list') }} ">Liste</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href=" {{ path('admin_users_parameters_index') }} ">Paramètres</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Compte</a>
+								<ul class="dropdown-menu" aria-labelledby="dropdown04">
+									<li>
+										<a class="dropdown-item" href=" {{ path('account') }} ">Profil</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="  ">Paramètres</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href=" {{ path('app_logout') }} ">Se déconnceter</a>
+									</li>
+								</ul>
+							</li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+
+			{% block admin_content %}{% endblock %}    
+
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+	
+	{% block javascripts %}{% endblock %}
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#dismiss, .overlay').on('click', function () {
+                $('#sidebar').removeClass('active');
+                $('.overlay').removeClass('active');
+            });
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').addClass('active');
+                $('.overlay').addClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+
 </html>

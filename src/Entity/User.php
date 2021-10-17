@@ -120,6 +120,21 @@ class User implements UserInterface
     private $agree_rgpd;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Promotion::class, inversedBy="users")
+     */
+    private $promo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=School::class, inversedBy="students")
+     */
+    private $school;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Course::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $courses;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -127,6 +142,7 @@ class User implements UserInterface
         $this->commentaryStories = new ArrayCollection();
         $this->mailSends = new ArrayCollection();
         $this->roles = ['ROLE_MEMBER'];
+        $this->courses = new ArrayCollection();
     }
 
     public function getIdUser(): ?int
@@ -399,6 +415,60 @@ class User implements UserInterface
     public function setAgreeRgpd(?bool $agree_rgpd): self
     {
         $this->agree_rgpd = $agree_rgpd;
+
+        return $this;
+    }
+
+    public function getPromo(): ?Promotion
+    {
+        return $this->promo;
+    }
+
+    public function setPromo(?Promotion $promo): self
+    {
+        $this->promo = $promo;
+
+        return $this;
+    }
+
+    public function getSchool(): ?School
+    {
+        return $this->school;
+    }
+
+    public function setSchool(?School $school): self
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Course[]
+     */
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCourse(Course $course): self
+    {
+        if (!$this->courses->contains($course)) {
+            $this->courses[] = $course;
+            $course->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourse(Course $course): self
+    {
+        if ($this->courses->removeElement($course)) {
+            // set the owning side to null (unless already changed)
+            if ($course->getUser() === $this) {
+                $course->setUser(null);
+            }
+        }
 
         return $this;
     }

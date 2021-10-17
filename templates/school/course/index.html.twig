@@ -1,0 +1,38 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block site_title %}Course index{% endblock %}
+
+{% block site_content %}
+    <h4>Liste des cours de {{ matiere.name }} ( <b> {{ courses|length }} </b> ) </h4>
+    <input type="search" name="" id="" class="form-control my-4" placeholder="Recherchez un cours ...">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Created_at</th>
+                <th>Updated_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for course in courses %}
+            <tr>
+                <td>{{ course.title }}</td>
+                <td>{{ course.createdAt ? course.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ course.updatedAt ? course.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('school_course_show', {'id': course.id}) }}" class="btn btn-sm btn-info">show</a>
+                    <a href="{{ path('school_course_edit', {'id': course.id}) }}" class="btn btn-sm btn-warning">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun cours dans cette matière</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('school_matiere_course_new', { 'id' : matiere.id }) }}" class="btn btn-sm btn-success"> Ajouter un cours</a>
+    <a href="{{ path('school_home') }}" class="btn btn-sm btn-secondary">Retour</a>
+{% endblock %}

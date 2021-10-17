@@ -1,0 +1,25 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{# {% block admin_title %}Ajout Promotion{% endblock %} #}
+
+{# {% block admin_title %}New Promotion{% endblock %} #}
+
+{% block admin_content %}
+    <h1>Create new Promotion</h1>
+
+    {{ form_start(form) }}
+        <label for="filiere">Filière</label>
+        <select name="filiere" id="filiere" class="form-control my-2">
+            {% for filiere in filieres %}
+            <option value="{{ filiere.id }}"> {{ filiere.name }} </option>
+                
+            {% endfor %}
+        </select>
+        {{ form_widget(form) }}
+        <button class="btn btn-sm btn-success my-2">{{ button_label|default('Ajouter') }}</button>
+    {{ form_end(form) }}
+    {# {{ include('admin/promotion/_form.html.twig') }} #}
+
+
+    <a href="{{ path('admin_promotion_index') }}" class="btn btn-sm btn-secondary">Retour à la liste</a>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{% block admin_title %}New Filiere{% endblock %}
+
+{% block admin_content %}
+    <div class="row">
+        <div class="col-md-9 mx-auto">      
+            <h1>Ajouter une nouvelle Filiere</h1>
+
+            {{ include('admin/filiere/_form.html.twig') }}
+
+            <a href="{{ path('admin_filiere_index') }}" class="btn btn-sm btn-secondary my-2"> <i class="fas fa-arrow-left"></i> back to list</a>
+        </div>
+    </div>
+{% endblock %}

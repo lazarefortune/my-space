@@ -267,7 +267,7 @@
 
 				<ul class="list-unstyled menu-categories" id="accordionExample">
 					<li class="menu">
-						<a href=" {{ path('home') }} " aria-expanded="false" class="dropdown-toggle">
+						<a href=" {{ path('home') }} " {{ ('home' == app.request.get('_route')) ? 'data-active="true"' }}  aria-expanded="{{ ('school_' == app.request.get('_route')) ? 'true' : 'false' }}" class="dropdown-toggle {{ app.request.get('_route') == 'home' ? 'active' }}">
 							<div class="">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
 									<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -278,9 +278,23 @@
 							</div>
 						</a>
 					</li>
+					{# {% if app.user.school %}	 #}
+					<li class="menu">
+						<a href=" {{ path('school_home') }} " {{ ('school_' in app.request.get('_route')) ? 'data-active="true"' }}  aria-expanded="{{ ('school_' in app.request.get('_route')) ? 'true' : 'false' }}"  class="dropdown-toggle">
+							<div class="">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+									<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+									<polyline points="9 22 9 12 15 12 15 22"></polyline>
+								</svg>
+								<span>
+									Ecole</span>
+							</div>
+						</a>
+					</li>
+					{# {% endif %} #}
 
 					<li class="menu">
-						<a href="#starter-kit" {{ app.request.get('_route') == 'story_index' ? 'data-active="true"' }}  data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+						<a href="#starter-kit" {{ ('story_' in app.request.get('_route')) ? 'data-active="true" aria-expanded="true"' }}  data-toggle="collapse"  class="dropdown-toggle">
 							<div class="">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-terminal">
 									<polyline points="4 17 10 11 4 5"></polyline>
@@ -294,7 +308,8 @@
 								</svg>
 							</div>
 						</a>
-						<ul class="submenu list-unstyled collapse show" id="starter-kit" data-parent="#accordionExample" style="">
+						
+						<ul class="submenu list-unstyled  {{ ('story_' in app.request.get('_route')) ? 'show' }} collapse" id="starter-kit" data-parent="#accordionExample" style="">
 							<li class="{{ app.request.get('_route') == 'story_index' ? 'active' }}">
 								<a href=" {{ path('story_index') }} ">
 									Toutes les stories

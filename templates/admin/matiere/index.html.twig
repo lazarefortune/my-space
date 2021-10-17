@@ -1,0 +1,37 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{% block admin_title %}Matiere index{% endblock %}
+
+{% block admin_content %}
+    <h1>Matiere index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Coeff</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for matiere in matieres %}
+            <tr>
+                <td>{{ matiere.id }}</td>
+                <td>{{ matiere.name }}</td>
+                <td>{{ matiere.coeff }}</td>
+                <td>
+                    <a href="{{ path('admin_matiere_show', {'id': matiere.id}) }}">show</a>
+                    <a href="{{ path('admin_matiere_edit', {'id': matiere.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_matiere_new') }}">Create new</a>
+{% endblock %}

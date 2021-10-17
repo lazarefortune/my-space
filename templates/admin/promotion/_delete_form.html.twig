@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('admin_promotion_delete', {'id': promotion.id}) }}" onsubmit="return confirm('êtes vous sûr de vouloir supprimer cette promotion?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ promotion.id) }}">
+    <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+</form>

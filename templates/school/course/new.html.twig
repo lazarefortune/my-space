@@ -1,0 +1,11 @@
+{% extends 'layouts/admin.html.twig' %}
+
+{% block site_title %}New Course{% endblock %}
+
+{% block site_content %}
+    <h1>Créer un nouveau cours en {{ matiere.name }} </h1>
+
+    {{ include('school/course/_form.html.twig') }}
+
+    <a href="{{ path('school_matiere_course_index', { 'id' : matiere.id }) }}" class="btn btn-sm btn-secondary">Retour à la liste</a>
+{% endblock %}

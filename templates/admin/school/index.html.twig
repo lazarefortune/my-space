@@ -1,0 +1,41 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{% block admin_title %}School index{% endblock %}
+
+{% block admin_content %}
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <h1>Liste des établissement</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for school in schools %}
+            <tr>
+                <td>{{ school.id }}</td>
+                <td>{{ school.name }}</td>
+                <td>{{ school.description }}</td>
+                <td>
+                    <a href="{{ path('admin_school_show', {'id': school.id}) }}" class="btn btn-sm btn-warning"><i class="fas fa-eye"></i> Voir</a>
+                    <a href="{{ path('admin_school_edit', {'id': school.id}) }}" class="btn btn-sm btn-info"> <i class="fas fa-edit"></i> Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_school_new') }}" class="btn btn-sm btn-success"> <i class="fas fa-plus"></i> Ajouter un établissement</a>
+        </div>
+    </div>
+{% endblock %}

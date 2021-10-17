@@ -1,0 +1,52 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{# {% block admin_title %}Promotion{% endblock %} #}
+
+{% block admin_content %}
+    <h1>Promotion</h1>
+    {% include 'layouts/flash-messages-admin.html.twig' %}
+    <table class="table">
+        <tbody>
+            {# <tr>
+                <th>Id</th>
+                <td>{{ promotion.id }}</td>
+            </tr> #}
+            <tr>
+                <th>Nom</th>
+                <td>{{ promotion.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ promotion.description }}</td>
+            </tr>
+            <tr>
+                <th>Nombre  d'étudiants inscrits</th>
+                <td>
+                     
+                    {% if users.count() > 0 %}
+                       ({{ users.count() }}) <a href="" class="btn btn-sm btn-secondary">Voir la liste des étudiants</a>
+                    {% else %}
+                        Aucun
+                    {% endif %}
+                    <a href=" {{ path('admin_promotion_student_new', {'id': promotion.id}) }} " class="btn btn-sm btn-primary"> Inscrire un étudiant </a>
+                </td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ promotion.createdAt ? promotion.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Dernière mise à jour </th>
+                <td>{{ promotion.updatedAt ? promotion.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="mb-2"> 
+        <a href="{{ path('admin_promotion_index') }}" class="btn btn-sm btn-secondary">Retour à la liste</a>
+
+        <a href="{{ path('admin_promotion_edit', {'id': promotion.id}) }}" class="btn btn-sm btn-warning">Editer</a>
+    </div>
+
+    {{ include('admin/promotion/_delete_form.html.twig') }}
+{% endblock %}

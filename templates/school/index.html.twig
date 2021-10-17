@@ -1,0 +1,61 @@
+{% extends "layouts/admin.html.twig" %}
+
+{% block site_content %}
+    
+
+	{% if app.user.school %}
+        <h2><b>{{ app.user.school.name }}</b> </h2>
+        
+        {% if app.user.promo %}
+        <p> Vous êtes inscrit en filière <b> {{ app.user.promo.filiere.name }} </b> de la promotion <b>{{ app.user.promo.name }}</b> </p>
+            {% if app.user.promo.filiere.modules.count() != 0 %}       
+                <h4 class="text-warning">La liste de vos modules</h4>
+                <br>
+                <ul>
+                    {% for module in app.user.promo.filiere.modules %}
+                        <li> <h5> <b>{{ module.name }}</b> </h5> 
+                            {% if module.matieres.count() > 0 %}
+                                <ul>
+                                    <h6>Liste des matières du module</h6>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Nom</th>
+                                                <th scope="col">Nombre de cours</th>
+                                                <th scope="col">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for matiere in module.matieres %}
+                                                <tr>
+                                                <th scope="row"> {{ matiere.id }} </th>
+                                                <td> {{ matiere.name }} </td>
+                                                <td>  Aucun </td>
+                                                <td>
+                                                    <a href=" {{ path('school_matiere_course_new', { 'id' : matiere.id }) }} " class="btn btn-sm btn-success">Ajouter un cours</a>
+                                                    <a href=" {{ path('school_matiere_course_index', { 'id' : matiere.id }) }} " class="btn btn-sm btn-info">Voir les cours</a>
+                                                </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+
+                                </ul>
+                            {% else %}
+                                <div class="alert alert-info">Ce module ne contient aucune matière pour l'instant</div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="alert alert-warning">Votre filière ne comporte aucun module pour le moment</div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-info">Vous n'avez pas encore été inscrit dans une promotion</div>
+        {% endif %}
+    {% else %}
+            <div class="alert alert-info">Vous n'avez pas encore été inscrit dans un établissement</div>
+    {% endif %}
+{% endblock %}

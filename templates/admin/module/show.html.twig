@@ -1,0 +1,63 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{% block admin_title %}Module{% endblock %}
+
+{% block admin_content %}
+    <h1>Module</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ module.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ module.name }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de matières</th>
+                <td>{{ module.matieres.count() }}
+                    <a href=" {{ path('admin_module_matiere_new', {'id' : module.id}) }} " class="text-primary"> Ajouter une matière </a>
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ module.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if module.matieres.count() > 0 %}       
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-header" id="headingFiliere">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFiliere" aria-expanded="false" aria-controls="collapseFiliere">
+                                voir la liste des matières
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseFiliere" class="collapse " aria-labelledby="headingFiliere" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                            {% for matiere in module.matieres %}
+                                <li > - <a href="{{ path('admin_matiere_show', {'id': matiere.id}) }}" class="link text-primary my-2"> {{ matiere.name }} </a></li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <a href="{{ path('admin_module_index') }}">back to list</a>
+
+    <a href="{{ path('admin_filiere_show', {'id' : module.filiere.id}) }}" class="btn btn-sm btn-secondary my-2">back to filiere</a>
+    <a href="{{ path('admin_module_edit', {'id': module.id}) }}">edit</a>
+
+    {{ include('admin/module/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends 'layouts/dashboard.html.twig' %}
+
+{% block admin_title %}New School{% endblock %}
+
+{% block admin_content %}
+    <h1>Inscrire un étudiant à {{ school.name }} </h1>
+
+    {% include 'layouts/flash-messages-admin.html.twig' %}
+
+	<div class="row mt-4 mb-3">
+		<div class="col-md-3 mx-auto">
+			<select name="role_tri" id="role" class="form-select form-select-sm">Trier par role :
+				<option value="ROLE_MEMBER">Membre</option>
+				{% if is_granted('ROLE_SUPER_ADMIN') %}
+					<option value="ROLE_ADMIN">Administrateur</option>
+					<option value="ROLE_USER">Utilisateur</option>
+					<option value="ROLE_SUPER_ADMIN">Super Admin</option>
+				{% endif %}
+			</select>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8 mx-auto">
+			<form action="">
+				<div class="input-group mb-3">
+					<input type="text" name="" id="" placeholder="Recherche..." aria-label="Recherche" aria-describedby="button-search" class="form-control">
+					<button class="btn btn-outline-primary" type="submit" id="button-search"> Rechercher </button>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-10 mx-auto">
+			<form method="post">
+				<div class="card card-body">
+
+					<table class="table">
+						<div class="dropdown">
+							<button class="btn btn-primary dropdown-toggle disabled" type="submit" id="action-btn" data-bs-toggle="dropdown" aria-expanded="false">
+								Action
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="action-btn">
+								<li>
+									<button type="submit" name="action" value="suscribe" class="dropdown-item">Inscrire</button>
+								</li>
+								<li>
+									<button type="submit" name="action" value="unsuscribe" class="dropdown-item">Désinscrire</button>
+								</li>
+								<li>
+									<!-- Button trigger modal -->
+									<button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+										Supprimer
+									</button>
+								</li>
+							</ul>
+						</div>
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Vous allez supprimer un/plusieurs utilisateur(s)</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										NB: Cette action est irréversible
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+										<button type="submit" class="btn btn-danger">Supprimer</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<thead>
+							<tr>
+								<th
+									scope="col">
+									<input type="checkbox" id="checkAll" onclick="toggle(this);"/>
+									Tous<br/>
+								</th>
+								<th scope="col">Nom et prénom</th>
+								<th scope="col">Rôle(s)</th>
+								<th scope="col">Valide</th>
+								<th scope="col">Action(s)</th>
+							</tr>
+						</thead>
+						<tbody id="list">
+							{% for user in users %}
+								<tr>
+									<th
+										scope="row">
+										<input
+										type="checkbox" class="user-check" {% if user.school %} {% if user.school.id == school.id %} checked {% endif %} {% endif %}  onclick="checkNumberOfCheck()" name="user-{{ user.idUser }}" id="" value="{{ user.idUser }}">
+									</th>
+									<td>
+										{{ user.nom }}
+										{{ user.prenom }}
+									</td>
+									<td>
+										{% for role in user.roles %}
+											{% if role == "ROLE_USER" %}
+												User
+											{% elseif role == "ROLE_ADMIN" %}
+												Admin
+											{% elseif role == "ROLE_MEMBER" %}
+												Membre
+											{% elseif role == "ROLE_SUPER_ADMIN" %}
+												Super Admin
+											{% endif %}
+										{% endfor %}
+									</td>
+									<td>
+										{% if user.isVerified %}
+											<span class="text-success">Valide</span>
+										{% else %}
+											<span class="text-danger">NON Valide</span>
+										{% endif %}
+									</td>
+									<td>
+										<a href=" {{ path('admin_users_edit', {'id': user.idUser}) }} " class="btn btn-sm btn-warning">Modifier</a>
+										<button class="btn btn-sm btn-danger">Supprimer</button>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</form>
+		</div>
+	</div>
+
+    <a href="{{ path('admin_school_show', {'id': school.id}) }}" class="btn btn-sm btn-secondary">back to school</a>
+    <a href="{{ path('admin_school_index') }}" class="btn btn-sm btn-secondary">back to list</a>
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+		function toggle(source) {
+			var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+			var nbCheckBoxOn = 0;
+			for (var i = 0; i < checkboxes.length; i++) {
+				if (checkboxes[i] != source) 
+				checkboxes[i].checked = source.checked;
+			}
+			checkNumberOfCheck();
+		}
+
+		function checkNumberOfCheck()
+		{
+			var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+			var nbCheckBoxOn = 0;
+			for (var i = 0; i < checkboxes.length; i++) {
+				if ( checkboxes[i].checked ) nbCheckBoxOn +=1;
+			}
+			if ( nbCheckBoxOn >= 1 ){
+				document.getElementById('action-btn').classList.remove("disabled");
+			}else{
+				document.getElementById('action-btn').classList.add("disabled");
+			}
+		}
+		// vérifier si un input est checked
+	</script>
+
+	<script src="{{ asset('admin/js/filter.js') }}"></script>
+{% endblock %}
