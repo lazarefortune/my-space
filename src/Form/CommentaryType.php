@@ -22,8 +22,7 @@ class CommentaryType extends AbstractType
                 ]
             ])
             ->add('publier', SubmitType::class, [
-                'label' => "Laisser mon commentaire",
-                'icon-after' => "fas fa-edit",
+                'label' => "Partager",
                 'attr' => [
                     'class' => 'btn btn-primary'
                 ]

@@ -11,18 +11,21 @@
   <div class="row">
     <div class="col-md-9 mx-auto">
 
-      <h4 class="">
-      <i class="fas fa-atlas nav-icon"></i>
-        <span class="text-capitalize font-weight-bold ">{{ app.user.nom }}
-          {{ app.user.prenom }}</span>
-        ici vous avez toutes vos stories</h4>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="">
+        <i class="fas fa-atlas nav-icon"></i>
+          <span class="text-capitalize font-weight-bold ">Vos stories
+        </h4>
+
+        <a href="{{ path('story_create') }}" class="btn btn-primary mt-2 mb-4">
+          <i class="fas fa-plus ml-1"></i>
+          <span class="d-none d-md-inline">Ajouter une story</span>
+        </a>
+      </div>
 
       {% include 'layouts/flash-messages.html.twig' %}
 
-      <a href="{{ path('story_create') }}" class="btn btn-primary mt-2 mb-4">
-        Ajouter une story
-        <i class="fas fa-plus ml-1"></i>
-      </a>
 
       {% if allStory is empty %}
         <div class="alert alert-info">Vous n'avez aucune story, vous pouvez en ajouter
@@ -42,7 +45,7 @@
       {% for story in allStory %}
       <div class="card shadow my-3">
         <div class="card-body">
-        <span class="h5 font-weight-bold text-primary"> {{ story.title }} </span>
+        <span class="h5 font-weight-bold text-primary text-uppercase"> {{ story.title }} </span>
           <p> Publié 
               <span class="font-italic">
               {% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}

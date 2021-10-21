@@ -11,16 +11,21 @@
 	<div class="row">
 		<div class="col-md-9 mx-auto">
 
-			<h4 class="font-weight-bold">
+	
+
+			<div class="d-flex justify-content-between align-items-center">
+				<h4 class="">
 				<i class="fas fa-globe-europe"></i>
-				Les stories publics</h4>
+				<span class="text-capitalize font-weight-bold ">Stories publiques
+				</h4>
+
+				<a href="{{ path('story_create') }}" class="btn btn-primary mt-2 mb-4">
+				<i class="fas fa-plus ml-1"></i>
+				<span class="d-none d-md-inline">Ajouter une story</span>
+				</a>
+			</div>
 
 			{% include 'layouts/flash-messages.html.twig' %}
-
-			<a href="{{ path('story_create') }}" class="btn btn-primary shadow mt-2 mb-2">
-				<i class="fas fa-plus"></i>
-				Ajouter
-			</a>
 
 			{% if allStory is empty %}
 				<div class="alert alert-info">Il n'y a aucune story public, Vous pouvez être le premier(ère) à en ajouter
@@ -30,29 +35,10 @@
 			{% for story in allStory %}
 				<div class="card shadow my-3">
 					<div class="card-body">
-						<span class="h5 font-weight-bold text-primary">
+						<span class="h5 font-weight-bold text-primary text-uppercase">
 							{{ story.title }}
-						</span>
-						<p>
-							Publié
-							<span class="font-italic">
-								{% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
-									Aujourd'hui à
-									{{ story.createdAt|date("H:i:s") }}
-								{% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
-									Hier à
-									{{ story.createdAt|date("H:i:s") }}
-								{% else %}
-									(Le
-									{{ story.createdAt|date("d/m/Y") }}
-									à
-									{{ story.createdAt|date("H:i:s") }}
-									)
-								{% endif %}
-							</span>
-							<br>
-							par:
-							<span class="font-weight-bold">
+						</span> <br>
+						<span class="font-weight-bold">
 								{% if app.user.idUser == story.idUser.idUser %}
 									Vous
 									{% if story.statut == "public_anonyme" %}
@@ -67,7 +53,27 @@
 									{% endif %}
 								{% endif %}
 							</span>
-							<br>
+
+						
+
+						<p>
+							
+							<span class="font-italic">
+								{% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
+									Aujourd'hui à
+									{{ story.createdAt|date("H:i:s") }}
+								{% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
+									Hier à
+									{{ story.createdAt|date("H:i:s") }}
+								{% else %}
+									Le
+									{{ story.createdAt|date("d/m/Y") }}
+									à
+									{{ story.createdAt|date("H:i:s") }}
+									
+								{% endif %}
+							</span>
+							
 
 						</p>
 						<a href="{{ path('story_show', {storyId: story.id} ) }}" class="btn btn-primary rounded shadow float-right">Lire la story
