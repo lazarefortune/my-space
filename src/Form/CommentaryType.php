@@ -15,13 +15,15 @@ class CommentaryType extends AbstractType
     {
         $builder
             ->add('content', TextareaType::class, [
-                'label' => "Laissez un commentaire",
+                'label' => "Laissez votre commentaire",
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                 ]
             ])
-            ->add('commenter', SubmitType::class, [
+            ->add('publier', SubmitType::class, [
+                'label' => "Laisser mon commentaire",
+                'icon-after' => "fas fa-edit",
                 'attr' => [
                     'class' => 'btn btn-primary'
                 ]

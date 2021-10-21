@@ -204,7 +204,19 @@
 			</article>
 
 			<div class="mt-2 mb-5">
-				<h4 class=" font-weight-bold mt-5 mb-3">Commentaires :</h4>
+				<h4 class=" font-weight-bold mt-5 mb-3"> <i class="fas fa-comment-dots"></i> Commentaires :</h4>
+				
+				<div class="mt-4">
+					{{ form_start( formCommentary ) }}
+					{# <div class="form-group mt-4">
+															<label for="commentary">Laisser un commentaire</label>
+															<textarea name="" class="form-control" id="" cols="30" rows="5"></textarea>
+														</div> #}
+						{# <button type="submit" class="btn btn-primary">Laisser mon commentaire <i class="fas fa-paper-plane"></i></button> #}
+						{# {% do formCommentary.publier.setRendered %} #}
+					{{ form_end( formCommentary ) }}
+				</div>
+
 				<ul class="list-group">
 					{% for commentary in commentaries %}
 						<li class="list-group-item my-3">
@@ -227,15 +239,7 @@
 					{% endfor %}
 				</ul>
 
-				<div class="mt-4">
-					{{ form_start( formCommentary ) }}
-					{# <div class="form-group mt-4">
-															<label for="commentary">Laisser un commentaire</label>
-															<textarea name="" class="form-control" id="" cols="30" rows="5"></textarea>
-														</div>
-														<button type="submit" class="btn btn-primary">Commenter</button> #}
-					{{ form_end( formCommentary ) }}
-				</div>
+				
 			</div>
 
 		{% endif %}

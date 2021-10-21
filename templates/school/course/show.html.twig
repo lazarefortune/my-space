@@ -3,34 +3,39 @@
 {% block site_title %}Course{% endblock %}
 
 {% block site_content %}
-    <h1>Cours</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Title</th>
-                <td>{{ course.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ course.content|raw }}</td>
-            </tr>
-            <tr>
-                <th>Crée le</th>
-                <td>{{ course.createdAt ? course.createdAt|date('d/m/Y H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Mis à jour le</th>
-                <td>{{ course.updatedAt ? course.updatedAt|date('d/m/Y H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href=" {{ path('school_home') }} ">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('school_home') }}"> {{ course.matiere.module.name }} </a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('school_matiere_course_index', { 'id' : course.matiere.id }) }}"> {{ course.matiere.name }} </a></li>
+                    <li class="breadcrumb-item active" aria-current="page"> {{ course.id }} </li>
+                    {# <li class="breadcrumb-item active" aria-current="page"> {{ course.matiere.name }} </li> #}
+                </ol>
+            </nav>
+            <div class="card">
+                <div class="card-header">
+                    <h5> {{ course.title }} </h5> 
+                    <small> Crée le : {{ course.createdAt ? course.createdAt|date('d/m/Y H:i:s') : '' }} ,
+                        Mis à jour le : {{ course.updatedAt ? course.updatedAt|date('d/m/Y H:i:s') : '' }}
+                    </small>  
+                </div>
+                <div class="card-body">
+                    {{ course.content|raw }}
+                </div>
+                <div class="mt-4 card-footer d-flex justify-content-between">
+                    {# <a href="{{ path('school_course_index') }}">back to list</a> #}
 
-    {# <a href="{{ path('school_course_index') }}">back to list</a> #}
+                    <a href="{{ path('school_matiere_course_index', { 'id' : course.matiere.id }) }}" class="btn btn-sm btn-secondary my-2">Retour à la liste</a>
 
-    <a href="{{ path('school_matiere_course_index', { 'id' : course.matiere.id }) }}" class="btn btn-sm btn-secondary my-2">Retour à la liste</a>
+                    <a href="{{ path('school_course_edit', {'id': course.id}) }}" class="btn btn-sm btn-warning my-2">edit</a>
 
-    <a href="{{ path('school_course_edit', {'id': course.id}) }}" class="btn btn-sm btn-warning my-2">edit</a>
+                    {{ include('school/course/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {{ include('school/course/_delete_form.html.twig') }}
 {% endblock %}

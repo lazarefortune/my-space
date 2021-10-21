@@ -153,8 +153,9 @@ blockquote.media-object .media .usr-img img {
     letter-spacing: 1px; }
 
 a {
-  color: #515365;
-  outline: none; }
+  /* color: #515365; */
+  /* outline: none;  */
+}
   a:hover {
     color: #555555;
     text-decoration: none; }

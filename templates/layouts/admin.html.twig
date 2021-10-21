@@ -29,17 +29,19 @@
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content=" {{ asset('assets/favicon/ms-icon-144x144.png') }} ">
 		<meta name="theme-color" content="#ffffff">
-
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 		<!-- BEGIN GLOBAL MANDATORY STYLES -->
 		<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 		<link href=" {{ asset('bootstrap/css/bootstrap.min.css') }} " rel="stylesheet" type="text/css"/>
 		<link href=" {{ asset('assets/css/plugins.css') }} " rel="stylesheet" type="text/css"/>
 		<link href=" {{ asset('assets/css/scrollspyNav.css') }} " rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href=" {{ asset('plugins/font-icons/fontawesome/css/regular.css') }} ">
-    	<link rel="stylesheet" href=" {{ asset('plugins/font-icons/fontawesome/css/fontawesome.css') }} ">
+		{# <link rel="stylesheet" href=" {{ asset('plugins/font-icons/fontawesome/css/regular.css') }} "> #}
+    	{# <link rel="stylesheet" href=" {{ asset('plugins/font-icons/fontawesome/css/fontawesome.css') }} "> #}
 		<!-- END GLOBAL MANDATORY STYLES -->
 
-		<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->{% block stylesheets %}
+		<!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+		{% block stylesheets %}
 		{% endblock %}
 		<style>
 ::-moz-selection {
