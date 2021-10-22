@@ -73,8 +73,8 @@
 									
 								{% endif %}
 							</span>
-							
-
+							<br>
+							{{ story.description|truncate(150)|raw }}
 						</p>
 						<a href="{{ path('story_show', {storyId: story.id} ) }}" class="btn btn-primary rounded shadow float-right">Lire la story
 							<i class="fas fa-arrow-circle-right ml-2"></i>
