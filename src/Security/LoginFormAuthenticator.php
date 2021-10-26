@@ -83,7 +83,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Identifiant ou mot de passe incorrect');
         }
-        // dd($user);
 
         return $user;
     }

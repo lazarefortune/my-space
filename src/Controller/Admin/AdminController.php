@@ -21,10 +21,11 @@ class AdminController extends AbstractController
      */
     public function index( Request $request ): Response
     {
-        // $ip = $request->getClientIp();
-        $id = $this->container->get('request_stack')->getCurrentRequest()->getClientIp();
-        $ip = $_SERVER;
-        $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // $id = $this->container->get('request_stack')->getCurrentRequest()->getClientIp();
+        // $ip = $_SERVER;
+        // $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
         // dd($hostname);
         // dd($ip);
         // dd($id);

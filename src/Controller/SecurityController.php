@@ -49,7 +49,7 @@ class SecurityController extends AbstractController
         $form = $this->createForm( ResetPasswordType::class );
 
         $form->handleRequest( $request );
-        // dd($form);
+        
         if ( $form->isSubmitted() && $form->isValid()  ) {
             
             // On récupère les données

@@ -6,17 +6,20 @@ use App\Entity\Course;
 use App\Entity\Matiere;
 use App\Form\CourseType;
 use App\Repository\CourseRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/school/course")
+ * @Security("is_granted('ROLE_USER')")
  */
 class CourseController extends AbstractController
 {
     /**
+     * TODO : Supprimer cette fonction (inutile)
      * @Route("/", name="school_course_index", methods={"GET"})
      */
     public function index(CourseRepository $courseRepository): Response

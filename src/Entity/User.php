@@ -135,6 +135,16 @@ class User implements UserInterface
     private $courses;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $notifAccount;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $notifAppStory;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -469,6 +479,30 @@ class User implements UserInterface
                 $course->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNotifAccount(): ?bool
+    {
+        return $this->notifAccount;
+    }
+
+    public function setNotifAccount(?bool $notifAccount): self
+    {
+        $this->notifAccount = $notifAccount;
+
+        return $this;
+    }
+
+    public function getNotifAppStory(): ?bool
+    {
+        return $this->notifAppStory;
+    }
+
+    public function setNotifAppStory(?bool $notifAppStory): self
+    {
+        $this->notifAppStory = $notifAppStory;
 
         return $this;
     }

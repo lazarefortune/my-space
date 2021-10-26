@@ -1,9 +1,9 @@
-{% extends 'layouts/auth.html.twig' %}
+{% extends 'layouts/site_simple.html.twig' %}
 
-{% block title %}Register
+{% block site_title %}Register
 {% endblock %}
 
-{% block auth_content %}
+{% block site_content %}
 	{% for flashError in app.flashes('verify_email_error') %}
 		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
 	{% endfor %}
@@ -14,10 +14,11 @@
 				<div class="form-container">
 					<div class="form-content">
 
-						<h1 class="">Inscription</h1>
-						<p class="signup-link register">Vous avez déjà un compte?
-							<a href=" {{ path('app_login') }} ">Connectez vous</a>
-						</p>
+						<a href=" {{ path('home_site') }} ">
+							<img src=" {{ asset('assets/img/my_space_logo.png') }} " width="70" alt="">
+						</a>
+						<p class="mb-0">Rejoins la communauté </p>
+						
 						<div class="text-left">
 							{{ form_start(registrationForm) }}
 							<div class="form">
@@ -134,9 +135,13 @@
 										<button type="submit" class="btn btn-primary" value="">Commencer!</button>
 									</div>
 								</div>
+								
 
 							</div>
 							{{ form_end(registrationForm) }}
+							<p class="signup-link register mt-3">Vous avez déjà un compte?
+								<a href=" {{ path('app_login') }} ">Connectez vous</a>
+							</p>
 						</div>
 
 					</div>

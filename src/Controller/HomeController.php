@@ -10,18 +10,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/" , name="home")
+     * @Route("/", name="home_site")
+     *
+     * @return void
+     */
+    public function index_site(){
+        return $this->render('public/index.html.twig');
+    }
+
+    /**
+     * @Route("/home" , name="home")
      */
     public function index(): Response{
 
         return $this->render('index.html.twig');
     }
 
-    /**
-     * @Route("/email", name="email_test")
-     */
-    public function emailTest(): Response
-    {
-        return $this->render('layouts/emails/test.html.twig');
-    }
 }

@@ -19,9 +19,11 @@ use App\Repository\InspirationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/story",name="story_")
+ * @Security("is_granted('ROLE_USER')")
  */
 class StoryController extends AbstractController
 {

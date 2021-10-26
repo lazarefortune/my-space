@@ -6,16 +6,18 @@ use App\Entity\User;
 use App\Form\EditUserType;
 use App\Services\GrantedService;
 use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
 /**
  * @Route("/admin/users",name="admin_users_")
+ * @Security("is_granted('ROLE_ADMIN') and is_granted('ROLE_USER')")
  */
 class UserController extends AbstractController
 {
