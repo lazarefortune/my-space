@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>My Space - Error 503 Page</title>
+    <title>My Space - Error 500 Page</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
@@ -28,10 +28,11 @@
 
     <div class="container-fluid error-content">
         <div class="">
-            <h1 class="error-number">503</h1>
+            <h1 class="error-number">500</h1>
             <p class="mini-text">Ooops!</p>
-            <p class="error-text">Une erreur s'est produite!</p>
-            <a href="index.html" class="btn btn-secondary mt-5">Retour</a>
+            <p class="error-text">Une erreur s'est produite sur notre serveur!</p>
+            <p>Nous sommes navrés du désagrément, nous reviendrons vers vous au plus vite.</p>
+            <a href=" {{ path('home') }} " class="btn btn-secondary mt-5">Retour</a>
         </div>
     </div>
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
