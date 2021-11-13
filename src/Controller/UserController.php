@@ -92,6 +92,29 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/profil/photo/suppression", name="account_delete_photo")
+     */
+    public function deletePhoto()
+    {
+        $user = $this->getUser();
+        
+        if ( !empty( $user->getProfilePicture() ) && file_exists( $this->getParameter('user_profile_directory').'/'.$user->getProfilePicture() ) )
+        {
+            unlink($this->getParameter('user_profile_directory').'/'.$user->getProfilePicture());
+        }
+
+        $user->setProfilePicture(null);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Photo supprimée avec succès');
+
+        return $this->redirectToRoute('account_edit');
+    }
+
+    /**
      * @Route("/profil/edition/mot-de-passe", name="account_edit_password")
      *
      * @param Request $request

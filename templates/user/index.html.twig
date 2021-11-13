@@ -26,7 +26,11 @@
 					</a>
 				</div>
 				<div class="text-center">
-					<img src=" {{ asset('images/user-group.png') }} " alt="" width="70" class="rounded-circle border border-5 border-primary my-2">
+					{% if app.user.profilePicture %}
+						<img src=" {{ user_profile_picture_directory }}/{{ app.user.profilePicture }} " alt="" width="70" class="rounded-circle border border-5 border-primary my-2">
+					{% else %}
+						<img src=" {{ asset('images/user-group.png') }} " alt="" width="70" class="rounded-circle border border-5 border-primary my-2">
+					{% endif %}
 					<h4 class="font-weight-bold">
 						{{ app.user.nom }}
 						{{ app.user.prenom }}

@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
   
   $('.dropify').dropify({
-      messages: { 'default': 'Click to Upload or Drag n Drop', 'remove':  '<i class="flaticon-close-fill"></i>', 'replace': 'Upload or Drag n Drop' }
+      messages: { 'default': 'Cliquez pour télécharger ou glisser-déposer', 'remove':  '<i class="flaticon-close-fill"></i>', 'replace': 'Télécharger ou glisser-déposer' }
   });
 
   // Save notification messagae

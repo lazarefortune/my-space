@@ -35,6 +35,43 @@
 											<i class="flaticon-cloud-upload mr-1"></i>
 											Upload</p> #}
 									</div>
+
+										
+									{% if app.user.profilePicture %}
+									<!-- Button delete modal -->
+									<a href="" class="mt-4 d-flex justify-content-center" data-toggle="modal" data-target="#deleteProfilePicture">
+										<span class="">Supprimer</span>
+									</a>
+									{% endif %}
+
+									<!-- Modal -->
+									<div class="modal fade" id="deleteProfilePicture" tabindex="-1" role="dialog" aria-labelledby="deleteProfilePictureLabel" aria-hidden="true">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="deleteStoryLabel">Suppression de votre photo de profil</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														x
+													</button>
+												</div>
+												<div class="modal-body">
+													<p>
+														Vous êtes sur le point de supprimer votre photo de profil. Souhaitez-vous continuer ?
+													</p>
+												</div>
+												<div class="modal-footer">
+													<button class="btn btn-primary" data-dismiss="modal">
+														<i class="flaticon-cancel-12"></i>
+														Annuler</button>
+													<a href="{{ path('account_delete_photo') }}" class="btn btn-outline-danger">
+														<i data-feather="trash-2"></i>
+														Oui, continuer
+													</a>
+												</div>
+											</div>
+										</div>			
+									</div>
+
 								</div>
 								<div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
 									<div class="form">
