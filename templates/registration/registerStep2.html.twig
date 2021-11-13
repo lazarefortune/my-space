@@ -1,0 +1,90 @@
+{% extends 'layouts/site_simple.html.twig' %}
+
+
+{% block stylesheets %}
+<style>
+.form-container{
+	background: url(" images/my_space_background.png ") no-repeat center center fixed;	
+}
+</style>
+{% endblock %}
+
+{% block site_title %}Inscription{% endblock %}
+
+{% block site_content %}
+	{% for flashError in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+	{% endfor %}
+
+	<div class="form-container outer">
+		<div class="form-form">
+			<div class="form-form-wrap">
+				<div class="form-container">
+					<div class="form-content">
+
+						<a href=" {{ path('home_site') }} ">
+							<img src=" {{ asset('assets/img/my_space_logo.png') }} " width="70" alt="">
+						</a>
+						<p class="mb-0"> Nous y sommes presque... </p>
+						<p class="mb-0"> Plus qu'une étape pour configurer votre espace </p>
+						
+						<div class="text-left">
+							{{ form_start(registrationForm) }}
+							<div class="form">
+								{% for flashError in app.flashes('verify_email_error') %}
+									<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+								{% endfor %}
+								{% include 'layouts/flash-messages.html.twig' %}
+								{# For convenience sake of this snippet, store the errors in a variable #}
+								{% set formErrors = registrationForm.vars.errors.form.getErrors(true) %}
+
+								{# If there are errors in the form, display them in this unorganized list #}
+								{% if formErrors|length %}
+									<ul class="text-danger">
+										{% for error in formErrors %}
+											<li>{{ error.message }}</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+								<div class="row">
+									<div class="col-6">
+										<div id="username-field" class="field-wrapper input">
+											<label for="nom">NOM*</label>
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+												<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+												<circle cx="12" cy="7" r="4"></circle>
+											</svg>
+											{{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control', 'id': 'nom', 'placeholder': 'Nom'}}) }}
+										</div>
+									</div>
+									<div class="col-6">
+										<div id="username-field" class="field-wrapper input">
+											<label for="prenom">PRENOM*</label>
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+												<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+												<circle cx="12" cy="7" r="4"></circle>
+											</svg>
+											{{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control', 'id': 'prenom', 'placeholder': 'Prénom'}}) }}
+										</div>
+									</div>
+								</div>
+
+								<div class="d-sm-flex justify-content-between">
+									<div class="field-wrapper">
+										<button type="submit" class="btn btn-primary" value="">Continuer</button>
+									</div>
+								</div>
+								
+
+							</div>
+							{{ form_end(registrationForm) }}
+							
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

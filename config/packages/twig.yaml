@@ -4,3 +4,4 @@ twig:
     globals:
         title: "My Space"
         cats: '@App\Twig\CatsExtension'
+        user_profile_picture_directory: '%user_profile_picture_directory%'

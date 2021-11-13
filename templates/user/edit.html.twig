@@ -1,185 +1,169 @@
 {% extends "layouts/site.html.twig" %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href=" {{ asset('plugins/dropify/dropify.min.css') }} ">
+	<link href=" {{ asset('assets/css/users/account-setting.css') }} " rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block site_breadcrumb %}
+	/
+	<a href=" {{ path('account') }} ">
+		Profil
+	</a>
+	/ Edition
+{% endblock %}
+
 {% block site_content %}
 
-	{# <div class="row mt-4">
-					
-					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="margin-bottom:24px;">
-						<div class="statbox widget box box-shadow">
-							<div class="widget-header">
-								<div class="row">
-									<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-										<h4>Profil</h4>
+	{{ form_start(formUser) }}
+	{% include 'layouts/flash-messages.html.twig' %}
+
+	<div class="row ">
+		<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+			<div id="general-info" class="section general-info">
+				<div class="info">
+					<h6 class="d-flex align-items-center text-primary"> <i data-feather="user" class="mr-2"></i> Informations générales</h6>
+					<div class="row">
+						<div class="col-lg-11 mx-auto">
+							<div class="row">
+								<div class="col-xl-2 col-lg-12 col-md-4">
+									<div class="upload mt-0 mt-md-4 mt-lg-4 rounded shadow">
+										<input type="file" name="user[profile_picture]" id="input-file-max-fs" class="dropify" data-default-file="{{ user_profile_picture_directory }}/{{ app.user.profilePicture }}" data-max-file-size="5M"/>
+										{% do formUser.profile_picture.setRendered %}
+										{# {{ form_widget(formUser.profile_picture, {'attr': { 'class': 'dropify', 'data-default-file' : "#{user_profile_picture_directory}/#{app.user.profilePicture}" , 'id' : 'input-file-max-fs'  } } ) }} #}
+										{# <p class="mt-2">
+											<i class="flaticon-cloud-upload mr-1"></i>
+											Upload</p> #}
+									</div>
+								</div>
+								<div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+									<div class="form">
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="form-group">
+													<label for="form_nomEval">Nom
+													</label>
+													{{ form_widget(formUser.nom) }}
+													{{ form_errors(formUser.nom) }}
+												</div>
+											</div>
+											<div class="col-sm-6">
+												<div class="form-group">
+													<label for="input02">Prénom
+													</label>
+													{{ form_widget(formUser.prenom) }}
+													{{ form_errors(formUser.prenom) }}
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input04">Téléphone
+											</label>
+											{{ form_widget(formUser.phone, { 'attr': { 'placeholder' : '' } }) }}
+											{{ form_errors(formUser.phone) }}
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="widget-content widget-content-area" style="height: 571px;">
-								<form>
-									<div class="form-row mb-4">
-										<div class="form-group col-md-6">
-											<label for="inputEmail4">Email</label>
-											<input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-										</div>
-										<div class="form-group col-md-6">
-											<label for="inputPassword4">Password</label>
-											<input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-										</div>
-									</div>
-									<div class="form-group mb-4">
-										<label for="inputAddress">Address</label>
-										<input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-									</div>
-									<div class="form-group mb-4">
-										<label for="inputAddress2">Address 2</label>
-										<input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-									</div>
-									<div class="form-row mb-4">
-										<div class="form-group col-md-6">
-											<label for="inputCity">City</label>
-											<input type="text" class="form-control" id="inputCity">
-										</div>
-										<div class="form-group col-md-4">
-											<label for="inputState">State</label>
-											<select id="inputState" class="form-control">
-												<option selected="">Choose...</option>
-												<option>...</option>
-											</select>
-										</div>
-										<div class="form-group col-md-2">
-											<label for="inputZip">Zip</label>
-											<input type="text" class="form-control" id="inputZip">
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="form-check pl-0">
-											<div class="custom-control custom-checkbox checkbox-info">
-												<input type="checkbox" class="custom-control-input" id="gridCheck">
-												<label class="custom-control-label" for="gridCheck">Check me out</label>
-											</div>
-										</div>
-									</div>
-									<button type="submit" class="btn btn-primary mt-3">Sign in</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div> #}
-
-	<div class="row mt-4">
-		<div class="mx-auto col-md-12">
-
-			{% include 'layouts/flash-messages.html.twig' %}
-
-			<div
-				class="statbox widget box box-shadow mb-5">
-				{# <h6 class="card-header font-weight-bold bg-dark">
-																	Profil
-																</h6> #}
-				<div class="widget-header">
-					<div class="row">
-						<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-							<h4>Profil</h4>
 						</div>
 					</div>
 				</div>
-				<!-- .card-body -->
+			</div>
+		</div>
+		<div class="mx-auto col-md-12">
+
+			{# <nav aria-label="breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a href=" {{ path('home') }} "> Accueil </a></li>
+									<li class="breadcrumb-item"><a href=" {{ path('account') }} "> Profil </a></li>
+									<li class="breadcrumb-item active" aria-current="page"> Edition </li>
+								</ol>
+							</nav> #}
+
+			<!-- form -->
+				<div class="statbox widget box box-shadow mb-4"> <div class="widget-header">
+					<div class="row">
+						<div class="col-xl-12 col-md-12 col-sm-12 col-12">
+							<h4>
+								<i class="fa fa-edit"></i>
+								Edition du profil
+							</h4>
+						</div>
+					</div>
+				</div>
 				<div
-					class="widget-content widget-content-area">
-					<!-- form -->
-					{{ form_start(formUser) }}
+					class="widget-content widget-content-area ">
+
+
+					<!-- form row -->
+					<div class="form-row"></div>
+					<!-- /form row -->
+
+
+					<h6 class="font-weight-bold text-primary ">
+						<i class="fas fa-cog"></i>
+						Informations du compte
+					</h6>
+
 					<!-- form row -->
 					<div
 						class="form-row">
 						<!-- form column -->
 						<div class="col-md-6 mb-3">
-							<label for="form_nomEval">Nom
+							<label for="input03">Adresse e-mail
 								<span class="text-danger">*</span>
 							</label>
-							{{ form_widget(formUser.nom) }}
-							{{ form_errors(formUser.nom) }}
+							{{ form_widget(formUser.email) }}
+							{{ form_errors(formUser.email) }}
 						</div>
 						<!-- /form column -->
 						<!-- form column -->
 						<div class="col-md-6 mb-3">
-							<label for="input02">Prénom
-								<span class="text-danger">*</span>
-							</label>
-							{{ form_widget(formUser.prenom) }}
-							{{ form_errors(formUser.prenom) }}
+							<label for="input03">Adresse e-mail secondaire</label>
+							{{ form_widget(formUser.secondEmail) }}
+							{{ form_errors(formUser.secondEmail) }}
 						</div>
 						<!-- /form column -->
 					</div>
 					<!-- /form row -->
-					<!-- .form-group -->
-					<div class="form-group">
-						<label for="input03">Adresse e-mail
-							<span class="text-danger">*</span>
-						</label>
-						{{ form_widget(formUser.email) }}
-						{{ form_errors(formUser.email) }}
-					</div>
-					<!-- /.form-group -->
-					<!-- .form-group -->
-					<div class="form-group">
-						<label for="input03">Adresse e-mail secondaire</label>
-						{{ form_widget(formUser.secondEmail) }}
-						{{ form_errors(formUser.secondEmail) }}
-					</div>
-					<!-- /.form-group -->
-					<!-- .form-group -->
-					<div class="form-group">
-						<label for="identifiant">Identifiant de connexion</label>
-						{{ form_widget(formUser.login) }}
-						{{ form_errors(formUser.login) }}
-						<div class=" mt-1">
-							<span class="badge badge-primary">
-								<small id="sh-text4" class="form-text mt-0">Cet identifiant est unique et vous permet de vous connecter à la plateforme.</small>
-							</span>
-						</div>
-						{# <small class="text-muted">Cet identifiant est unique et vous permet de vous connecter à la plateforme.</small> #}
-					</div>
-					<!-- /.form-group -->
-					<!-- .form-group -->
-					<div class="form-group">
-						<label for="newPassword">Nouveau mot de passe</label>
-						<input type="password" class="form-control" name="newPassword" id="newPassword">
-						<small>Uniquement si vous Souhaitez modifier votre mot de passe, sinon laissez vide.</small>
-					</div>
-					<!-- /.form-group -->
-					{# <hr> #}
-					<!-- .form-actions -->
-					<!-- enable submit btn when user type their current password -->
-						<div class="form-group"> <label for="oldPassword">Mot de passe actuel *</label>
-						<input
-						type="password" class="form-control mr-3" name="oldPassword" id="oldPassword" placeholder="Entrez votre mot de passe actuel" required="">
-					{# <small>Obligatoire pour mettre à jour vos données.</small> #}
-					</div>
-					<button type="submit" class="btn btn-primary text-nowrap ml-auto" id="send" disabled>Mettre à jour</button>
-					<!-- /.form-actions -->
-					{{ form_end(formUser) }}
 
-					<!-- /form -->
+					<!-- .form-row -->
+					<div class="form-row">
+						<div class="col-md-6 mb-3">
+							<label for="identifiant">Identifiant de connexion
+								<span class="text-danger">*</span>
+							</label>
+							{{ form_widget(formUser.login) }}
+							{{ form_errors(formUser.login) }}
+							{# <div class=" mt-1">
+																<span class="badge badge-primary">
+																	<small id="sh-text4" class="form-text mt-0">Cet identifiant est unique et vous permet de vous connecter à la plateforme.</small>
+																</span>
+															</div> #}
+						</div>
+					</div>
+					<!-- ./form-row -->
+
+					<button type="submit" class="btn btn-primary my-4 col-12 col-md-4 text-nowrap" id="send">
+						<i data-feather="check"></i>
+						Enregistrer les modifications</button>
 				</div>
-				<!-- /.card-body -->
 			</div>
-			<!-- /.card -->
+
+
 		</div>
 	</div>
 
 
 	<div>
+		{{ form_end(formUser) }}
+
 
 	{% endblock %}
 
 	{% block javascripts %}
-		<script>
-			document.getElementById("oldPassword").addEventListener("keyup", function () {
-var nameInput = document.getElementById('oldPassword').value;
-if (nameInput != "") {
-document.getElementById('send').removeAttribute("disabled");
-} else {
-document.getElementById('send').setAttribute("disabled", null);
-}
-});
-		</script>
+		<script src=" {{ asset('assets/js/users/account-settings.js') }} "></script>
+		<script src=" {{ asset('plugins/dropify/dropify.min.js') }} "></script>
+		<script src=" {{ asset('plugins/blockui/jquery.blockUI.min.js') }} "></script>
+
 	{% endblock %}

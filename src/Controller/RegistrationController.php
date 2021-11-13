@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Parameters;
 use App\Entity\User;
+use App\Form\RegisterStep2Type;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
@@ -50,7 +51,7 @@ class RegistrationController extends AbstractController
 
             $user->setCreatedAt( $today );
             $user->setUpdatedAt( $today );
-            $user->setLastConnexion( $today );
+            $user->setLastLogin( $today );
             
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -68,6 +69,18 @@ class RegistrationController extends AbstractController
                 $entityManager->flush();
             }
 
+            $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );
+
+            $this->addFlash('success', 'Votre compte a été créé !');
+            
+            return $this->redirectToRoute('app_register_step_2', [
+                'id' => $user->getIdUser() ,
+            ]);
             // generate a signed url and email it to the user
             // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
             //     (new TemplatedEmail())
@@ -104,6 +117,39 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/inscription/etape-2/{id}", name="app_register_step_2")
+     */
+    public function registerStep2( Request $request , $id , GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, \Swift_Mailer $mailer): Response
+    {
+        // $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $user = $this->getUser();
+        $form = $this->createForm(RegisterStep2Type::class, $user);
+        $form->handleRequest($request);
+        if( $form->isSubmitted() && $form->isValid() ){
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $user->setUpdatedAt( new \DateTime('now', new \DateTimeZone('Europe/Paris')) );
+            $entityManager->persist( $user );
+            $entityManager->flush();
+
+            // return $guardHandler->authenticateUserAndHandleSuccess(
+            //     $user,
+            //     $request,
+            //     $authenticator,
+            //     'main' // firewall name in security.yaml
+            // );
+
+            return $this->redirectToRoute('home_site');
+        }
+        
+
+
+        return $this->render('registration/registerStep2.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }

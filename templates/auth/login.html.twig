@@ -1,5 +1,13 @@
 {% extends "layouts/site_simple.html.twig" %}
 
+{% block stylesheets %}
+<style>
+.form-container{
+	background: url(" images/my_space_background.png ") no-repeat center center fixed;	
+}
+</style>
+{% endblock %}
+
 {% block site_title %}Connexion | {% endblock %}
 
 {% block site_content %}
@@ -13,7 +21,7 @@
 						<a href=" {{ path('home_site') }} ">
 							<img src=" {{ asset('assets/img/my_space_logo.png') }} " width="70" alt="">
 						</a>
-						<p class="mb-0">Ravis de te revoir !!!</p>
+						<p class="mb-0">Ravis de te (re)voir !!!</p>
 
 						<form class="text-left" method="post">
 							<div class="form">
@@ -51,7 +59,7 @@
 										<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
 										<circle cx="12" cy="12" r="3"></circle>
 									</svg>
-									<a href="{{ path('forgotten_password') }}" class="forgot-pass-link mt-2">Mot de passe oublié?</a>
+									<a href="{{ path('forgotten_password') }}" class="text-primary forgot-pass-link mt-2">Mot de passe oublié?</a>
 								</div>
 								{# CSRF TOKEN #}
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

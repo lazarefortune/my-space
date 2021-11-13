@@ -1,5 +1,14 @@
 {% extends "layouts/site_simple.html.twig" %}
 
+{% block stylesheets %}
+<style>
+.form-container{
+	background: url(" ../images/my_space_background.png ") no-repeat center center fixed;	
+}
+</style>
+{# <link rel="stylesheet" href=" {{ asset('assets/css/authentication/form-2.css') }} "> #}
+{% endblock %}
+
 {% block site_content %}
 
 	<div class="form-container outer">

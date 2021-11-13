@@ -1,16 +1,43 @@
 {% extends "layouts/site.html.twig" %}
 
+{% block site_breadcrumb %}
+	/ Profil
+{% endblock %}
+
 {% block site_content %}
 
-	<div class="row mt-4">
+	<div class="row">
 		<div class="col-md-12 mx-auto">
+
+			{# <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href=" {{ path('home') }} "> Accueil </a></li>
+                    <li class="breadcrumb-item active" aria-current="page"> Profil </li>
+                </ol>
+            </nav> #}
+
+			{% include 'layouts/flash-messages.html.twig' %}
+
 			<div class="card shadow-sm card-body mb-3">
+				<div class="text-left d-flex justify-content-between h5 font-weight-bold text-dark align-items-center">
+					<span></span>
+					<a href=" {{ path('account_edit') }} " class="d-none d-md-block">
+						<i class="fas fa-edit text-primary"></i>
+					</a>
+				</div>
 				<div class="text-center">
 					<img src=" {{ asset('images/user-group.png') }} " alt="" width="70" class="rounded-circle border border-5 border-primary my-2">
 					<h4 class="font-weight-bold">
 						{{ app.user.nom }}
 						{{ app.user.prenom }}
+						{% if app.user.nom is empty and app.user.prenom is empty %}
+							<a href=" {{ path('account_edit') }} " class="btn btn-sm btn-primary">
+								Complétez votre profil
+							</a>
+						{% else %}
+						
 						{{ app.user.isVerified == 1 ? '<i class="text-info fas fa-check-circle"></i>' : '<i class="text-warning fas fa-exclamation-triangle"></i>' }}
+						{% endif %}
 					</h4>
 					{% if app.user.isVerified == 0 %}
 						<small>
@@ -24,14 +51,19 @@
 					{% endif %}
 
 				</div>
+				<div class="d-flex">
+					<a href=" {{ path('app_logout') }} " class="d-none d-md-block btn btn-sm btn-outline-info ml-auto"> Me déconnecter <i class="fas fa-sign-out-alt"></i> </a>
+					<a href=" {{ path('app_logout') }} " class="d-block d-md-none ml-auto">Me déconnecter <i class="fas fa-sign-out-alt"></i> </a>
+				</div>
 
 			</div>
 
 			<div class="card shadow-sm card-body mb-3">
 				<div class="text-left d-flex justify-content-between h5 font-weight-bold text-dark align-items-center">
 					<span>
-						<i class="fas fa-user"></i>
-						Informations personnelles</span>
+						{# <i class="fas fa-user"></i> #}
+						<i data-feather="user"></i>
+						Mes informations</span>
 					<a href=" {{ path('account_edit') }} " class="d-none d-md-block">
 						<i class="fas fa-edit text-primary"></i>
 					</a>
@@ -40,29 +72,52 @@
 					<p>
 						Adresse mail :
 						<b>
-							{{ app.user.email }}
+							{{ app.user.email ? app.user.email : 'Non renseigné' }}
 						</b>
 					</p>
 					<p>
 						Adresse mail secondaire :
 						<b>
-							{{ app.user.secondEmail }}
+							{{ app.user.secondEmail ? app.user.secondEmail : 'Non renseigné' }}
 						</b>
 					</p>
 					<p>
 						Contact :
 						<b>
-							Aucun
+							{{ app.user.phone ? app.user.phone : 'Non renseigné' }}
 						</b>
 					</p>
+					
+				</div>
+				<div class="d-block d-md-none d-flex">
+					<a href=" {{ path('account_edit') }} " class="ml-auto mt-3	btn btn-sm btn-outline-primary">Modifier <i class="fas fa-arrow-right"></i> </a>
 				</div>
 			</div>
 			<div class="card shadow-sm card-body mb-3">
 				<div class="text-left h5 font-weight-bold text-dark align-items-center">
-					<i class="fas fa-cog"></i>
-					Paramètres de votre compte
+					{# <i class="fas fa-cog"></i> #}
+					<i data-feather="settings"></i>
+					Mon compte
 				</div>
 				<div class="ml-4 mt-3">
+					<p>
+						Compte créé le :
+						<b>
+							{{ app.user.createdAt ? app.user.createdAt|date('d/m/Y à H:i') : 'Non renseigné' }}
+						</b>
+					</p>
+					<p>
+						Dernière connexion :
+						<b>
+							{{ app.user.lastLogin ? app.user.lastLogin|date('d/m/Y à H:i') : 'Non renseigné' }}
+						</b>
+					</p>
+					<p>
+						Dernière mise à jour :
+						<b>
+							{{ app.user.updatedAt ? app.user.updatedAt|date('d/m/Y à H:i') : 'Non renseigné' }}
+						</b>
+					</p>
 					<div class="d-flex justify-content-between align-items-center">
 						<span class="h6 font-weight-bold">Notifications :</span>
 						{# <a href="" class="btn btn-primary"> Modifier <i class="fas fa-arrow-right"></i></a> #}
@@ -78,6 +133,51 @@
 							</label>
 						</div>
 					</div>
+					<a href=" {{ path('account_edit_password') }} " class="btn btn-orange mb-2"> <i data-feather="unlock"></i> Modifier mon mot de passe </a>
+
+					<!-- Button delete modal -->
+					<button data-toggle="modal" data-target="#deletePermentlyStory" class="btn btn-outline-danger mb-2">
+						<i data-feather="trash-2"></i>
+						<span class="">Supprimer mon compte</span>
+					</button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="deletePermentlyStory" tabindex="-1" role="dialog" aria-labelledby="deletePermentlyStoryLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="deleteStoryLabel">Souhaitez vous vraiment supprimer votre compte ?
+											</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											x
+										</button>
+									</div>
+									<div class="modal-body">
+										<p>
+											Vous ne pourrez plus accéder à votre compte et vos données seront supprimées définitivement.
+										</p>
+										<p class="text-danger">
+											NB : Cette action est irréversible. Vous ne pourrez pas récupérer vos données.
+										</p>
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input" id="customCheck1">
+											<label class="custom-control-label text-dark" for="customCheck1"> Cochez cette case pour confirmer votre choix </label>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button class="btn btn-primary" data-dismiss="modal">
+											<i class="flaticon-cancel-12"></i>
+											Annuler</button>
+										<a href=" {{ path('account_delete') }} " class="btn btn-outline-danger d-none" id="deleteAccount">
+											<i data-feather="trash-2"></i>
+											Supprimer définitivement
+										</a>
+									</div>
+								</div>
+							</div>
+						
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -88,22 +188,14 @@
 
 {% block javascripts %}
 	<script>
-		document.getElementById("oldPassword").addEventListener("keyup", function () {
-var nameInput = document.getElementById('oldPassword').value;
-if (nameInput != "") {
-document.getElementById('send').removeAttribute("disabled");
-} else {
-document.getElementById('send').setAttribute("disabled", null);
-}
-});
-
-document.getElementById("edit-btn").addEventListener("onclick", function () {
-let test = document.querySelectorAll('.editable');
-test.forEach(item) {
-console.log(item);
-};
-
-})
-function test() {}
+		document.getElementById('customCheck1').addEventListener('change', function() {
+			if (this.checked) {
+				document.getElementById('deleteAccount').classList.remove('d-none').add('d-inline');
+			} else {
+				document.getElementById('deleteAccount').classList.add('d-none').remove('d-inline');
+			}
+		});
 	</script>
 {% endblock %}
+
+

@@ -1,7 +1,16 @@
 {% extends 'layouts/site_simple.html.twig' %}
 
-{% block site_title %}Register
+
+{% block stylesheets %}
+<style>
+.form-container{
+	background: url(" images/my_space_background.png ") no-repeat center center fixed;	
+}
+</style>
+
 {% endblock %}
+
+{% block site_title %}Inscription{% endblock %}
 
 {% block site_content %}
 	{% for flashError in app.flashes('verify_email_error') %}
@@ -37,7 +46,7 @@
 										{% endfor %}
 									</ul>
 								{% endif %}
-								<div class="row">
+								{# <div class="row">
 									<div class="col-6">
 										<div id="username-field" class="field-wrapper input">
 											<label for="nom">NOM</label>
@@ -45,10 +54,7 @@
 												<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
 												<circle cx="12" cy="7" r="4"></circle>
 											</svg>
-											{# <input id="nom" name="registration_form[nom]" type="text" class="form-control" placeholder="Nom"> #}
 											{{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control', 'id': 'nom', 'placeholder': 'Nom'}}) }}
-											{# {{ form_errors(registrationForm.nom) }} #}
-											{# {% do registrationForm.nom.setRendered %} #}
 										</div>
 									</div>
 									<div class="col-6">
@@ -58,13 +64,10 @@
 												<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
 												<circle cx="12" cy="7" r="4"></circle>
 											</svg>
-											{# <input id="prenom" name="registration_form[prenom]" type="text" class="form-control" placeholder="Prénom"> #}
 											{{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control', 'id': 'prenom', 'placeholder': 'Prénom'}}) }}
-											{# {{ form_errors(registrationForm.prenom) }} #}
-											{# {% do registrationForm.prenom.setRendered %} #}
 										</div>
 									</div>
-								</div>
+								</div> #}
 
 								<div id="username-field" class="field-wrapper input">
 									<label for="login">IDENTIFIANT</label>

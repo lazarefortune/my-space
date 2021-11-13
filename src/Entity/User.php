@@ -30,16 +30,23 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      */
     private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=255, nullable=false)
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
      */
     private $prenom;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
+     */
+    private $phone;
 
     /**
      * @var string|null
@@ -58,7 +65,7 @@ class User implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="password", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="password", type="text", length=65535, nullable=false)
      */
     private $password;
     
@@ -112,7 +119,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $last_connexion;
+    private $last_login;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -145,6 +152,11 @@ class User implements UserInterface
     private $notifAppStory;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $profile_picture;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -165,7 +177,7 @@ class User implements UserInterface
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -177,9 +189,21 @@ class User implements UserInterface
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+    
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }
@@ -405,14 +429,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLastConnexion(): ?\DateTimeInterface
+    public function getLastLogin(): ?\DateTimeInterface
     {
-        return $this->last_connexion;
+        return $this->last_login;
     }
 
-    public function setLastConnexion(?\DateTimeInterface $last_connexion): self
+    public function setLastLogin(?\DateTimeInterface $last_login): self
     {
-        $this->last_connexion = $last_connexion;
+        $this->last_login = $last_login;
 
         return $this;
     }
@@ -503,6 +527,18 @@ class User implements UserInterface
     public function setNotifAppStory(?bool $notifAppStory): self
     {
         $this->notifAppStory = $notifAppStory;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profile_picture;
+    }
+
+    public function setProfilePicture(?string $profile_picture): self
+    {
+        $this->profile_picture = $profile_picture;
 
         return $this;
     }

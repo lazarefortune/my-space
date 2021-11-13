@@ -137,20 +137,32 @@ class SecurityController extends AbstractController
         if ($request->isMethod('POST')) {
             // On supprime le token
             $user->setResetToken(null);
+            $newPassword = $request->request->get('password');
 
-            // On chiffre le mot de passe
-            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+            if ( $newPassword == null || $newPassword == '' ) {
+                $this->addFlash('danger', 'Veuillez renseigner tous les champs');
+            } else {
+                // On chiffre le mot de passe
+                $user->setPassword( $passwordEncoder->encodePassword( $user, $newPassword ) );
 
-            // On stocke
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+                // On enregistre l'utilisateur en BDD
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            // On crée le message flash
-            $this->addFlash('success', 'Mot de passe mis à jour, connectez-vous');
+                // On crée le message flash de confirmation
+                $this->addFlash('success', 'Mot de passe mis à jour');
 
-            // On redirige vers la page de connexion
-            return $this->redirectToRoute('app_login');
+                // On redirige vers la page de connexion
+                return $this->redirectToRoute('app_login');
+            }
+
+            return $this->redirectToRoute('reset_password', [
+                'token' => $token,
+                'user' => $user
+            ]);
+
+            
         } else {
             // Si on n'a pas reçu les données, on affiche le formulaire
             return $this->render('auth/password/reset_password.html.twig', [

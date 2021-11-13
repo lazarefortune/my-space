@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Entity\Parameters;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,50 +47,41 @@ class UserController extends AbstractController
     public function edit(Request $request, UserPasswordEncoderInterface $encoder)
     {
 
-        // $user =  new User();
-
-
         $user = $this->getUser();
-
-        // dd($user);
-        // $user->setNomEval();
-        // $form = $this->createFormBuilder($user)
-        //             ->add('nomEval')
-        //             // ->add('prenomEval', TextType::class)
-        //             // ->add('email', EmailType::class, [
-        //             //     'required' => "false"
-        //             // ])
-        //             // ->add('password', PasswordType::class)
-        //             // ->add('update', SubmitType::class, ['label' => 'Mettre à jour'])
-        //             ->getForm();
 
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
-        // dump($user);
-
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $match = $encoder->isPasswordValid($user, $request->request->get('oldPassword'));
-
-            if ($match) {
-                if ($request->request->get('newPassword')) {
-                    $passwordEncoded = $encoder->encodePassword($user, $request->request->get('newPassword'));
-                    $user->setPassword($passwordEncoded);
-                }
-
+    
                 $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
                 $user->setUpdatedAt( $today );
-              
+
+                
+                $image = $request->files->get('user')['profile_picture'];
+                if (isset($image)) {    
+                    
+                    // $fichier = md5(uniqid()).'.'. $image->guessExtension();
+                    $fichier = str_replace( " ", "-", $user->getNom().'-'.$user->getPrenom() ) . '-'. md5(uniqid()) .'.'. $image->guessExtension();
+                   // Supprimer l'ancienne image
+                    if ( !empty( $user->getProfilePicture() ) && file_exists( $this->getParameter('user_profile_directory').'/'.$user->getProfilePicture() ) )
+                    {
+                        unlink($this->getParameter('user_profile_directory').'/'.$user->getProfilePicture());
+                    }
+                    $image->move(
+                        $this->getParameter('user_profile_directory'),
+                        $fichier
+                    );
+
+                    $user->setProfilePicture($fichier);
+                }
+
+
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
-
                 $this->addFlash('success', 'Profil mis à jour avec succès');
-            } else {
-                $this->addFlash('danger', 'Mot de passe actuel incorrect');
-            }
 
             return $this->redirectToRoute('account_edit');
         }
@@ -100,11 +92,50 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/delete/{id}" , name="delete_account")
+     * @Route("/profil/edition/mot-de-passe", name="account_edit_password")
      *
-     * 
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return void
      */
-    public function delete($id, EntityManagerInterface $entityManager, \Swift_Mailer $mailer)
+    public function editPassword(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        $user = $this->getUser();
+        
+        if ( $request->isMethod('POST') ) {
+
+            $match = $encoder->isPasswordValid($user, $request->request->get('oldPassword'));
+
+            if ($match) {   
+                if ( $request->request->get('newPassword') != $request->request->get('newPasswordConfirm') ) {
+                    $this->addFlash('danger', 'Les mots de passe ne correspondent pas');
+                } else {
+                    $passwordEncoded = $encoder->encodePassword($user, $request->request->get('newPassword'));
+                    $user->setPassword($passwordEncoded);
+
+                    $this->addFlash('success', 'Mot de passe modifié succès');
+                }
+            } else {
+                $this->addFlash('danger', 'Mot de passe actuel incorrect');
+            }
+                
+            $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+            $user->setUpdatedAt( $today );
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('account_edit_password');
+        }
+
+        return $this->render('user/editPassword.html.twig');
+    }
+
+    /**
+     * @Route("/profil/suppression", name="account_delete")
+     */
+    public function delete( EntityManagerInterface $entityManager, \Swift_Mailer $mailer)
     {
         $currentUserId = $this->getUser()->getIdUser();
         // if ($currentUserId == $id) {
@@ -112,7 +143,16 @@ class UserController extends AbstractController
         //     $session = new Session();
         //     $session->invalidate();
         // }
-        $user = $entityManager->getRepository(User::class)->find($id);
+        $id = $this->getUser()->getIdUser();
+
+        if ( $id == 1 ) {
+            $this->addFlash('danger', 'Vous ne pouvez pas supprimer le compte administrateur');
+            return $this->redirectToRoute('account');
+        }
+
+        // $user = $entityManager->getRepository(User::class)->find($id);
+
+        $user = $this->getUser();
 
         $message = (new \Swift_Message('Suppression de votre compte'))
             ->setFrom('service@lazarefortune.com')
@@ -127,9 +167,20 @@ class UserController extends AbstractController
             );
         $mailer->send($message);
         
-        // $user = $this->getUser();
         $this->container->get('security.token_storage')->setToken(null);
 
+        // Suppression des données de l'utilisateur
+        $parameters = $entityManager->getRepository(Parameters::class)->findBy(
+            [
+                'idUser' => $id,
+            ]
+        );
+
+        foreach ($parameters as $parameter) {
+            $entityManager->remove($parameter);
+        }
+        
+        // Suppression de l'utilisateur
         $entityManager->remove($user);
         $entityManager->flush();
 

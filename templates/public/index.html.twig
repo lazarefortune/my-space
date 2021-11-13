@@ -12,19 +12,25 @@
                 <div class="coming-soon-container">
                     <div class="coming-soon-content">
 
-                        <h4 class="">Coming Soon</h4>
-                        <p class="">We will be here in a shortwhile.....
-                            <a href=" {{ path('home') }} ">Se connecter</a>
+                        <h4 class="">En maintenance</h4>
+                        <p class="">Nous travaillons au mieux pour vous faciliter la vie.....
+                            <a href=" {{ path('home') }} " class="btn btn-primary">
+                                {% if is_granted('ROLE_USER') %}
+                                    Accueil
+                                {% else %}
+                                    Se connecter
+                                {% endif %}
+                            </a>
                         </p>
 
                         <div id="timer">
-                            <div class="days"><span class="count">--</span> <span class="text">Days</span></div>
-                            <div class="hours"><span class="count">--</span> <span class="text">Hours</span></div>
-                            <div class="min"><span class="count">--</span> <span class="text">Mins</span></div>
-                            <div class="sec"><span class="count">--</span> <span class="text">Secs</span></div>
+                            <div class="days"><span class="count">--</span> <span class="text">Jour(s)</span></div>
+                            <div class="hours"><span class="count">--</span> <span class="text">Heure(s)</span></div>
+                            <div class="min"><span class="count">--</span> <span class="text">Min(s)</span></div>
+                            <div class="sec"><span class="count">--</span> <span class="text">Sec(s)</span></div>
                         </div>
-
-                        <h3>Subscribe to get notified!</h3>
+                        <div class="row">avant le lancement</div>
+                        <h3>Inscrivez vous pour recevoir une notification!</h3>
 
                         <form class="text-left">
                             <div class="coming-soon">
@@ -33,7 +39,7 @@
                                     <div id="email-field" class="field-wrapper input">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
                                         <input id="email" name="email" class="form-control" type="text" value="" placeholder="Email">
-                                        <button type="submit" class="btn btn-primary" value="">Subscribe</button>
+                                        <button type="submit" class="btn btn-primary" value="">Je m'inscris</button>
                                     </div>                                    
                                 </div>
 

@@ -1,6 +1,6 @@
 // Set the date we're counting down to
-var getYear = new Date().getFullYear()+1;
-var countDownDate = new Date("Dec 5, "+ getYear +" 15:37:25").getTime();
+var getYear = new Date().getFullYear() + 1;
+var countDownDate = new Date("Dec 5, "+ getYear +" 20:30:25").getTime();
 
 // Update the count down every 1 second
 var countdownfunction = setInterval(function() {
@@ -18,14 +18,14 @@ var countdownfunction = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
   
   // Output the result in an element with id="demo"
-  document.getElementById("timer").innerHTML = '<div class="days"><span class="count">' + days + '</span> <span class="text">Days</span></div>' +
- '<div class="hours"><span class="count">'+ hours +'</span> <span class="text">Hours</span></div>' +
- '<div class="min"><span class="count">'+ minutes +'</span> <span class="text">Mins</span></div>' +
- '<div class="sec"><span class="count">'+ seconds +'</span> <span class="text">Secs</span></div>';
+  document.getElementById("timer").innerHTML = '<div class="days"><span class="count">' + days + '</span> <span class="text">Jour(s)</span></div>' +
+ '<div class="hours"><span class="count">'+ hours +'</span> <span class="text">Heure(s)</span></div>' +
+ '<div class="min"><span class="count">'+ minutes +'</span> <span class="text">Min(s)</span></div>' +
+ '<div class="sec"><span class="count">'+ seconds +'</span> <span class="text">Sec(s)</span></div>';
   
   // If the count down is over, write some text 
   if (distance < 0) {
     clearInterval(countdownfunction);
-    document.getElementById("timer").innerHTML = "EXPIRED";
+    document.getElementById("timer").innerHTML = '<div class="h2">Bienvenue sur My Space</div> ';
   }
 }, 1000);

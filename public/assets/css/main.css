@@ -622,6 +622,61 @@ select.form-control.form-custom {
 .btn-success:focus, .btn-info:focus, .btn-danger:focus, .btn-warning:focus, .btn-secondary:focus, .btn-dark:focus, .btn-outline-success:focus, .btn-outline-info:focus, .btn-outline-danger:focus, .btn-outline-warning:focus, .btn-outline-secondary:focus, .btn-outline-dark:focus .btn-light-default:focus, .btn-light-primary:focus, .btn-light-success:focus, .btn-light-info:focus, .btn-light-danger:focus, .btn-light-warning:focus, .btn-light-secondary:focus, .btn-light-dark:focus {
   box-shadow: none; }
 
+  
+/*      Default Orange       */
+.btn-orange {
+  color: #fff !important;
+  background-color: #ff6e14 !important;
+  border-color: #ff6e14; }
+  .btn-orange:hover, .btn-orange:focus {
+    color: #fff !important;
+    background-color: #ff6e14;
+    box-shadow: none;
+    border-color: #ff6e14; }
+  .btn-orange:active, .btn-orange.active {
+    background-color: #ff6e14;
+    border-top: 1px solid #ff6e14; }
+  .btn-orange.disabled, .btn-orange.btn[disabled], .btn-orange:disabled {
+    background-color: #ff6e14;
+    border-color: #ff6e14;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none; }
+  .btn-orange.active.focus, .btn-orange.active:focus, .btn-orange.active:hover {
+    color: #fff !important;
+    background-color: #2aebcb;
+    border-color: #2aebcb; }
+  .btn-orange.focus:active {
+    color: #fff !important;
+    background-color: #2aebcb;
+    border-color: #2aebcb; }
+  .btn-orange:active:focus, .btn-orange:active:hover {
+    color: #fff !important;
+    background-color: #2aebcb;
+    border-color: #2aebcb; }
+
+.open > .dropdown-toggle.btn-orange.focus, .open > .dropdown-toggle.btn-orange:focus, .open > .dropdown-toggle.btn-orange:hover {
+  color: #fff !important;
+  background-color: #2aebcb;
+  border-color: #2aebcb; }
+
+.btn-orange:not(:disabled):not(.disabled).active, .btn-orange:not(:disabled):not(.disabled):active {
+  color: #fff !important;
+  background-color: #ff6e14;
+  border-color: #ff6e14; }
+
+.show > .btn-orange.dropdown-toggle {
+  color: #fff !important;
+  background-color: #ff6e14;
+  border-color: #ff6e14; }
+
+.btn-orange .caret {
+  border-top-color: #fff; }
+
+.btn-group.open .btn-orange.dropdown-toggle {
+  background-color: #c2d5ff; }
+
+
 /*      Default Buttons       */
 .btn-primary {
   color: #fff !important;

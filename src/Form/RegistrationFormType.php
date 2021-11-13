@@ -19,22 +19,22 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class, [
-                'constraints' => [
-                    new Length([
-                        'min' => 2,
-                        'minMessage' => 'Votre nom doit comporter au moins {{ limit }} caractères',
-                    ]),
-                ],
-            ])
-            ->add('prenom', TextType::class, [
-                'constraints' => [
-                    new Length([
-                        'min' => 2,
-                        'minMessage' => 'Votre prénom doit comporter au moins {{ limit }} caractères',
-                    ]),
-                ],
-            ])
+            // ->add('nom', TextType::class, [
+            //     'constraints' => [
+            //         new Length([
+            //             'min' => 2,
+            //             'minMessage' => 'Votre nom doit comporter au moins {{ limit }} caractères',
+            //         ]),
+            //     ],
+            // ])
+            // ->add('prenom', TextType::class, [
+            //     'constraints' => [
+            //         new Length([
+            //             'min' => 2,
+            //             'minMessage' => 'Votre prénom doit comporter au moins {{ limit }} caractères',
+            //         ]),
+            //     ],
+            // ])
             ->add('login', TextType::class, [
                 'constraints' => [
                     new Length([
