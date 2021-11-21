@@ -94,6 +94,7 @@ class RegistrationController extends AbstractController
             
             // do anything else you need here, like send an email
 
+            // Information pour le mail
             $context = [
                 'user' => $user,
                 'token' => $user->getActivationToken()
