@@ -9,6 +9,7 @@ use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
+use App\Services\SendMailService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/inscription", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, \Swift_Mailer $mailer): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, SendMailService $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -78,7 +79,7 @@ class RegistrationController extends AbstractController
 
             $this->addFlash('success', 'Votre compte a été créé !');
             
-            return $this->redirectToRoute('app_register_step_2', [
+        return $this->redirectToRoute('app_register_step_2', [
                 'id' => $user->getIdUser() ,
             ]);
             // generate a signed url and email it to the user
@@ -93,20 +94,22 @@ class RegistrationController extends AbstractController
             
             // do anything else you need here, like send an email
 
+            $context = [
+                'user' => $user,
+                'token' => $user->getActivationToken()
+            ];
             // envoie de l'email
-            $message = (new \Swift_Message( 'Activation de votre compte' ))
-                ->setFrom( 'service@lazarefortune.com' )
-                ->setTo( $user->getEmail() )
-                ->setBody( 
-                    $this->renderView( 
-                        'emails/activation_email.html.twig', [
-                            'token' => $user->getActivationToken(),
-                            'user' => $user
-                            ]
-                    ),
-                    'text/html'
-                 );
-            $mailer->send( $message );
+            $mailer->sendMail(
+                [
+                    $this->getParameter('send_mail_user')
+                ],
+                [
+                    $user->getEmail()
+                ],
+                'Confirmation de votre inscription',
+                'activation_email',
+                $context
+            );
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
