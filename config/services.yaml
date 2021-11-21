@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    send_mail_user : '%env(SEND_MAIL_USER)%'
+    admin_email : '%env(ADMIN_EMAIL)%'
     user_profile_directory : '%kernel.project_dir%/public/uploads/user/profiles'
     user_profile_picture_directory : '/uploads/user/profiles'
 

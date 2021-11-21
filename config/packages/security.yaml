@@ -61,8 +61,6 @@ security:
         - { path: ^/elfinder, role: [ROLE_USER] }
         - { path: ^/home, roles: ROLE_USER }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-
 
     role_hierarchy:
         ROLE_ADMIN:  ROLE_USER

@@ -42,7 +42,7 @@
 
 # Build data
 /build/
-.env
+.env*
 # Composer PHAR
 /composer.phar
 
@@ -53,3 +53,13 @@
 /.web-server-pid
 
 .htaccess
+
+# intellij idea
+.idea
+*.iws
+*.iml
+*.ipr
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
