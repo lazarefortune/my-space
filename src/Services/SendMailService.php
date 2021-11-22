@@ -32,7 +32,7 @@ class SendMailService
                     // On attribue les destinataires
                     ->to( $value )
                     // On crée le texte avec la vue
-                    ->htmlTemplate( 'layouts/emails/'. $template .'html.twig' )
+                    ->htmlTemplate( 'layouts/emails/'. $template .'.html.twig' )
                     // On ajoute les valeurs de la vue
                     ->context( $context );
     
