@@ -96,7 +96,7 @@ class SecurityController extends AbstractController
                     [ $this->getParameter('send_mail_user') ],
                     [ $user->getEmail() ],
                     'Réinitialisation de votre mot de passe',
-                    'reset_password',
+                    'password/reset_password',
                     [
                         'url' => $url,
                         'user' => $user
