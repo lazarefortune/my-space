@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
+use App\Services\SendMailService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,7 +45,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/mot-de-passe/reinitialisation" , name="forgotten_password")
      */
-    public function forgotten_password( UserRepository $users, \Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator, Request $request ) : Response
+    public function forgotten_password( UserRepository $users, SendMailService $mailer , TokenGeneratorInterface $tokenGenerator, Request $request ) : Response
     {
         $form = $this->createForm( ResetPasswordType::class );
 
@@ -91,21 +92,16 @@ class SecurityController extends AbstractController
             $url = $this->generateUrl('reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
             // On génère l'e-mail
-            $message = (new \Swift_Message('Réinitialisation du mot de passe - My Space'))
-                ->setFrom('service@lazarefortune.com')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView('emails/password/reset_password.html.twig',
+            $mailer->sendMail(
+                    [ $this->getParameter('send_mail_user') ],
+                    [ $user->getEmail() ],
+                    'Réinitialisation de votre mot de passe',
+                    'reset_password',
                     [
-                        'user' => $user,
-                        'url' => $url
-                    ]), 'text/html'
-                    // "Bonjour,<br><br>Une demande de réinitialisation de mot de passe a été effectuée pour le site de gestion des projet tuteurés de l'IUT de Metz (Université de Lorraine). Veuillez cliquer sur le lien suivant : " . $url,
-                    // 'text/html'
+                        'url' => $url,
+                        'user' => $user
+                    ]
                 );
-            //dd($mailer);
-            // On envoie l'e-mail
-            $mailer->send($message);
 
             // On crée le message flash de confirmation
             $this->addFlash('success', 'E-mail de réinitialisation du mot de passe envoyé !');
