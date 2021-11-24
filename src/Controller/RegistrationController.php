@@ -79,45 +79,16 @@ class RegistrationController extends AbstractController
 
             $this->addFlash('success', 'Votre compte a été créé !');
             
-        return $this->redirectToRoute('app_register_step_2', [
+            return $this->redirectToRoute('app_register_step_2', [
                 'id' => $user->getIdUser() ,
             ]);
-            // generate a signed url and email it to the user
-            // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            //     (new TemplatedEmail())
-            //         ->from(new Address('servicefortuneindustry@gmail.com', "My Space"))
-            //         ->to($user->getEmail())
-            //         ->subject('Please Confirm your Email')
-            //         ->htmlTemplate('registration/confirmation_email.html.twig')
+
+            // return $guardHandler->authenticateUserAndHandleSuccess(
+            //     $user,
+            //     $request,
+            //     $authenticator,
+            //     'main' // firewall name in security.yaml
             // );
-
-            
-            // do anything else you need here, like send an email
-
-            // Information pour le mail
-            $context = [
-                'user' => $user,
-                'token' => $user->getActivationToken()
-            ];
-            // envoie de l'email
-            $mailer->sendMail(
-                [
-                    $this->getParameter('send_mail_user')
-                ],
-                [
-                    $user->getEmail()
-                ],
-                'Confirmation de votre inscription',
-                'activation_email',
-                $context
-            );
-
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );
         }
 
         return $this->render('registration/register.html.twig', [
@@ -128,9 +99,8 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/inscription/etape-2/{id}", name="app_register_step_2")
      */
-    public function registerStep2( Request $request , $id , GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, \Swift_Mailer $mailer): Response
+    public function registerStep2( Request $request , SendMailService $mailer ): Response
     {
-        // $user = $this->getDoctrine()->getRepository(User::class)->find($id);
         $user = $this->getUser();
         $form = $this->createForm(RegisterStep2Type::class, $user);
         $form->handleRequest($request);
@@ -140,6 +110,35 @@ class RegistrationController extends AbstractController
             $user->setUpdatedAt( new \DateTime('now', new \DateTimeZone('Europe/Paris')) );
             $entityManager->persist( $user );
             $entityManager->flush();
+
+            // Envoie de l'email à l'administrateur
+            $mailer->sendMail( 
+                $this->getParameter('send_mail_user'),
+                [
+                    $this->getParameter('admin_email')
+                ],
+                'Nouvelle inscription sur le site',
+                'admin/new_user',
+                [
+                    'user' => $this->getUser(),
+                ]
+            );
+
+            // Information pour le mail de l'utilisateur
+            $context = [
+                'user' => $user,
+                'token' => $user->getActivationToken()
+            ];
+            // envoie de l'email
+            $mailer->sendMail(
+                $this->getParameter('send_mail_user'),
+                [
+                    $user->getEmail()
+                ],
+                'Confirmation de votre inscription',
+                'activation_email',
+                $context
+            );
 
             // return $guardHandler->authenticateUserAndHandleSuccess(
             //     $user,
@@ -183,8 +182,6 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("verify/email/{token}", name="email_verify")
-     *
-     * 
      */
     public function activationEmail( $token, UserRepository $usersRepo )
     {
@@ -195,19 +192,19 @@ class RegistrationController extends AbstractController
 
         // Si aucun utilisateur n'existe avec ce token
         if ( !$user ) {
-            throw $this-> createNotFoundException( "Cet utilisateur n'existe pas" );
+            // throw $this-> createNotFoundException( "Cet utilisateur n'existe pas" );
+            $this->addFlash('danger', '<b>Le lien pour vérifier votre email n\'est pas valide. Veuillez demander un nouveau lien.<b/>');
+        }else{
+
+            // Sinon on supprime le token 
+            $user->setActivationToken( null );
+            $user->setIsVerified( true );
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash( 'success' , '<b>Félicitations !!! Votre compte a été confirmé avec succès</b>' );
         }
 
-        // Sinon on supprime le token 
-        $user->setActivationToken( null );
-        $user->setIsVerified( true );
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-         
-        $this->addFlash( 'success' , 'Adresse mail vérifié avec succès' );
-
-        return $this->redirectToRoute( 'account' );
+        return $this->render('registration/emailVerify.html.twig');
     }
 }

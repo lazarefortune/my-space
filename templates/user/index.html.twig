@@ -17,6 +17,9 @@
             </nav> #}
 
 			{% include 'layouts/flash-messages.html.twig' %}
+			{% if app.user.isDeleted %}
+				<p class="card card-body p-3 d-flex justify-content-center text-danger font-weight-bold">Vous avez lancé la procédure de suppression de votre compte, il sera bientôt supprimé.</p>
+			{% endif %}
 
 			<div class="card shadow-sm card-body mb-3">
 				<div class="text-left d-flex justify-content-between h5 font-weight-bold text-dark align-items-center">
@@ -49,7 +52,7 @@
 							Vous n'avez pas encore confirmé votre compte
 							<br>
 							<i class="text-info fas fa-info-circle"></i>
-							<a href="">Cliquez ici
+							<a href=" {{ path('send_verify_email', { 'token': app.user.activationToken } ) }} ">Cliquez ici
 							</a>pour confirmer votre compte
 						</small>
 					{% endif %}
@@ -138,19 +141,21 @@
 						</div>
 					</div>
 					<a href=" {{ path('account_edit_password') }} " class="btn btn-orange mb-2"> <i data-feather="unlock"></i> Modifier mon mot de passe </a>
-
-					<!-- Button delete modal -->
-					<button data-toggle="modal" data-target="#deletePermentlyStory" class="btn btn-outline-danger mb-2">
-						<i data-feather="trash-2"></i>
-						<span class="">Supprimer mon compte</span>
-					</button>
+					
+					{% if not app.user.isDeleted %}
+						<!-- Button delete modal -->
+						<button data-toggle="modal" data-target="#deletePermentlyStory" class="btn btn-link">
+							<i data-feather="trash-2"></i>
+							<span class="">Supprimer mon compte.</span>
+						</button>
+					{% endif %}
 
 					<!-- Modal -->
 					<div class="modal fade" id="deletePermentlyStory" tabindex="-1" role="dialog" aria-labelledby="deletePermentlyStoryLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="deleteStoryLabel">Souhaitez vous vraiment supprimer votre compte ?
+										<h5 class="modal-title" id="deleteStoryLabel"> Nous sommes désolés de vous voir partir!
 											</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											x
@@ -158,14 +163,14 @@
 									</div>
 									<div class="modal-body">
 										<p>
-											Vous ne pourrez plus accéder à votre compte et vos données seront supprimées définitivement.
+											Vous ne pourrez plus accéder à votre compte et vos données seront supprimées définitivement de nos services.
 										</p>
 										<p class="text-danger">
 											NB : Cette action est irréversible. Vous ne pourrez pas récupérer vos données.
 										</p>
 										<div class="custom-control custom-checkbox">
 											<input type="checkbox" class="custom-control-input" id="customCheck1">
-											<label class="custom-control-label text-dark" for="customCheck1"> Cochez cette case pour confirmer votre choix </label>
+											<label class="custom-control-label text-dark" for="customCheck1"> Je souhaite supprimer mon compte et les données associées. </label>
 										</div>
 									</div>
 									<div class="modal-footer">

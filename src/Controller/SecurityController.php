@@ -69,7 +69,7 @@ class SecurityController extends AbstractController
             }
             if ( $user->getEmail() === null ) {
 
-                $this->addFlash('danger', 'Cet utilisateur ne possède pas d\'adresse mail');
+                $this->addFlash('danger', 'Vous ne possedez pas d\'adresse mail, veuillez contacter le support technique.');
 
                 // On retourne sur la page de réinitialisation du mot de passe
                 return $this->redirectToRoute('forgotten_password');
@@ -93,7 +93,7 @@ class SecurityController extends AbstractController
 
             // On génère l'e-mail
             $mailer->sendMail(
-                    [ $this->getParameter('send_mail_user') ],
+                    $this->getParameter('send_mail_user'),
                     [ $user->getEmail() ],
                     'Réinitialisation de votre mot de passe',
                     'password/reset_password',

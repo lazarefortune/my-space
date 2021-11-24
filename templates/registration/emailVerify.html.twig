@@ -1,0 +1,70 @@
+{% extends 'layouts/site_simple.html.twig' %}
+
+
+{% block stylesheets %}
+<style>
+.form-container{
+	background: url(" images/my_space_background.png ") no-repeat center center fixed;	
+}
+</style>
+
+{% endblock %}
+
+{% block site_title %}Verification du compte{% endblock %}
+
+{% block site_content %}
+	{% for flashError in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+	{% endfor %}
+
+	<div class="form-container outer">
+		<div class="form-form">
+			<div class="form-form-wrap">
+				<div class="form-container">
+					<div class="form-content">
+
+						<a href=" {{ path('home_site') }} ">
+							<img src=" {{ asset('assets/img/my_space_logo.png') }} " width="70" alt="">
+						</a>
+						<p class="mb-0 text-dark"> <b>Validation du compte</b> </p>
+						
+						<div class="text-left">
+							
+							<div class="form">
+								{% for flashError in app.flashes('verify_email_error') %}
+									<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+								{% endfor %}
+
+                                <div class="mt-4">
+								    {% include 'layouts/flash-messages.html.twig' %}
+                                </div>
+									
+                                {% if is_granted('ROLE_USER') %}        
+                                    <div class="d-sm-flex justify-content-center">
+                                        <div class="field-wrapper">
+                                            <a href=" {{ path('home') }} " class="btn btn-primary"> Continuer sur le site </a>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="d-sm-flex justify-content-center">
+                                        <div class="field-wrapper">
+                                            <a href=" {{ path('app_login') }} " class="btn btn-primary"> Se connecter </a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+								
+
+							</div>
+							
+							{# <p class="signup-link register mt-3">Vous avez déjà un compte?
+								<a href=" {{ path('app_login') }} ">Connectez vous</a>
+							</p> #}
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

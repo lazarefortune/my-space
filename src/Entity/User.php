@@ -157,6 +157,11 @@ class User implements UserInterface
     private $profile_picture;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $is_deleted;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -539,6 +544,18 @@ class User implements UserInterface
     public function setProfilePicture(?string $profile_picture): self
     {
         $this->profile_picture = $profile_picture;
+
+        return $this;
+    }
+
+    public function getIsDeleted(): ?bool
+    {
+        return $this->is_deleted;
+    }
+
+    public function setIsDeleted(?bool $is_deleted): self
+    {
+        $this->is_deleted = $is_deleted;
 
         return $this;
     }

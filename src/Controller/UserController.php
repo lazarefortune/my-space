@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\Parameters;
+use App\Services\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -158,7 +159,7 @@ class UserController extends AbstractController
     /**
      * @Route("/profil/suppression", name="account_delete")
      */
-    public function delete( EntityManagerInterface $entityManager, \Swift_Mailer $mailer)
+    public function delete( EntityManagerInterface $entityManager, SendMailService $mailer )
     {
         $currentUserId = $this->getUser()->getIdUser();
         // if ($currentUserId == $id) {
@@ -177,48 +178,52 @@ class UserController extends AbstractController
 
         $user = $this->getUser();
 
-        $message = (new \Swift_Message('Suppression de votre compte'))
-            ->setFrom('service@lazarefortune.com')
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->renderView(
-                    'emails/delete_account.html.twig', [
-                        'nom' => $user->getNom()." ".$user->getPrenom()
-                    ]
-                ),
-                'text/html'
+        try {
+            $mailer->sendMail( 
+                $this->getParameter('send_mail_user'),
+                [ $user->getEmail() ],
+                'Suppression de votre compte',
+                'user/delete_account',
+                [
+                    'user' => $user
+                ]
             );
-        $mailer->send($message);
-        
-        $this->container->get('security.token_storage')->setToken(null);
-
-        // Suppression des données de l'utilisateur
-        $parameters = $entityManager->getRepository(Parameters::class)->findBy(
-            [
-                'idUser' => $id,
-            ]
-        );
-
-        foreach ($parameters as $parameter) {
-            $entityManager->remove($parameter);
+        } catch (\Throwable $th) {
+            $this->addFlash( 'danger', 'Il y a eu une erreur lors de l\'envoie du mail' );
         }
         
-        // Suppression de l'utilisateur
-        $entityManager->remove($user);
+        // $this->container->get('security.token_storage')->setToken(null);
+
+        $user->setIsDeleted( true );
+        $entityManager->persist($user);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Votre compte utilisateur a bien été supprimé !');
+        // // Suppression des données de l'utilisateur
+        // $parameters = $entityManager->getRepository(Parameters::class)->findBy(
+        //     [
+        //         'idUser' => $id,
+        //     ]
+        // );
 
-        return $this->redirectToRoute('app_register');
+        // foreach ($parameters as $parameter) {
+        //     $entityManager->remove($parameter);
+        // }
+        
+        // // Suppression de l'utilisateur
+        // $entityManager->remove($user);
+        // $entityManager->flush();
+
+        $this->addFlash('success', 'Votre compte utilisateur a bien été désactivé, il sera supprimé dans 15 jours!');
+        return $this->redirectToRoute('account');
+        // return $this->redirectToRoute('app_register');
     }
 
     /**
      * @Route("/verify-email/send", name="send_verify_email")
      */
-    public function sendEmailVerify(\Swift_Mailer $mailer)
+    public function sendEmailVerify( SendMailService $mailer )
     {
         $user = $this->getUser();
-        // dd($user->getActivationToken());
 
         $user->setActivationToken(md5(uniqid()));
 
@@ -226,21 +231,18 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $message = (new \Swift_Message('Activation de votre compte'))
-            ->setFrom('service@lazarefortune.com')
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->renderView(
-                    'emails/activation_email.html.twig',
-                    [
-                        'token' => $user->getActivationToken()
-                    ]
-                ),
-                'text/html'
-            );
-        $mailer->send($message);
+        $mailer->sendMail( 
+            $this->getParameter('send_mail_user'),
+            [ $user->getEmail() ],
+            'Confirmation de votre compte',
+            'activation_verify_email',
+            [
+                'user' => $user,
+                'token' => $user->getActivationToken()
+            ]
+        );
         
-        $this->addFlash( 'success', 'Email envoyé avec succès');
+        $this->addFlash( 'success', 'Email envoyé avec succès, veuillez consulter votre messagerie.');
         return $this->redirectToRoute('account');
     }
 }

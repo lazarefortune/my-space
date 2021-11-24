@@ -64,7 +64,7 @@ class StoryController extends AbstractController
     /**
      * @Route("/create", name="create")
      */
-    public function create(Request $request, \Swift_Mailer $mailer, InspirationRepository $inspirationRepository): Response
+    public function create(Request $request, SendMailService $mailer, InspirationRepository $inspirationRepository): Response
     {
         $story = new Inspiration();
 
@@ -101,30 +101,23 @@ class StoryController extends AbstractController
                     ]);
                 $toEmail = [];
                 foreach ($parameters as $parameter) {
-                    $user = $parameter->getIdUser();
-                    $toEmail[] = $user->getEmail();
-                    if ( $user->getSecondEmail() ) {
-                        $toEmail[] = $user->getSecondEmail();
+                    $userMail = $parameter->getIdUser();
+                    $toEmail[] = $userMail->getEmail();
+                    if ( $userMail->getSecondEmail() ) {
+                        $toEmail[] = $userMail->getSecondEmail();
                     }
                 }
-                $messageTitle = 'Nouvelle story n°' . $story->getId() . ' disponible';
-                $message = (new \Swift_Message($messageTitle))
-                    // On attribue l'expéditeur
-                    ->setFrom('myspace@lazarefortune.com')
-                    // On attribue le destinataire
-                    ->setTo($toEmail)
-                    // On crée le texte avec la vue
-                    ->setBody(
-                        $this->renderView(
-                            'layouts/emails/new_story.html.twig',
-                            [
-                                'story' => $story,
-                                'user' => $user
-                            ]
-                        ),
-                        'text/html'
-                    );
-                $mailer->send($message);
+
+                $mailer->sendMail(
+                    $this->getParameter('send_mail_user'),
+                    $toEmail,
+                    "Nouvelle story publiée",
+                    "story/new_story",
+                    [
+                        "story" => $story,
+                        "user" => $this->getUser()
+                    ]
+                );
             }
 
             $this->addFlash('success', 'Nouvelle story ajoutée avec succès');
@@ -159,9 +152,25 @@ class StoryController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($commentary);
             $entityManager->flush();
+
+            // On notifie l'auteur de la story uniquement si la story est publiée
+            if ( $commentary->getUser()->getIdUser() != $this->getUser()->getIsUser() && ( $story->getStatut() == "public" || $story->getStatut() == "public_anonyme" ) ) {
+                
+                $mailer->sendMail(
+                    $this->getParameter('send_mail_user'),
+                    [ $story->getIdUser()->getEmail() ],
+                    'Nouveau commentaire sur votre story',
+                    'story/new_commentary',
+                    [
+                        'commentary' => $commentary,
+                        'story' => $story,
+                        'user' => $this->getUser(),
+                    ]
+                );
+            }
+
             $this->addFlash('success', 'Commentaire ajouté avec succès');
             return $this->redirectToRoute('story_show', ['storyId' => $story->getId()]);
-            // return $this->redirect($this->generateUrl('story_show', array('storyId' => $story)));
         }
         // On vérifie si on peut compter la vue de l'utilisateur sur la story
         $repo = $this->getDoctrine()->getRepository(Parameters::class);
@@ -202,10 +211,8 @@ class StoryController extends AbstractController
                 'view' => $view
             ];
             // Envoie de l'email
-            $mailer->sendMail( 
-                [ 
-                    $this->getParameter( 'send_mail_user' ) 
-                ],
+            $mailer->sendMail(
+                $this->getParameter( 'send_mail_user' ),
                 $toEmail, 
                 $messageTitle, 
                 "viewStory", 
@@ -280,9 +287,7 @@ class StoryController extends AbstractController
 
                 $messageTitle = 'Modification de la story n°' . $story->getId() . ' disponible';
                 $mailer->sendMail(
-                    [
-                        $this->getParameter( 'send_mail_user' )
-                    ],
+                    $this->getParameter( 'send_mail_user' ),
                     $toEmail,
                     $messageTitle,
                     "updateStory",

@@ -15,14 +15,13 @@ class SendMailService
     }
 
     public function sendMail( 
-        array $from , 
+        string $from , 
         array $to , 
         String $subject, 
         String $template, 
         array $context 
     ) : void
     {
-        $from = $from[0];
         foreach ($to as $value) {
             
             $email = (new TemplatedEmail())
