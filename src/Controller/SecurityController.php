@@ -117,7 +117,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/mot-de-passe/reinitialisation/{token}", name="reset_password")
      */
-    public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
+    public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder, SendMailService $mailer)
     {
         // On cherche un utilisateur avec le token donné
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['reset_token' => $token]);
@@ -145,6 +145,21 @@ class SecurityController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();
+
+                // On notifie par mail l'utilisateur
+                try {
+                    $mailer->sendMail(
+                        $this->getParameter('send_mail_user'),
+                        [ $user->getEmail() ],
+                        'Votre mot de passe a été réinitialisé',
+                        'password/reset_password_success',
+                        [
+                            'user' => $user
+                        ]
+                    );
+                } catch (\Throwable $th) {
+                    $this->addFlash('danger',"Erreur lors de l'envoie de l'email" );
+                }
 
                 // On crée le message flash de confirmation
                 $this->addFlash('success', 'Mot de passe mis à jour');
