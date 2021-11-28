@@ -42,7 +42,8 @@
 
 # Build data
 /build/
-.env*
+.env.local
+.env.test
 # Composer PHAR
 /composer.phar
 
