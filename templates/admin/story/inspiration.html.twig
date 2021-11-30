@@ -28,7 +28,7 @@
 			{% include 'layouts/flash-messages.html.twig' %}
 
 			{% if allStory is empty %}
-				<div class="alert alert-info">Il n'y a aucune story public, Vous pouvez être le premier(ère) à en ajouter
+				<div class="alert alert-info">Il n'y a aucune story publique, Vous pouvez être le premier(ère) à en ajouter
 				</div>
 			{% endif %}
 
@@ -36,9 +36,10 @@
 				<div class="card shadow my-3">
 					<div class="card-body">
 						<span class="h5 font-weight-bold text-primary text-uppercase">
-							{{ story.title }}
+							<i class="fas fa-book text-primary"></i> {{ story.title }}
 						</span> <br>
 						<span class="font-weight-bold">
+								<i class="fas fa-user"></i>
 								{% if app.user.idUser == story.idUser.idUser %}
 									Vous
 									{% if story.statut == "public_anonyme" %}
@@ -57,7 +58,7 @@
 						
 
 						<p>
-							
+							<i class="fas fa-calendar-alt"></i>
 							<span class="font-italic">
 								{% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
 									Aujourd'hui à
