@@ -24,7 +24,7 @@ class CommentaryType extends AbstractType
             ->add('publier', SubmitType::class, [
                 'label' => "Partager",
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-secondary'
                 ]
             ])
         ;
