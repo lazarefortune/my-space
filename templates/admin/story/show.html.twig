@@ -10,14 +10,68 @@
 
 	<div class="row">
 
-		<div class="col-md-8 mx-auto">
+		<div class="col-md-10 mx-auto">
 		{% include 'layouts/flash-messages.html.twig' %}
 			{% if app.user.idUser != story.idUser.idUser and story.trash == true %}
 				<div class="alert alert-info">
 					Cette story a été supprimé temporairement par son auteur.
 				</div>
 			{% else %}
-				<div class="d-flex justify-content-between">
+				
+
+			<article class="card border-0 border-top border-secondary border-width-4px shadow-none mt-4 py-4 px-4 mx-auto">
+				<h3 class="font-weight-bold text-uppercase mb-4">
+					<i class="fas fa-book text-secondary"></i> {{ story.title }} 
+				</h3>
+				<p class="mb-0">
+					<i class="fas fa-calendar-alt text-secondary"></i>
+					<span class=" font-weight-bold text-secondary">
+						{% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
+							Aujourd'hui à
+							{{ story.createdAt|date("H:i:s") }}
+						{% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
+							Hier à
+							{{ story.createdAt|date("H:i:s") }}
+						{% else %}
+							
+							{{ story.createdAt|date("d/m/Y") }}
+							à
+							{{ story.createdAt|date("H:i:s") }}
+							
+						{% endif %}
+					</span>
+					<br class="d-flex d-md-none"> 
+					<i class=" fas fa-user text-secondary"></i>
+					<span class="font-italic font-weight-bold">
+						{% if app.user.idUser == story.idUser.idUser %}
+							<a href="">Vous</a>
+							{% if story.statut == "public_anonyme" %}
+								(En anonyme)
+							{% endif %}
+						{% else %}
+							{% if story.statut == "public_anonyme" %}
+								un inconnu
+							{% else %}
+								<a href="">{{ story.idUser.nom }}
+								{{ story.idUser.prenom }}</a>
+							{% endif %}
+						{% endif %}
+
+					</span>
+					{# <span class="badge badge-{{ story.statut == 'privee' ? 'danger' : 'success' }}">
+						<i class="fas fa-{{ story.statut == 'privee' ? 'lock' : 'globe-europe' }}"></i>
+						{{ story.statut }}
+					</span> #}
+					
+				</p>
+
+				<p class="mt-4 text-justify">
+					{{ story.description|raw }}
+				</p>
+
+			</article>
+
+			<div class="d-flex justify-content-between bg-white px-3">
 					<a href="{{ path('story_create') }}" class="btn btn-sm btn-primary shadow mt-2 mb-4">
 						<i class="fas fa-plus"></i>
 						<span class="d-none d-md-inline">Ajouter une story</span>
@@ -150,59 +204,8 @@
 
 			</div>
 
-			<article class="card border-0 border-top border-success border-width-4px shadow-none mt-4 p-3 mx-auto">
-				<h4 class="font-weight-bold text-uppercase ">
-					{{ story.title }} 
-				</h4>
-				<p class="mb-0 text-info">
-					Par 
-					<span class="font-italic font-weight-bold">
-						{% if app.user.idUser == story.idUser.idUser %}
-							Vous
-							{% if story.statut == "public_anonyme" %}
-								(En anonyme)
-							{% endif %}
-						{% else %}
-							{% if story.statut == "public_anonyme" %}
-								un inconnu
-							{% else %}
-								{{ story.idUser.nom }}
-								{{ story.idUser.prenom }}
-							{% endif %}
-						{% endif %}
-
-					</span>
-					{# <span class="badge badge-{{ story.statut == 'privee' ? 'danger' : 'success' }}">
-						<i class="fas fa-{{ story.statut == 'privee' ? 'lock' : 'globe-europe' }}"></i>
-						{{ story.statut }}
-					</span> #}
-					le 
-					
-					<span class=" font-weight-bold">
-						{% if story.createdAt | date("m/d/Y") == "now" | date("m/d/Y") %}
-							Aujourd'hui à
-							{{ story.createdAt|date("H:i:s") }}
-						{% elseif story.createdAt | date("m/d/Y") == "yesterday" | date("m/d/Y") %}
-							Hier à
-							{{ story.createdAt|date("H:i:s") }}
-						{% else %}
-							
-							{{ story.createdAt|date("d/m/Y") }}
-							à
-							{{ story.createdAt|date("H:i:s") }}
-							
-						{% endif %}
-					</span>
-				</p>
-
-				<p class="mt-4 text-justify">
-					{{ story.description|raw }}
-				</p>
-
-			</article>
-
 			<div class="mt-2 mb-5">
-				<h4 class=" font-weight-bold mt-5 mb-3"> <i class="fas fa-comment-dots"></i> Commentaires :</h4>
+				<h4 class=" font-weight-bold mt-5 mb-3"> <i class="fas fa-comment-dots text-secondary"></i> Commentaires :</h4>
 				
 				<div class="mt-4">
 					{{ form_start( formCommentary ) }}
@@ -217,16 +220,16 @@
 
 				<ul class="list-group">
 					{% for commentary in commentaries %}
-						<li class="list-group-item my-3 border-0 border-top border-width-3px border-primary">
+						<li class="list-group-item my-3 border-0 border-top border-width-3px border-secondary">
 							<h6 class="font-weight-bold">{{ commentary.user.nom }}
 									{{ commentary.user.prenom }}</h6>
 							<p class="mb-0">{{ commentary.content }}</p>
 
 							<br>
 							<small class="d-flex justify-content-between">
-								<span>{{ story.createdAt|date("d/m/Y") }}
+								<span>{{ commentary.createdAt|date("d/m/Y") }}
 								à
-								{{ story.createdAt|date("H:i:s") }}</span>
+								{{ commentary.createdAt|date("H:i:s") }}</span>
 
 								{% if commentary.user.idUser == app.user.idUser  %}
 									<div>
