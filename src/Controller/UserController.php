@@ -122,7 +122,7 @@ class UserController extends AbstractController
      * @param UserPasswordEncoderInterface $encoder
      * @return void
      */
-    public function editPassword(Request $request, UserPasswordEncoderInterface $encoder)
+    public function editPassword(Request $request, UserPasswordEncoderInterface $encoder, SendMailService $mailer )
     {
         $user = $this->getUser();
         
@@ -137,18 +137,34 @@ class UserController extends AbstractController
                     $passwordEncoded = $encoder->encodePassword($user, $request->request->get('newPassword'));
                     $user->setPassword($passwordEncoded);
 
-                    $this->addFlash('success', 'Mot de passe modifié succès');
+                    $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+                    $user->setUpdatedAt( $today );
+                    
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+
+                    // On notifie par mail l'utilisateur
+                    try {
+                        $mailer->sendMail(
+                            $this->getParameter('send_mail_user'),
+                            [ $user->getEmail() ],
+                            'Votre mot de passe a été modifié avec succès',
+                            'password/change_password_success',
+                            [
+                                'user' => $user,
+                            ]
+                        );
+                    } catch (\Throwable $th) {
+                        $this->addFlash('danger',"Erreur lors de l'envoie de l'email" );
+                    }
+
+                    $this->addFlash('success', 'Mot de passe mis à jour avec succès');
                 }
             } else {
                 $this->addFlash('danger', 'Mot de passe actuel incorrect');
             }
                 
-            $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-            $user->setUpdatedAt( $today );
-            
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
 
             return $this->redirectToRoute('account_edit_password');
         }

@@ -154,7 +154,8 @@ class SecurityController extends AbstractController
                         'Votre mot de passe a été réinitialisé',
                         'password/reset_password_success',
                         [
-                            'user' => $user
+                            'user' => $user,
+                            'admin_email' => $this->getParameter('admin_email')
                         ]
                     );
                 } catch (\Throwable $th) {
