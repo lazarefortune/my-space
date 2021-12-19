@@ -154,7 +154,7 @@ class StoryController extends AbstractController
             $entityManager->flush();
 
             // On notifie l'auteur de la story uniquement si la story est publiée
-            if ( $commentary->getUser()->getIdUser() != $this->getUser()->getIdUser() && ( $story->getStatut() == "public" || $story->getStatut() == "public_anonyme" ) ) {
+            if ( $commentary->getUser()->getIdUser() != $story->getUser()->getIdUser() && ( $story->getStatut() == "public" || $story->getStatut() == "public_anonyme" ) ) {
                 
                 $mailer->sendMail(
                     $this->getParameter('send_mail_user'),
