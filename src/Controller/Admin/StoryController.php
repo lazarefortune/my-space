@@ -164,7 +164,7 @@ class StoryController extends AbstractController
                     [
                         'commentary' => $commentary,
                         'story' => $story,
-                        'user' => $this->getUser(),
+                        'user' => $story->getIdUser(),
                     ]
                 );
             }
