@@ -360,4 +360,22 @@ class StoryController extends AbstractController
         $this->addFlash('success', 'La story a été supprimé avec succès');
         return $this->redirectToRoute('story_my');
     }
+
+    // TODO : Revoir la responsabilité des contrôleurs
+
+    /**
+     * @Route("/delete/commentary/{commentary}", name="delete_commentary")
+     */
+    public function delete_commentary( CommentaryStory $commentary , EntityManagerInterface $entityManager)
+    {
+        $storyId = $commentary->getStory()->getId();
+
+        $entityManager->remove( $commentary );
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Votre commentaire a été supprimé');
+        return $this->redirectToRoute( 'story_show', [
+            'storyId' => $storyId
+        ] );
+    }
 }
