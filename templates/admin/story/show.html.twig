@@ -233,15 +233,44 @@
 
 								{% if commentary.user.idUser == app.user.idUser  %}
 									<div>
-										<a href="" class="text-warning">
-										<i class="fas fa-edit"></i>
-										Modifier
-									</a>
-									<a href="" class="text-danger">
-										<i class="fas fa-trash"></i>
-										Supprimer
-									</a>
-									</div>
+										{# <button class="btn btn-sm btn-outline-warning shadow">
+											<i class="fas fa-edit"></i>
+										</button> #}
+										<!-- Button delete modal -->
+										<button  class="btn btn-sm btn-outline-danger shadow " data-toggle="modal" data-target="#deleteCommentary">
+											<i class="fas fa-trash"></i>
+										</button>
+
+										<!-- Modal -->
+										<div class="modal fade" id="deleteCommentary" tabindex="-1" role="dialog" aria-labelledby="deleteCommentaryLabel" aria-hidden="true">
+											<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="deleteStoryLabel">Suppression de votre commentaire</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																x
+															</button>
+														</div>
+														<div class="modal-body">
+															<p>Souhaitez vous vraiment supprimer ce commentaire ?
+														<br>
+														Cette action est irréversible.
+														<hr></p>
+														</div>
+														<div class="modal-footer">
+															<button class="btn" data-dismiss="modal">
+																<i class="flaticon-cancel-12"></i>
+																Annuler</button>
+															<a href="{{ path('story_delete_commentary', {commentary: commentary.id} ) }}" class="btn btn-danger">
+																<i class="fas fa-trash"></i>
+																Supprimer
+															</a>
+														</div>
+													</div>
+												</div>
+											
+											</div>
+										</div>
 								{% endif %}
 							</small>
 							
