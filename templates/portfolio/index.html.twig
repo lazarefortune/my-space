@@ -1,0 +1,30 @@
+{% extends "layouts/site_simple.html.twig" %}
+
+{% block site_title %}
+    {{ user.prenom |trans }} {{ user.nom |trans }} |
+{% endblock %}
+
+{% block site_content %}
+
+{# make portfolio with user informations #}
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-8 mx-auto">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 mx-auto text-center">
+                                <h4>{{ user.prenom |trans }} {{ user.nom |trans }}</h4>
+                                <p>{{ user.email |trans }}</p>
+                                <p>{{ user.phone |trans }}</p>
+                                <a href="" class="btn btn-primary">
+                                    Télécharger mon CV
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+{% endblock %}
