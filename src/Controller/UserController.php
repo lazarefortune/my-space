@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\UserType;
 use App\Entity\Parameters;
 use App\Services\SendMailService;
@@ -23,9 +24,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
-    private function isPasswordValid(User $eval, string $plainPassword, string $password): bool
+    private function isPasswordValid(User $user, string $plainPassword, string $password): bool
     {
-        $encoder = $this->encoderFactory->getEncoder($eval);
+        $encoder = $this->encoderFactory->getEncoder($user);
 
         return $encoder->isPasswordValid($password, $plainPassword, null);
     }
@@ -51,7 +52,6 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         $form = $this->createForm(UserType::class, $user);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -84,11 +84,11 @@ class UserController extends AbstractController
                 $entityManager->flush();
                 $this->addFlash('success', 'Profil mis à jour avec succès');
 
-            return $this->redirectToRoute('account_edit');
+            return $this->redirectToRoute('account');
         }
 
         return $this->render('user/edit.html.twig', [
-            'formUser' => $form->createView()
+            'formUser' => $form->createView(),
         ]);
     }
 
@@ -116,7 +116,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profil/edition/mot-de-passe", name="account_edit_password")
+     * @Route("/profil/mot-de-passe", name="account_edit_password")
      *
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
@@ -125,24 +125,28 @@ class UserController extends AbstractController
     public function editPassword(Request $request, UserPasswordEncoderInterface $encoder, SendMailService $mailer )
     {
         $user = $this->getUser();
-        
-        if ( $request->isMethod('POST') ) {
 
-            $match = $encoder->isPasswordValid($user, $request->request->get('oldPassword'));
+        $passwordForm = $this->createForm(ChangePasswordType::class);
 
-            if ($match) {   
-                if ( $request->request->get('newPassword') != $request->request->get('newPasswordConfirm') ) {
-                    $this->addFlash('danger', 'Les mots de passe ne correspondent pas');
-                } else {
-                    $passwordEncoded = $encoder->encodePassword($user, $request->request->get('newPassword'));
-                    $user->setPassword($passwordEncoded);
+        $passwordForm->handleRequest($request);
 
+        if( $passwordForm->isSubmitted() && $passwordForm->isValid() )
+        {
+            $oldPassword = $passwordForm->get('currentPassword')->getData();
+            $newPassword = $passwordForm->get('newPassword')->getData();
+            $confirmPassword = $passwordForm->get('newPasswordConfirm')->getData();
+
+            if( $encoder->isPasswordValid($user, $oldPassword, $user->getPassword()) )
+            {
+                if( $newPassword == $confirmPassword )
+                {
+                    $user->setPassword( $encoder->encodePassword($user, $newPassword) );
                     $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
                     $user->setUpdatedAt( $today );
-                    
                     $entityManager = $this->getDoctrine()->getManager();
                     $entityManager->persist($user);
                     $entityManager->flush();
+                    $this->addFlash('success', 'Mot de passe mis à jour avec succès');
 
                     // On notifie par mail l'utilisateur
                     try {
@@ -159,17 +163,65 @@ class UserController extends AbstractController
                         $this->addFlash('danger',"Erreur lors de l'envoie de l'email" );
                     }
 
-                    $this->addFlash('success', 'Mot de passe mis à jour avec succès');
+                    return $this->redirectToRoute('account');
                 }
-            } else {
-                $this->addFlash('danger', 'Mot de passe actuel incorrect');
+                else
+                {
+                    $this->addFlash('danger', 'Les mots de passe ne correspondent pas');
+                }
             }
-                
-
-            return $this->redirectToRoute('account_edit_password');
+            else
+            {
+                $this->addFlash('danger', 'Ancien mot de passe incorrect');
+            }
         }
 
-        return $this->render('user/editPassword.html.twig');
+//        if ( $request->isMethod('POST') ) {
+//
+//            $match = $encoder->isPasswordValid($user, $request->request->get('oldPassword'));
+//
+//            if ($match) {
+//                if ( $request->request->get('newPassword') != $request->request->get('newPasswordConfirm') ) {
+//                    $this->addFlash('danger', 'Les mots de passe ne correspondent pas');
+//                } else {
+//                    $passwordEncoded = $encoder->encodePassword($user, $request->request->get('newPassword'));
+//                    $user->setPassword($passwordEncoded);
+//
+//                    $today = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+//                    $user->setUpdatedAt( $today );
+//
+//                    $entityManager = $this->getDoctrine()->getManager();
+//                    $entityManager->persist($user);
+//                    $entityManager->flush();
+//
+//                    // On notifie par mail l'utilisateur
+//                    try {
+//                        $mailer->sendMail(
+//                            $this->getParameter('send_mail_user'),
+//                            [ $user->getEmail() ],
+//                            'Votre mot de passe a été modifié avec succès',
+//                            'password/change_password_success',
+//                            [
+//                                'user' => $user,
+//                            ]
+//                        );
+//                    } catch (\Throwable $th) {
+//                        $this->addFlash('danger',"Erreur lors de l'envoie de l'email" );
+//                    }
+//
+//                    $this->addFlash('success', 'Mot de passe mis à jour avec succès');
+//                }
+//            } else {
+//                $this->addFlash('danger', 'Mot de passe actuel incorrect');
+//            }
+//
+//
+//            return $this->redirectToRoute('account_edit_password');
+//        }
+
+        return $this->render('user/change-password.html.twig', [
+            'passwordForm' => $passwordForm->createView()
+        ]);
     }
 
     /**
@@ -232,6 +284,20 @@ class UserController extends AbstractController
         $this->addFlash('success', 'Votre compte utilisateur a bien été désactivé, il sera supprimé dans 15 jours!');
         return $this->redirectToRoute('account');
         // return $this->redirectToRoute('app_register');
+    }
+
+    /**
+     * @Route("/profil/activation", name="account_cancel_delete")
+     */
+    public function cancelDeleteUser( EntityManagerInterface $entityManager )
+    {
+        $id = $this->getUser()->getIdUser();
+        $user = $entityManager->getRepository(User::class)->find($id);
+        $user->setIsDeleted( false );
+        $entityManager->persist($user);
+        $entityManager->flush();
+        $this->addFlash('success', 'Votre compte utilisateur a bien été réactivé');
+        return $this->redirectToRoute('account');
     }
 
     /**

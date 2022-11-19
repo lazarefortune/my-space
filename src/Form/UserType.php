@@ -21,10 +21,10 @@ class UserType extends AbstractType
                 'mapped' => false,
             ])
             ->add('nom', TextType::class, [
-                'required' => false,
+                'required' => true,
             ])
             ->add('prenom', TextType::class, [
-                'required' => false,
+                'required' => true,
             ])
             ->add('email', EmailType::class,[
                 'required' => true,

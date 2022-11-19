@@ -1,7 +1,7 @@
 {% extends "layouts/site_simple.html.twig" %}
 
 {% block site_title %}
-    {{ user.prenom |trans }} {{ user.nom |trans }} |
+    {{ user.prenom }} {{ user.nom }} |
 {% endblock %}
 
 {% block site_content %}
@@ -14,9 +14,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 mx-auto text-center">
-                                <h4>{{ user.prenom |trans }} {{ user.nom |trans }}</h4>
-                                <p>{{ user.email |trans }}</p>
-                                <p>{{ user.phone |trans }}</p>
+                                <h4>{{ user.prenom }} {{ user.nom }}</h4>
+                                <p>{{ user.email }}</p>
+                                <p>{{ user.phone }}</p>
                                 <a href="" class="btn btn-primary">
                                     Télécharger mon CV
                                 </a>

@@ -1,206 +1,152 @@
 {% extends "layouts/site.html.twig" %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" type="text/css" href=" {{ asset('plugins/dropify/dropify.min.css') }} ">
-	<link href=" {{ asset('assets/css/users/account-setting.css') }} " rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href=" {{ asset('plugins/dropify/dropify.min.css') }} ">
+    <link href=" {{ asset('assets/css/users/account-setting.css') }} " rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block site_breadcrumb %}
-	/
-	<a href=" {{ path('account') }} ">
-		Profil
-	</a>
-	/ Edition
+    /
+    <a href=" {{ path('account') }} ">
+        Profil
+    </a>
+    / Edition
 {% endblock %}
 
 {% block site_content %}
 
-	{{ form_start(formUser) }}
-	{% include 'layouts/flash-messages.html.twig' %}
 
-	<div class="row ">
-		<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-			<div id="general-info" class="section general-info">
-				<div class="info">
-					<h6 class="d-flex align-items-center text-primary"> <i data-feather="user" class="mr-2"></i> Informations générales</h6>
-					<div class="row">
-						<div class="col-lg-11 mx-auto">
-							<div class="row">
-								<div class="col-xl-2 col-lg-12 col-md-4">
-									<div class="upload mt-0 mt-md-4 mt-lg-4 rounded shadow">
-										<input type="file" name="user[profile_picture]" id="input-file-max-fs" class="dropify" data-default-file="{{ user_profile_picture_directory }}/{{ app.user.profilePicture }}" data-max-file-size="5M"/>
-										{% do formUser.profile_picture.setRendered %}
-										{# {{ form_widget(formUser.profile_picture, {'attr': { 'class': 'dropify', 'data-default-file' : "#{user_profile_picture_directory}/#{app.user.profilePicture}" , 'id' : 'input-file-max-fs'  } } ) }} #}
-										{# <p class="mt-2">
+<div class="container">
+
+    <!-- Profil -->
+    {{ form_start(formUser) }}
+    <div class="row">
+        <div class="col-md-10 mx-auto mt-3 mb-5">
+            <div class="card rounded rounded-lg border-0 shadow-sm">
+                <div class="pt-4 px-5 h5 text-dark">
+                    Profil
+                </div>
+                <div class="card-body px-5">
+                    {% include 'layouts/flash-messages.html.twig' %}
+                    <div class="form-row mb-5">
+                        <div class="col-xl-3 col-12 mx-auto">
+                            <div class="upload mt-0 mt-md-4 mt-lg-4 rounded shadow">
+                                <input type="file" name="user[profile_picture]" id="input-file-max-fs" class="dropify"
+                                       data-default-file="{{ user_profile_picture_directory }}/{{ app.user.profilePicture }}"
+                                       data-max-file-size="5M"/>
+                                {% do formUser.profile_picture.setRendered %}
+                                {# {{ form_widget(formUser.profile_picture, {'attr': { 'class': 'dropify', 'data-default-file' : "#{user_profile_picture_directory}/#{app.user.profilePicture}" , 'id' : 'input-file-max-fs'  } } ) }} #}
+                                {# <p class="mt-2">
 											<i class="flaticon-cloud-upload mr-1"></i>
-											Upload</p> #}
-									</div>
-
-										
-									{% if app.user.profilePicture %}
-									<!-- Button delete modal -->
-									<a href="" class="mt-4 d-flex justify-content-center" data-toggle="modal" data-target="#deleteProfilePicture">
-										<span class="">Supprimer</span>
-									</a>
-									{% endif %}
-
-									<!-- Modal -->
-									<div class="modal fade" id="deleteProfilePicture" tabindex="-1" role="dialog" aria-labelledby="deleteProfilePictureLabel" aria-hidden="true">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="deleteStoryLabel">Suppression de votre photo de profil</h5>
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														x
-													</button>
-												</div>
-												<div class="modal-body">
-													<p>
-														Vous êtes sur le point de supprimer votre photo de profil. Souhaitez-vous continuer ?
-													</p>
-												</div>
-												<div class="modal-footer">
-													<button class="btn btn-primary" data-dismiss="modal">
-														<i class="flaticon-cancel-12"></i>
-														Annuler</button>
-													<a href="{{ path('account_delete_photo') }}" class="btn btn-outline-danger">
-														<i data-feather="trash-2"></i>
-														Oui, continuer
-													</a>
-												</div>
-											</div>
-										</div>			
-									</div>
-
-								</div>
-								<div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
-									<div class="form">
-										<div class="row">
-											<div class="col-sm-6">
-												<div class="form-group">
-													<label for="form_nomEval">Nom
-													</label>
-													{{ form_widget(formUser.nom) }}
-													{{ form_errors(formUser.nom) }}
-												</div>
-											</div>
-											<div class="col-sm-6">
-												<div class="form-group">
-													<label for="input02">Prénom
-													</label>
-													{{ form_widget(formUser.prenom) }}
-													{{ form_errors(formUser.prenom) }}
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="input04">Téléphone
-											</label>
-											{{ form_widget(formUser.phone, { 'attr': { 'placeholder' : '' } }) }}
-											{{ form_errors(formUser.phone) }}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="mx-auto col-md-12">
-
-			{# <nav aria-label="breadcrumb">
-								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href=" {{ path('home') }} "> Accueil </a></li>
-									<li class="breadcrumb-item"><a href=" {{ path('account') }} "> Profil </a></li>
-									<li class="breadcrumb-item active" aria-current="page"> Edition </li>
-								</ol>
-							</nav> #}
-
-			<!-- form -->
-				<div class="statbox widget box box-shadow mb-4"> <div class="widget-header">
-					<div class="row">
-						<div class="col-xl-12 col-md-12 col-sm-12 col-12">
-							<h4>
-								<i class="fa fa-edit"></i>
-								Edition du profil
-							</h4>
-						</div>
-					</div>
-				</div>
-				<div
-					class="widget-content widget-content-area ">
+											Upload
+										</p>
+                                #}
+                            </div>
 
 
-					<!-- form row -->
-					<div class="form-row"></div>
-					<!-- /form row -->
+                            {% if app.user.profilePicture %}
+                                <!-- Button delete modal -->
+                                <a href="" class="mt-4 d-flex justify-content-center" data-toggle="modal"
+                                   data-target="#deleteProfilePicture">
+                                    <span class="">Supprimer</span>
+                                </a>
+                            {% endif %}
 
 
-					<h6 class="font-weight-bold text-primary ">
-						<i class="fas fa-cog"></i>
-						Informations du compte
-					</h6>
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteProfilePicture" tabindex="-1" role="dialog"
+                                 aria-labelledby="deleteProfilePictureLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteStoryLabel">Suppression de votre photo de
+                                                profil</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                x
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                Vous êtes sur le point de supprimer votre photo de profil.
+                                                Souhaitez-vous continuer ?
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-primary" data-dismiss="modal">
+                                                <i class="flaticon-cancel-12"></i>
+                                                Annuler
+                                            </button>
+                                            <a href="{{ path('account_delete_photo') }}" class="btn btn-outline-danger">
+                                                <i data-feather="trash-2"></i>
+                                                Oui, continuer
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-					<!-- form row -->
-					<div
-						class="form-row">
-						<!-- form column -->
-						<div class="col-md-6 mb-3">
-							<label for="input03">Adresse e-mail
-								<span class="text-danger">*</span>
-							</label>
-							{{ form_widget(formUser.email) }}
-							{{ form_errors(formUser.email) }}
-						</div>
-						<!-- /form column -->
-						<!-- form column -->
-						<div class="col-md-6 mb-3">
-							<label for="input03">Adresse e-mail secondaire</label>
-							{{ form_widget(formUser.secondEmail) }}
-							{{ form_errors(formUser.secondEmail) }}
-						</div>
-						<!-- /form column -->
-					</div>
-					<!-- /form row -->
+                        </div>
+                    </div>
 
-					<!-- .form-row -->
-					<div class="form-row">
-						<div class="col-md-6 mb-3">
-							<label for="identifiant">Identifiant de connexion
-								<span class="text-danger">*</span>
-							</label>
-							{{ form_widget(formUser.login) }}
-							{{ form_errors(formUser.login) }}
-							{# <div class=" mt-1">
-																<span class="badge badge-primary">
-																	<small id="sh-text4" class="form-text mt-0">Cet identifiant est unique et vous permet de vous connecter à la plateforme.</small>
-																</span>
-															</div> #}
-						</div>
-					</div>
-					<!-- ./form-row -->
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="form_nom">Nom*
+                            </label>
+                            {{ form_widget(formUser.nom) }}
+                            {{ form_errors(formUser.nom) }}
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="form_prenom">Prénom*
+                            </label>
+                            {{ form_widget(formUser.prenom) }}
+                            {{ form_errors(formUser.prenom) }}
+                        </div>
+                    </div>
 
-					<button type="submit" class="btn btn-primary my-4 col-12 col-md-4 text-nowrap" id="send">
-						<i data-feather="check"></i>
-						Enregistrer les modifications</button>
-				</div>
-			</div>
+                    <div class="form-group mb-3">
+                        <label for="email">Pseudonyme*
+                        </label>
+                        {{ form_widget(formUser.login) }}
+                        {{ form_errors(formUser.login) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="email">Adresse email*
+                        </label>
+                        {{ form_widget(formUser.email) }}
+                        {{ form_errors(formUser.email) }}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="email">Adresse email secondaire
+                        </label>
+                        {{ form_widget(formUser.secondEmail) }}
+                        {{ form_errors(formUser.secondEmail) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form_nom">Numéro de téléphone
+                        </label>
+                        {{ form_widget(formUser.phone) }}
+                        {{ form_errors(formUser.phone) }}
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(formUser) }}
+<div>
 
 
-		</div>
-	</div>
+{% endblock %}
 
+{% block javascripts %}
+    <script src=" {{ asset('assets/js/users/account-settings.js') }} "></script>
+    <script src=" {{ asset('plugins/dropify/dropify.min.js') }} "></script>
+    <script src=" {{ asset('plugins/blockui/jquery.blockUI.min.js') }} "></script>
 
-	<div>
-		{{ form_end(formUser) }}
-
-
-	{% endblock %}
-
-	{% block javascripts %}
-		<script src=" {{ asset('assets/js/users/account-settings.js') }} "></script>
-		<script src=" {{ asset('plugins/dropify/dropify.min.js') }} "></script>
-		<script src=" {{ asset('plugins/blockui/jquery.blockUI.min.js') }} "></script>
-
-	{% endblock %}
+{% endblock %}

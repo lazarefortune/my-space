@@ -9,7 +9,8 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   letter-spacing: 0.0312rem;
-  font-family: 'Montserrat','Nunito', sans-serif !important; }
+  font-family: 'Rubik','Montserrat','Nunito', sans-serif !important;
+}
 
 h1, h2, h3, h4, h5, h6 {
   color: #3b3f5c; }

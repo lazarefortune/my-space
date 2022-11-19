@@ -1,210 +1,261 @@
 {% extends "layouts/site.html.twig" %}
 
 {% block site_breadcrumb %}
-	/ Profil
+    / Profil
 {% endblock %}
 
 {% block site_content %}
 
-	<div class="row">
-		<div class="col-md-12 mx-auto">
+    <div class="row">
+        <div class="col-xl-10 col-md-12 col-12 mx-auto">
 
-			{# <nav aria-label="breadcrumb">
+            {# <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href=" {{ path('home') }} "> Accueil </a></li>
                     <li class="breadcrumb-item active" aria-current="page"> Profil </li>
                 </ol>
             </nav> #}
 
-			{% include 'layouts/flash-messages.html.twig' %}
-			{% if app.user.isDeleted %}
-				<p class="card card-body p-3 d-flex justify-content-center text-danger font-weight-bold">Vous avez lancé la procédure de suppression de votre compte, il sera bientôt supprimé.</p>
-			{% endif %}
+            {% include 'layouts/flash-messages.html.twig' %}
 
-			<div class="card shadow-sm card-body mb-3">
-				<div class="text-left d-flex justify-content-between h5 font-weight-bold text-dark align-items-center">
-					<span></span>
-					<a href=" {{ path('account_edit') }} " class="d-none d-md-block">
-						<i class="fas fa-edit text-primary"></i>
-					</a>
-				</div>
-				<div class="text-center">
-					{% if app.user.profilePicture %}
-						<img src=" {{ user_profile_picture_directory }}/{{ app.user.profilePicture }} " alt="" width="70" class="rounded-circle border border-5 border-primary my-2">
-					{% else %}
-						<img src=" {{ asset('images/user-group.png') }} " alt="" width="70" class="rounded-circle border border-5 border-primary my-2">
-					{% endif %}
-					<h4 class="font-weight-bold">
-						{{ app.user.nom }}
-						{{ app.user.prenom }}
-						{% if app.user.nom is empty and app.user.prenom is empty %}
-							<a href=" {{ path('account_edit') }} " class="btn btn-sm btn-primary">
-								Complétez votre profil
-							</a>
-						{% else %}
-						
-						{{ app.user.isVerified == 1 ? '<i class="text-info fas fa-check-circle"></i>' : '<i class="text-warning fas fa-exclamation-triangle"></i>' }}
-						{% endif %}
-					</h4>
-					{% if app.user.isVerified == 0 %}
-						<small>
-							<i class="text-warning fas fa-exclamation-triangle"></i>
-							Vous n'avez pas encore confirmé votre compte
-							<br>
-							<i class="text-info fas fa-info-circle"></i>
-							<a href=" {{ path('send_verify_email', { 'token': app.user.activationToken } ) }} ">Cliquez ici
-							</a>pour confirmer votre compte
-						</small>
-					{% endif %}
+            {% if app.user.isDeleted %}
+                <div class="alert alert-danger">
+                    <p>
+                        Vous avez lancé la procédure de suppression de votre compte.
+                        Vous disposez de 30 jours pour annuler cette procédure.
+                        Passé ce délai, votre compte sera définitivement supprimé.
+                    </p>
+                    <a href=" {{ path('account_cancel_delete') }} " class="btn btn-sm btn-danger btn-sm"> Annuler la suppression </a>
+                </div>
+            {% endif %}
 
-				</div>
-				<div class="d-flex">
-					<a href=" {{ path('app_logout') }} " class="d-none d-md-block btn btn-sm btn-outline-info ml-auto"> Me déconnecter <i class="fas fa-sign-out-alt"></i> </a>
-					<a href=" {{ path('app_logout') }} " class="d-block d-md-none ml-auto">Me déconnecter <i class="fas fa-sign-out-alt"></i> </a>
-				</div>
+            <!-- username head -->
+            <div class="card card-body rounded rounded-lg border-0 shadow-sm mb-3">
+                <div class="text-center">
+                    {% if app.user.profilePicture %}
+                        <img src=" {{ user_profile_picture_directory }}/{{ app.user.profilePicture }} " alt=""
+                             width="70" class="rounded-circle border border-5 border-primary my-2">
+                    {% else %}
+                        <img src=" {{ asset('images/user-group.png') }} " alt="" width="70"
+                             class="rounded-circle border border-5 border-primary my-2">
+                    {% endif %}
+                        <h4 class="font-weight-bold">
+                            {{ app.user.nom }} {{ app.user.prenom }}
+                        </h4>
+                        {% if app.user.nom is empty and app.user.prenom is empty %}
+                            <a href=" {{ path('account_edit') }} " class="btn btn-sm btn-primary">
+                                Ajouter un nom et prénom
+                            </a>
+                        {% else %}
+{#                            {{ app.user.isVerified == 1 ? '<i class="text-info fas fa-check-circle"></i>' : '<i class="text-warning fas fa-exclamation-triangle"></i>' }}#}
+                    {% endif %}
+                </div>
 
-			</div>
+            </div>
 
-			<div class="card shadow-sm card-body mb-3">
-				<div class="text-left d-flex justify-content-between h5 font-weight-bold text-dark align-items-center">
-					<span>
-						{# <i class="fas fa-user"></i> #}
-						<i data-feather="user"></i>
-						Mes informations</span>
-					<a href=" {{ path('account_edit') }} " class="d-none d-md-block">
-						<i class="fas fa-edit text-primary"></i>
-					</a>
-				</div>
-				<div class="ml-4 mt-3">
-					<p>
-						Adresse mail :
-						<b>
-							{{ app.user.email ? app.user.email : 'Non renseigné' }}
-						</b>
-					</p>
-					<p>
-						Adresse mail secondaire :
-						<b>
-							{{ app.user.secondEmail ? app.user.secondEmail : 'Non renseigné' }}
-						</b>
-					</p>
-					<p>
-						Contact :
-						<b>
-							{{ app.user.phone ? app.user.phone : 'Non renseigné' }}
-						</b>
-					</p>
-					
-				</div>
-				<div class="d-block d-md-none d-flex">
-					<a href=" {{ path('account_edit') }} " class="ml-auto mt-3	btn btn-sm btn-outline-primary">Modifier <i class="fas fa-arrow-right"></i> </a>
-				</div>
-			</div>
-			<div class="card shadow-sm card-body mb-3">
-				<div class="text-left h5 font-weight-bold text-dark align-items-center">
-					{# <i class="fas fa-cog"></i> #}
-					<i data-feather="settings"></i>
-					Mon compte
-				</div>
-				<div class="ml-4 mt-3">
-					<p>
-						Compte créé le :
-						<b>
-							{{ app.user.createdAt ? app.user.createdAt|date('d/m/Y à H:i') : 'Non renseigné' }}
-						</b>
-					</p>
-					<p>
-						Dernière connexion :
-						<b>
-							{{ app.user.lastLogin ? app.user.lastLogin|date('d/m/Y à H:i') : 'Non renseigné' }}
-						</b>
-					</p>
-					<p>
-						Dernière mise à jour :
-						<b>
-							{{ app.user.updatedAt ? app.user.updatedAt|date('d/m/Y à H:i') : 'Non renseigné' }}
-						</b>
-					</p>
-					<div class="d-flex justify-content-between align-items-center">
-						<span class="h6 font-weight-bold">Notifications :</span>
-						{# <a href="" class="btn btn-primary"> Modifier <i class="fas fa-arrow-right"></i></a> #}
-					</div>
-					<div class="d-flex justify-content-between">
-						<span>
-							Recevoir un email
-						</span>
-						<div class="col-lg-3 col-md-3 col-sm-4 col-6">
-							<label class="switch s-icons s-outline  s-outline-primary  mb-4 mr-2">
-								<input type="checkbox" data-type="notifEmail" data-id="{{ app.user.idUser }}" {{ app.user.notifAccount == 1 ? 'checked' : '' }}>
-								<span class="slider round"></span>
-							</label>
-						</div>
-					</div>
-					<a href=" {{ path('account_edit_password') }} " class="btn btn-orange mb-2"> <i data-feather="unlock"></i> Modifier mon mot de passe </a>
-					
-					{% if not app.user.isDeleted %}
-						<!-- Button delete modal -->
-						<button data-toggle="modal" data-target="#deletePermentlyStory" class="btn btn-link">
-							<i data-feather="trash-2"></i>
-							<span class="">Supprimer mon compte.</span>
-						</button>
-					{% endif %}
+            {% if app.user.isVerified == 0 %}
+                <div class="card shadow-sm card-body mb-3 border border-warning">
+                    <div class="text-center">
+                        <h6 class="font-weight-bold text-warning">Vérification de votre compte</h6>
+                        <p class="text-muted">
+                            Pour pouvoir utiliser toutes les fonctionnalités de notre site, vous devez confirmer votre
+                            compte.
+                            <br>
+                            <i class="text-info fas fa-info-circle"></i>
+                            <a href=" {{ path('send_verify_email', { 'token': app.user.activationToken } ) }} ">Cliquez
+                                ici
+                            </a>pour recevoir un nouveau mail de confirmation.
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
 
-					<!-- Modal -->
-					<div class="modal fade" id="deletePermentlyStory" tabindex="-1" role="dialog" aria-labelledby="deletePermentlyStoryLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="deleteStoryLabel"> Nous sommes désolés de vous voir partir!
-											</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											x
-										</button>
-									</div>
-									<div class="modal-body">
-										<p>
-											Vous ne pourrez plus accéder à votre compte et vos données seront supprimées définitivement de nos services.
-										</p>
-										<p class="text-danger">
-											NB : Cette action est irréversible. Vous ne pourrez pas récupérer vos données.
-										</p>
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" id="customCheck1">
-											<label class="custom-control-label text-dark" for="customCheck1"> Je souhaite supprimer mon compte et les données associées. </label>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button class="btn btn-primary" data-dismiss="modal">
-											<i class="flaticon-cancel-12"></i>
-											Annuler</button>
-										<a href=" {{ path('account_delete') }} " class="btn btn-outline-danger d-none" id="deleteAccount">
-											<i data-feather="trash-2"></i>
-											Supprimer définitivement
-										</a>
-									</div>
-								</div>
-							</div>
-						
-					</div>
+            <!-- Account information -->
+            <div class="card rounded rounded-lg border-0 shadow-sm mb-3">
+                <div class="px-3 pt-3 h6 text-dark">
+                    Informations du compte
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">
+                        Si vous souhaitez modifier vos informations, veuillez cliquer sur le bouton ci-dessous.
+                    </p>
+                    <a href=" {{ path('account_edit') }} " class="btn btn-primary">
+                        <i class="fas fa-user-edit"></i>
+                        Modifier mes informations
+                    </a>
+                </div>
+            </div>
 
-				</div>
-			</div>
-		</div>
-	</div>
+            <!-- General  -->
+{#            <div class="card rounded rounded-lg border-0 shadow-sm mb-3">#}
+{#                <div class="px-3 pt-3 h6 text-dark">#}
+{#                    Informations de connexion#}
+{#                </div>#}
+{#                <div class="card-body">#}
+{#                    <!-- login information -->#}
+{#                    <div class="d-flex justify-content-between align-items-center">#}
+{#                        <div>#}
+{#                            <p class="text-muted">#}
+{#                                Informations de connexion#}
+{#                            </p>#}
+{#                            <p class="text-muted">#}
+{#                                <i class="fas fa-user"></i>#}
+{#                                {{ app.user.username }}#}
+{#                            </p>#}
+{#                        </div>#}
+{#                        <a href=" {{ path('account_edit') }} " class="btn btn-sm btn-outline-primary">Modifier <i#}
+{#                                    class="fas fa-arrow-right"></i> </a>#}
+{#                    </div>#}
+{#                    <hr>#}
+{#                    <!-- password information -->#}
+{#                    <div class="d-flex justify-content-between align-items-center">#}
+{#                        <div>#}
+{#                            <p class="text-muted">#}
+{#                                Mot de passe#}
+{#                            </p>#}
+{#                            <p class="text-muted">#}
+{#                                <i class="fas fa-lock"></i>#}
+{#                                ********#}
+{#                            </p>#}
+{#                        </div>#}
+{#                        <a href=" {{ path('account_edit') }} " class="btn btn-sm btn-outline-primary">Modifier <i#}
+{#                                    class="fas fa-arrow-right"></i> </a>#}
+{#                    </div>#}
 
-	
+{#                </div>#}
+{#            </div>#}
+
+            <!-- Account security -->
+            <div class="card rounded rounded-lg border-0 shadow-sm mb-3">
+                <div class="px-3 pt-3 h6 text-dark">
+                    Sécurité
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">
+                        Si vous souhaitez modifier votre mot de passe, veuillez cliquer sur le bouton ci-dessous.
+                    </p>
+                    <a href=" {{ path('account_edit_password') }} " class="btn btn-primary">
+                        <i class="fas fa-lock"></i>
+                        Modifier mon mot de passe
+                    </a>
+                </div>
+            </div>
+
+            <!-- General information -->
+            <div class="card rounded rounded-lg border-0 shadow-sm mb-3">
+                <div class="px-3 pt-3 h6 text-dark">
+                    Informations générales
+                </div>
+                <div class="card-body">
+                    <!-- created date information -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="text-muted">
+                            Date de création :
+                        </div>
+                        <div class="text-dark font-weight-bold">
+                            {{ app.user.createdAt ? app.user.createdAt|date('d/m/Y à H:i') : 'Non renseigné' }}
+                        </div>
+                    </div>
+                    <!-- last update information -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="text-muted">
+                            Dernière mise à jour :
+                        </div>
+                        <div class="text-dark font-weight-bold">
+                            {{ app.user.updatedAt ? app.user.updatedAt|date('d/m/Y à H:i') : 'Non renseigné' }}
+                        </div>
+                    </div>
+                    <!-- last login information -->
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="text-muted">
+                            Dernière connexion :
+                        </div>
+                        <div class="text-dark font-weight-bold">
+                            {{ app.user.lastLogin ? app.user.lastLogin|date('d/m/Y à H:i') : 'Non renseigné' }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Delete account section -->
+            <div class="card rounded rounded-lg border-0 shadow-sm mb-3">
+                {% if not app.user.isDeleted %}
+                    <div class="px-3 pt-3 h6 text-dark">
+                        Suppression du compte
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">
+                            Si vous souhaitez supprimer votre compte, cliquez sur le bouton ci-dessous.
+                        </p>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#deletePermentlyStory">
+                            <i class="fas fa-trash-alt"></i>
+                            Supprimer mon compte
+                        </button>
+                        <!-- Modal delete account-->
+                        <div class="modal fade" id="deletePermentlyStory" tabindex="-1" role="dialog"
+                             aria-labelledby="deletePermentlyStoryLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteStoryLabel"> Nous sommes désolés de vous voir
+                                            partir!
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            x
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            Vous ne pourrez plus accéder à votre compte et vos données seront supprimées
+                                            définitivement de nos services.
+                                        </p>
+                                        <p class="text-danger">
+                                            NB : Cette action est irréversible. Vous ne pourrez pas récupérer vos
+                                            données.
+                                        </p>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                            <label class="custom-control-label text-dark" for="customCheck1"> Je
+                                                souhaite supprimer mon compte et les données associées. </label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" data-dismiss="modal">
+                                            <i class="flaticon-cancel-12"></i>
+                                            Annuler
+                                        </button>
+                                        <a href=" {{ path('account_delete') }} " class="btn btn-outline-danger d-none"
+                                           id="deleteAccount">
+                                            <i data-feather="trash-2"></i>
+                                            Supprimer définitivement
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+
 {% endblock %}
 
 {% block javascripts %}
-	<script>
-		document.getElementById('customCheck1').addEventListener('change', function() {
-			if (this.checked) {
-				document.getElementById('deleteAccount').classList.remove('d-none').add('d-inline');
-			} else {
-				document.getElementById('deleteAccount').classList.add('d-none').remove('d-inline');
-			}
-		});
-	</script>
+    <script>
+        document.getElementById('customCheck1').addEventListener('change', function () {
+            if (this.checked) {
+                document.getElementById('deleteAccount').classList.remove('d-none').add('d-inline');
+            } else {
+                document.getElementById('deleteAccount').classList.add('d-none').remove('d-inline');
+            }
+        });
+    </script>
 {% endblock %}
 
 
