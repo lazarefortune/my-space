@@ -1,6 +1,10 @@
 html {
   min-height: 100%; }
 
+* {
+  font-family: 'Rubik', sans-serif;
+}
+
 body {
   color: #888ea8;
   height: 100%;
